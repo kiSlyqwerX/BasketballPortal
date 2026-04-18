@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BasketTap</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/src/styles/style.css">
+</head>
+<body>
+<div class="layout">
+ 
+<!-- HEADER -->
+<header>
+  <div class="logo">BasketTap</div>
+  <div class="hdr-stat">Taps:&nbsp;<b id="ht">0</b></div>
+  <div class="hdr-stat">Record:&nbsp;<b id="hr">0</b></div>
+</header>
+ 
+<!-- LEFT -->
+<aside class="left">
+  <div class="sec-label">Statistics</div>
+  <div class="stat-row">
+    <div class="stat-lbl">Click power</div>
+    <div class="stat-val" id="sp">1</div>
+  </div>
+  <div class="stat-row">
+    <div class="stat-lbl">Record</div>
+    <div class="stat-val" id="sr">0</div>
+  </div>
+ 
+  <div class="gap"></div>
+  <div class="sec-label">Upgrades</div>
+ 
+  <div class="upg" id="u0" onclick="buy(0)">
+    <div class="upg-ico">🏀</div>
+    <div class="upg-info">
+      <div class="upg-name">New ball</div>
+      <div class="upg-desc">+2 Taps for click</div>
+    </div>
+    <div class="upg-cost">50</div>
+  </div>
+ 
+  <div class="upg off" id="u1" onclick="buy(1)">
+    <div class="upg-ico">🤖</div>
+    <div class="upg-info">
+      <div class="upg-name">Auto dribbling</div>
+      <div class="upg-desc">+1 Tap / Sec</div>
+    </div>
+    <div class="upg-cost">120</div>
+  </div>
+ 
+  <div class="upg off" id="u2" onclick="buy(2)">
+    <div class="upg-ico">💪</div>
+    <div class="upg-info">
+      <div class="upg-name">Slam Dunk</div>
+      <div class="upg-desc">+5 Taps for click</div>
+    </div>
+    <div class="upg-cost">400</div>
+  </div>
+ 
+  <div class="upg off" id="u3" onclick="buy(3)">
+    <div class="upg-ico">🏟️</div>
+    <div class="upg-info">
+      <div class="upg-name">Stadions</div>
+      <div class="upg-desc">+5 Taps / Sec</div>
+    </div>
+    <div class="upg-cost">900</div>
+  </div>
+ 
+  <div class="upg off" id="u4" onclick="buy(4)">
+    <div class="upg-ico">👑</div>
+    <div class="upg-info">
+      <div class="upg-name">MVP</div>
+      <div class="upg-desc">×2 To all taps</div>
+    </div>
+    <div class="upg-cost">2500</div>
+  </div>
+</aside>
+ 
+<!-- CENTER -->
+<main>
+  <div class="num-block">
+    <div class="num-lbl">All taps</div>
+    <div class="num" id="cnt">0</div>
+  </div>
+ 
+  <div class="bwrap" id="bwrap">
+    <div class="ball" id="ball" onclick="tap(event)">
+      <svg viewBox="0 0 260 260" xmlns="http://www.w3.org/2000/svg">
+        <path d="M130 8 Q178 68 178 130 Q178 192 130 252" stroke="rgba(50,12,0,.58)" stroke-width="4.5" fill="none" stroke-linecap="round"/>
+        <path d="M130 8 Q82 68 82 130 Q82 192 130 252"  stroke="rgba(50,12,0,.58)" stroke-width="4.5" fill="none" stroke-linecap="round"/>
+        <path d="M8 130 Q68 96 130 96 Q192 96 252 130"  stroke="rgba(50,12,0,.58)" stroke-width="4.5" fill="none" stroke-linecap="round"/>
+        <path d="M8 130 Q68 164 130 164 Q192 164 252 130" stroke="rgba(50,12,0,.58)" stroke-width="4.5" fill="none" stroke-linecap="round"/>
+        <ellipse cx="88" cy="78" rx="28" ry="13" fill="rgba(255,235,160,.1)" transform="rotate(-22,88,78)"/>
+      </svg>
+    </div>
+  </div>
+ 
+  <div class="cps">
+    <div class="cps-item">
+      <div class="cps-v" id="cc">1</div>
+      <div class="cps-l">Per click</div>
+    </div>
+    <div class="cps-sep"></div>
+  </div>
+</main>
+ 
+<!-- RIGHT -->
+<aside class="right">
+  <div class="sec-label">Awards</div>
+ 
+  <div class="ach" id="a1">
+    <div class="ach-ico">🏀</div>
+    <div class="ach-body">
+      <div class="ach-name">First tap</div>
+      <div class="ach-prog"><div class="ach-bar" id="ab1" style="width:0%"></div></div>
+    </div>
+    <div class="ach-n">1</div>
+  </div>
+ 
+  <div class="ach" id="a10">
+    <div class="ach-ico">⭐</div>
+    <div class="ach-body">
+      <div class="ach-name">Warm up</div>
+      <div class="ach-prog"><div class="ach-bar" id="ab10" style="width:0%"></div></div>
+    </div>
+    <div class="ach-n">10</div>
+  </div>
+ 
+  <div class="ach" id="a50">
+    <div class="ach-ico">🔥</div>
+    <div class="ach-body">
+      <div class="ach-name">Warmed up</div>
+      <div class="ach-prog"><div class="ach-bar" id="ab50" style="width:0%"></div></div>
+    </div>
+    <div class="ach-n">50</div>
+  </div>
+ 
+  <div class="ach" id="a100">
+    <div class="ach-ico">💯</div>
+    <div class="ach-body">
+      <div class="ach-name">Hundred</div>
+      <div class="ach-prog"><div class="ach-bar" id="ab100" style="width:0%"></div></div>
+    </div>
+    <div class="ach-n">100</div>
+  </div>
+ 
+  <div class="ach" id="a500">
+    <div class="ach-ico">🏆</div>
+    <div class="ach-body">
+      <div class="ach-name">Star</div>
+      <div class="ach-prog"><div class="ach-bar" id="ab500" style="width:0%"></div></div>
+    </div>
+    <div class="ach-n">500</div>
+  </div>
+ 
+  <div class="ach" id="a1000">
+    <div class="ach-ico">👑</div>
+    <div class="ach-body">
+      <div class="ach-name">Legend</div>
+      <div class="ach-prog"><div class="ach-bar" id="ab1000" style="width:0%"></div></div>
+    </div>
+    <div class="ach-n">1000</div>
+  </div>
+ 
+  <div class="ach" id="a5000">
+    <div class="ach-ico">🌟</div>
+    <div class="ach-body">
+      <div class="ach-name">NBA Star</div>
+      <div class="ach-prog"><div class="ach-bar" id="ab5000" style="width:0%"></div></div>
+    </div>
+    <div class="ach-n">5000</div>
+  </div>
+</aside>
+ 
+<!-- FOOTER -->
+<footer>
+  <div class="fi"><div class="dot live"></div>Online</div>
+  <div class="fi"><div class="dot"></div>Session:&nbsp;<span class="fv" id="fs">0:00</span></div>
+  <button class="rbtn" onclick="reset()">↺ reset</button>
+</footer>
+ 
+</div>
+
+
+    <script src="/src/scripts/script.js"></script>
+</body>
+</html>
+ 
