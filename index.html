@@ -1,107 +1,70 @@
 <!DOCTYPE html>
-<html lang="uk">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>BasketTap</title>
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/src/styles/style.css">
-</head>
-<body>
-<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>BasketTap</title>
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
-  
+  <link rel="stylesheet" href="src/styles/styles.css" />
 </head>
 <body>
 <div class="layout">
- 
-  <!-- ════════════════════════════════
-       HEADER
-  ════════════════════════════════ -->
+
+  <!-- HEADER -->
   <header>
-    <div class="logo">BasketTap</div>
- 
-    <div class="hold-badge" id="hold-badge">
-      <div class="hold-dot" id="hold-dot"></div>
-      <span id="hold-label">Hold ready</span>
+    <div class="header-left">
+      <div class="logo">BasketTap</div>
+      <div class="diamond-counter"><span class="diamond-icon">💎</span><span id="diamond-display">0</span></div>
     </div>
- 
+    <nav class="game-nav">
+      <a href="home.html" class="game-nav-link" onclick="navigate(event,'home.html')">Home</a>
+      <a href="#" class="game-nav-link active">Game</a>
+      <a href="news.html" class="game-nav-link" onclick="navigate(event,'news.html')">News</a>
+    </nav>
     <div class="record-display">Rec&nbsp;<span id="record-val">0</span></div>
   </header>
- 
-  <!-- ════════════════════════════════
-       SIDEBAR  (desktop only)
-       Content mirrors the bottom sheets.
-  ════════════════════════════════ -->
+
+  <!-- SIDEBAR (desktop) -->
   <aside class="sidebar">
- 
     <div class="panel active" id="panel-skills">
       <div class="panel-title">Skill Tree</div>
       <div id="skill-cards"></div>
     </div>
- 
     <div class="panel" id="panel-auto">
       <div class="panel-title">Automation</div>
-      <div class="stat-row">
-        <div class="stat-label">Taps / sec</div>
-        <div class="stat-value" id="stat-tps">0</div>
-      </div>
-      <div class="stat-row">
-        <div class="stat-label">Multiplier</div>
-        <div class="stat-value" id="stat-multi">×1</div>
-      </div>
+      <div class="stat-row"><div class="stat-label">Taps / sec</div><div class="stat-value" id="stat-tps">0</div></div>
+      <div class="stat-row"><div class="stat-label">Multiplier</div><div class="stat-value" id="stat-multi">×1</div></div>
       <div style="height:10px"></div>
       <div id="auto-cards"></div>
     </div>
- 
     <div class="panel" id="panel-awards">
       <div class="panel-title">Awards</div>
       <div id="awards-list"></div>
     </div>
- 
     <div class="panel" id="panel-prestige">
-      <div class="panel-title">Prestige</div>
+      <div class="panel-title">👑 Prestige</div>
       <div id="prestige-content"></div>
     </div>
- 
   </aside>
- 
-  <!-- ════════════════════════════════
-       CENTER  — game area
-  ════════════════════════════════ -->
+
+  <!-- CENTER -->
   <main class="center" id="center-el">
- 
     <div class="tap-counter">
       <div class="tap-label">Taps</div>
       <div class="tap-number" id="tap-number">0</div>
     </div>
- 
     <div class="combo-display hidden" id="combo-display"></div>
- 
     <div class="heat-wrap">
       <div class="heat-label">Heat</div>
-      <div class="heat-bar-bg">
-        <div class="heat-bar-fill" id="heat-bar" style="width:0%; background:#22c55e"></div>
-      </div>
+      <div class="heat-bar-bg"><div class="heat-bar-fill" id="heat-bar" style="width:0%;background:#22c55e"></div></div>
       <div class="heat-val" id="heat-val">0%</div>
     </div>
- 
     <div class="ball-wrap" id="ball-wrap">
       <svg class="ring-svg" id="ring-svg" viewBox="0 0 260 260">
         <circle class="ring-track"    cx="130" cy="130" r="120"/>
-        <circle class="ring-progress" cx="130" cy="130" r="120"
-                id="ring-progress"
-                stroke-dasharray="753.98"
-                stroke-dashoffset="753.98"/>
+        <circle class="ring-progress" cx="130" cy="130" r="120" id="ring-progress" stroke-dasharray="753.98" stroke-dashoffset="753.98"/>
       </svg>
- 
       <div class="hold-prompt" id="hold-prompt">⚡ Hold!</div>
- 
       <div class="ball" id="ball">
         <svg viewBox="0 0 260 260" xmlns="http://www.w3.org/2000/svg">
           <path d="M130 8 Q178 68 178 130 Q178 192 130 252" stroke="rgba(50,12,0,.58)" stroke-width="4.5" fill="none" stroke-linecap="round"/>
@@ -112,109 +75,64 @@
         </svg>
       </div>
     </div>
- 
-    <div class="hold-bar-wrap" id="hold-bar-wrap">
-      <div class="hold-bar" id="hold-bar"></div>
-    </div>
- 
+    <div class="hold-bar-wrap" id="hold-bar-wrap"><div class="hold-bar" id="hold-bar"></div></div>
     <div class="click-hint">+<b id="click-power-display">1</b> per click</div>
- 
   </main>
- 
-  <!-- ════════════════════════════════
-       DESKTOP ICON NAV (right column)
-  ════════════════════════════════ -->
+
+  <!-- DESKTOP ICON NAV -->
   <nav class="icon-nav">
-    <button class="icon-nav-btn active" data-label="Skills"
-            onclick="showPanel('skills', this)">🌳</button>
-    <button class="icon-nav-btn" data-label="Automation"
-            onclick="showPanel('auto', this)">⚙️</button>
-    <button class="icon-nav-btn" data-label="Awards"
-            onclick="showPanel('awards', this)">🏆</button>
-    <button class="icon-nav-btn prestige-nav" data-label="Prestige"
-            onclick="showPanel('prestige', this)">✦</button>
+    <button class="icon-nav-btn active" data-label="Skills"     onclick="showPanel('skills',this)">🌳</button>
+    <button class="icon-nav-btn"        data-label="Automation" onclick="showPanel('auto',this)">⚙️</button>
+    <button class="icon-nav-btn"        data-label="Awards"     onclick="showPanel('awards',this)">🏆</button>
+    <button class="icon-nav-btn prestige-nav" data-label="Prestige" onclick="showPanel('prestige',this)">👑</button>
   </nav>
- 
-  <!-- ════════════════════════════════
-       DESKTOP FOOTER
-  ════════════════════════════════ -->
+
+  <!-- DESKTOP FOOTER -->
   <footer>
     <div class="foot-item"><div class="foot-dot live"></div>Online</div>
-    <div class="foot-item"><div class="foot-dot"></div>Session&nbsp;<span class="foot-val" id="session-display">0:00</span></div>
-    <div class="foot-item"><div class="foot-dot"></div>Auto&nbsp;<span class="foot-val" id="footer-auto">0</span>/s</div>
-    <button class="reset-btn" onclick="resetGame()">↺ Reset</button>
   </footer>
- 
+
 </div>
- 
-<!-- ════════════════════════════════
-     MOBILE BOTTOM NAV  (fixed)
-════════════════════════════════ -->
+
+<!-- MOBILE NAV -->
 <nav class="mobile-nav">
-  <button class="mob-btn" data-sheet="skills" onclick="openSheet('skills',this)">
-    <span class="mob-icon">🌳</span>
-    <span class="mob-label">Skills</span>
-    <span class="mob-indicator"></span>
-  </button>
-  <button class="mob-btn" data-sheet="auto" onclick="openSheet('auto',this)">
-    <span class="mob-icon">⚙️</span>
-    <span class="mob-label">Auto</span>
-    <span class="mob-indicator"></span>
-  </button>
-  <button class="mob-btn" data-sheet="awards" onclick="openSheet('awards',this)">
-    <span class="mob-icon">🏆</span>
-    <span class="mob-label">Awards</span>
-    <span class="mob-indicator"></span>
-  </button>
-  <button class="mob-btn" data-sheet="prestige" onclick="openSheet('prestige',this)">
-    <span class="mob-icon">✦</span>
-    <span class="mob-label">Prestige</span>
-    <span class="mob-indicator"></span>
-  </button>
-  <button class="mob-btn" onclick="resetGame()">
-    <span class="mob-icon">↺</span>
-    <span class="mob-label">Reset</span>
-    <span class="mob-indicator"></span>
-  </button>
+  <button class="mob-btn" data-sheet="skills"   onclick="openSheet('skills',this)">  <span class="mob-icon">🌳</span><span class="mob-label">Skills</span>  <span class="mob-dot"></span></button>
+  <button class="mob-btn" data-sheet="auto"     onclick="openSheet('auto',this)">    <span class="mob-icon">⚙️</span><span class="mob-label">Auto</span>    <span class="mob-dot"></span></button>
+  <button class="mob-btn" data-sheet="awards"   onclick="openSheet('awards',this)">  <span class="mob-icon">🏆</span><span class="mob-label">Awards</span>  <span class="mob-dot"></span></button>
+  <button class="mob-btn" data-sheet="prestige" onclick="openSheet('prestige',this)"><span class="mob-icon">👑</span><span class="mob-label">Prestige</span><span class="mob-dot"></span></button>
 </nav>
- 
-<!-- ════════════════════════════════
-     MOBILE BOTTOM SHEET
-════════════════════════════════ -->
+
+<!-- BOTTOM SHEET -->
 <div class="sheet-backdrop" id="sheet-backdrop" onclick="closeSheet()"></div>
- 
 <div class="bottom-sheet" id="bottom-sheet">
   <div class="sheet-handle"></div>
   <div class="sheet-header">
-    <div class="sheet-title" id="sheet-title">Skills</div>
+    <div class="sheet-title" id="sheet-title"></div>
     <button class="sheet-close" onclick="closeSheet()">✕</button>
   </div>
   <div class="sheet-content" id="sheet-content"></div>
 </div>
- 
-<!-- ════════════════════════════════
-     PRESTIGE CONFIRM OVERLAY
-════════════════════════════════ -->
+
+<!-- PRESTIGE OVERLAY -->
 <div class="prestige-overlay" id="prestige-overlay">
   <div class="prestige-modal">
-    <div class="prestige-modal-icon">✦</div>
+    <div class="prestige-modal-icon">👑</div>
     <div class="prestige-modal-title">Prestige</div>
-    <div class="prestige-modal-body">
-      Reset your run in exchange for a permanent<br>
-      <b id="modal-bonus-text">×1.5 multiplier</b> on all future taps.<br><br>
-      Your record and lifetime taps are kept.
-    </div>
+    <div class="prestige-modal-body" id="prestige-modal-body"></div>
     <div class="prestige-modal-btns">
       <button class="prestige-confirm-btn" onclick="confirmPrestige()">Prestige!</button>
       <button class="prestige-cancel-btn"  onclick="closePrestigeModal()">Cancel</button>
     </div>
   </div>
 </div>
- 
-</body>
-</html>
 
-    <script src="/src/scripts/script.js"></script>
+<script src="src/scripts/app.js"></script>
+<script>
+function navigate(e, href) {
+  e.preventDefault();
+  document.body.classList.add('exit');
+  setTimeout(() => { window.location.href = href; }, 270);
+}
+</script>
 </body>
 </html>
- 

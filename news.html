@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BasketTap — News</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --orange:   #ff6a00;
+      --diamond:  #67e8f9;
+      --bg:       #0a0a0a;
+      --surface:  #141414;
+      --surface2: #1c1c1c;
+      --text:     #e8e8e8;
+      --muted:    rgba(255,255,255,0.32);
+      --border:   rgba(255,255,255,0.07);
+    }
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+    html, body { height:100%; }
+    body {
+      background:var(--bg); font-family:'Inter',sans-serif;
+      color:var(--text); overflow:hidden;
+      animation:pageIn 0.34s cubic-bezier(0.22,1,0.36,1);
+    }
+    body.exit { animation:pageOut 0.27s cubic-bezier(0.55,0,1,0.45) forwards; }
+    @keyframes pageIn  { from{opacity:0;transform:translateX(55px)} to{opacity:1;transform:translateX(0)} }
+    @keyframes pageOut { from{opacity:1;transform:translateX(0)}    to{opacity:0;transform:translateX(-55px)} }
+
+    .page-wrap {
+      width:100%; height:100dvh; display:flex; flex-direction:column;
+      border:1px solid rgba(30,120,255,0.45);
+      outline:1px dashed rgba(30,120,255,0.15); outline-offset:-8px;
+    }
+
+    /* ── HEADER ── */
+    header {
+      display:flex; align-items:center; justify-content:space-between;
+      padding:0 28px; height:50px;
+      border-bottom:1px solid rgba(30,120,255,0.22);
+      flex-shrink:0; position:relative;
+    }
+    .header-left { display:flex; align-items:center; gap:12px; }
+    .logo { font-family:'Bebas Neue',sans-serif; font-size:26px; letter-spacing:6px; color:var(--orange); }
+    .diamond-counter { display:flex; align-items:center; gap:4px; font-family:'Bebas Neue',sans-serif; font-size:17px; color:var(--diamond); letter-spacing:1px; }
+    .home-nav { position:absolute; left:50%; transform:translateX(-50%); display:flex; gap:26px; list-style:none; }
+    .home-nav a { font-size:11px; font-weight:600; letter-spacing:2px; text-transform:uppercase; text-decoration:none; color:var(--muted); transition:color 0.18s; }
+    .home-nav a.active { color:var(--orange); }
+    .home-nav a:hover  { color:var(--text); }
+    .record-display { font-size:9px; letter-spacing:2px; text-transform:uppercase; color:var(--muted); }
+    .record-display span { font-family:'Bebas Neue',sans-serif; font-size:15px; color:var(--orange); vertical-align:middle; }
+
+    /* ── LAYOUT ── */
+    .news-layout { display:flex; flex:1; overflow:hidden; }
+
+    /* ── SIDEBAR ── */
+    .news-sidebar {
+      width:220px; flex-shrink:0;
+      border-right:1px solid rgba(30,120,255,0.18);
+      padding:22px 18px; display:flex; flex-direction:column;
+    }
+    .sidebar-title {
+      font-family:'Bebas Neue',sans-serif; font-size:18px; letter-spacing:4px; color:var(--diamond);
+      padding-bottom:10px; border-bottom:1px solid rgba(103,232,249,0.22); margin-bottom:10px;
+    }
+    .cat-item {
+      display:flex; align-items:center; gap:10px; padding:9px 12px; border-radius:7px;
+      font-size:10px; font-weight:600; letter-spacing:2px; text-transform:uppercase;
+      color:var(--muted); cursor:pointer; transition:color 0.15s, background 0.15s;
+      border:1px solid transparent; margin-bottom:2px;
+    }
+    .cat-item:hover { color:var(--text); background:rgba(255,255,255,0.04); }
+    .cat-item.active { color:var(--orange); border-color:rgba(255,106,0,0.35); background:rgba(255,106,0,0.06); }
+    .cat-dot { width:7px; height:7px; border-radius:50%; background:var(--orange); flex-shrink:0; opacity:0; transition:opacity 0.15s; }
+    .cat-item.active .cat-dot { opacity:1; }
+
+    /* ── MAIN CONTENT ── */
+    .news-content { flex:1; overflow-y:auto; padding:26px 30px; }
+    .news-content::-webkit-scrollbar { width:3px; }
+    .news-content::-webkit-scrollbar-thumb { background:rgba(255,106,0,0.3); border-radius:2px; }
+
+    .news-section-title {
+      font-family:'Bebas Neue',sans-serif; font-size:clamp(16px,2.2vw,26px);
+      letter-spacing:5px; color:var(--text); margin-bottom:20px;
+    }
+
+    /* ── NEWS GRID ── */
+    .news-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+
+    .news-card {
+      display:flex; border:1px solid var(--border); border-radius:8px;
+      overflow:hidden; cursor:pointer; background:var(--surface);
+      transition:border-color 0.18s, background 0.18s;
+    }
+    .news-card:hover { border-color:rgba(255,106,0,0.45); background:var(--surface2); }
+
+    .card-img-wrap { width:130px; min-height:108px; flex-shrink:0; overflow:hidden; background:#111; }
+    .card-img-wrap img { width:100%; height:100%; object-fit:cover; display:block; }
+    .no-img { width:100%; height:108px; display:flex; align-items:center; justify-content:center; font-size:30px; }
+
+    .card-body { flex:1; padding:10px 12px; display:flex; flex-direction:column; min-width:0; }
+    .card-title {
+      font-family:'Bebas Neue',sans-serif; font-size:14px; letter-spacing:1px;
+      color:var(--text); line-height:1.25;
+      overflow:hidden; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical;
+    }
+    .card-desc {
+      font-size:9px; color:var(--muted); line-height:1.55; margin-top:5px; flex:1;
+      overflow:hidden; display:-webkit-box; -webkit-line-clamp:3; -webkit-box-orient:vertical;
+    }
+    .card-read { font-size:8px; font-weight:600; letter-spacing:2px; color:var(--orange); text-transform:uppercase; margin-top:7px; text-align:right; }
+
+    /* ── SKELETON ── */
+    .skel-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+    .skel-card { display:flex; border:1px solid var(--border); border-radius:8px; overflow:hidden; background:var(--surface); height:108px; }
+    .skel-img  { width:130px; background:var(--surface2); flex-shrink:0; }
+    .skel-body { flex:1; padding:12px; display:flex; flex-direction:column; gap:8px; }
+    .skel-line { height:9px; background:var(--surface2); border-radius:4px; animation:shimmer 1.5s ease-in-out infinite; }
+    @keyframes shimmer { 0%,100%{opacity:0.35} 50%{opacity:0.85} }
+
+    /* ── ERROR ── */
+    .news-error { display:none; flex-direction:column; align-items:center; justify-content:center; gap:14px; padding:60px 0; text-align:center; }
+    .news-error.visible { display:flex; }
+    .err-icon { font-size:38px; }
+    .err-text { font-size:11px; letter-spacing:1.5px; text-transform:uppercase; color:var(--muted); }
+    .retry-btn { background:transparent; border:1px solid rgba(255,106,0,0.4); border-radius:6px; padding:8px 20px; font-family:'Bebas Neue',sans-serif; font-size:16px; letter-spacing:3px; color:var(--orange); cursor:pointer; transition:background 0.15s; }
+    .retry-btn:hover { background:rgba(255,106,0,0.08); }
+
+    /* ── ARTICLE VIEW ── */
+    #article-view { display:none; }
+    #article-view.visible { display:block; }
+    #list-view.hidden { display:none; }
+
+    .breadcrumb { font-size:9px; letter-spacing:1.5px; text-transform:uppercase; color:var(--muted); margin-bottom:18px; display:flex; align-items:center; gap:6px; flex-wrap:wrap; }
+    .bc-sep { color:rgba(255,255,255,0.18); }
+    .bc-link { cursor:pointer; color:var(--muted); transition:color 0.15s; }
+    .bc-link:hover { color:var(--text); }
+    .bc-cur { color:var(--orange); }
+
+    .art-hero { display:flex; gap:26px; margin-bottom:26px; align-items:flex-start; }
+    .art-img { width:300px; height:220px; flex-shrink:0; border-radius:8px; overflow:hidden; background:#111; }
+    .art-img img { width:100%; height:100%; object-fit:cover; }
+    .art-img .no-img { height:100%; font-size:60px; }
+    .art-head { flex:1; }
+    .art-title { font-family:'Bebas Neue',sans-serif; font-size:clamp(20px,2.8vw,36px); letter-spacing:4px; color:var(--text); line-height:1.1; margin-bottom:12px; }
+    .art-desc  { font-size:11px; color:rgba(255,255,255,0.65); line-height:1.75; }
+    .art-date  { font-size:8px; letter-spacing:2px; text-transform:uppercase; color:var(--muted); margin-top:10px; }
+    .art-btn   { display:inline-flex; align-items:center; gap:6px; margin-top:14px; padding:9px 22px; background:var(--orange); border-radius:6px; font-family:'Bebas Neue',sans-serif; font-size:16px; letter-spacing:3px; color:#fff; text-decoration:none; transition:opacity 0.15s; }
+    .art-btn:hover { opacity:0.85; }
+    .art-body  { font-size:10px; color:rgba(255,255,255,0.40); line-height:1.85; column-count:2; column-gap:26px; border-top:1px solid var(--border); padding-top:18px; }
+
+    /* ── FOOTER ── */
+    footer { height:34px; display:flex; align-items:center; justify-content:center; border-top:1px solid rgba(30,120,255,0.18); flex-shrink:0; }
+    .foot-online { display:flex; align-items:center; gap:6px; font-size:8px; letter-spacing:2px; text-transform:uppercase; color:rgba(255,255,255,0.22); }
+    .foot-dot { width:5px; height:5px; border-radius:50%; background:var(--orange); box-shadow:0 0 6px rgba(255,106,0,0.70); animation:pulse 2s infinite; }
+    @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.4;transform:scale(1.6)} }
+
+    /* ── MOBILE ── */
+    @media (max-width:700px) {
+      .home-nav  { display:none; }
+      header     { padding:0 16px; }
+      .news-sidebar { display:none; }
+      .news-content { padding:16px; }
+      .news-grid { grid-template-columns:1fr; }
+      .skel-grid { grid-template-columns:1fr; }
+      .art-hero  { flex-direction:column; }
+      .art-img   { width:100%; height:180px; }
+      .art-body  { column-count:1; }
+    }
+  </style>
+</head>
+<body>
+<div class="page-wrap">
+
+  <header>
+    <div class="header-left">
+      <div class="logo">BasketTap</div>
+      <div class="diamond-counter">💎 <span id="diamond-display">0</span></div>
+    </div>
+    <ul class="home-nav">
+      <li><a href="home.html" onclick="navigate(event,'home.html')">Home</a></li>
+      <li><a href="index.html" onclick="navigate(event,'index.html')">Game</a></li>
+      <li><a href="news.html" class="active">News</a></li>
+    </ul>
+    <div class="record-display">Record&nbsp;<span id="record-val">0</span></div>
+  </header>
+
+  <div class="news-layout">
+
+    <aside class="news-sidebar">
+      <div class="sidebar-title">Categories</div>
+      <div class="cat-item active" onclick="setCategory('all',this)"><span class="cat-dot"></span>Latest News</div>
+      <div class="cat-item"        onclick="setCategory('players',this)"><span class="cat-dot"></span>Players</div>
+      <div class="cat-item"        onclick="setCategory('teams',this)"><span class="cat-dot"></span>Teams</div>
+      <div class="cat-item"        onclick="setCategory('matches',this)"><span class="cat-dot"></span>Matches</div>
+    </aside>
+
+    <div class="news-content">
+
+      <div id="list-view">
+        <div class="news-section-title" id="section-title">Latest News of Basketball in the World</div>
+        <div id="loading-area"></div>
+        <div class="news-grid" id="news-grid" style="display:none"></div>
+        <div class="news-error" id="news-error">
+          <div class="err-icon">📡</div>
+          <div class="err-text">Couldn't load news. Check your connection.</div>
+          <button class="retry-btn" onclick="loadNews()">Retry</button>
+        </div>
+      </div>
+
+      <div id="article-view">
+        <div class="breadcrumb" id="art-breadcrumb"></div>
+        <div class="art-hero">
+          <div class="art-img" id="art-img"></div>
+          <div class="art-head">
+            <div class="art-title" id="art-title"></div>
+            <div class="art-desc"  id="art-desc"></div>
+            <div class="art-date"  id="art-date"></div>
+            <a class="art-btn" id="art-link" href="#" target="_blank">Read Full Article →</a>
+          </div>
+        </div>
+        <div class="art-body" id="art-body"></div>
+      </div>
+
+    </div>
+  </div>
+
+  <footer>
+    <div class="foot-online"><div class="foot-dot"></div>Online</div>
+  </footer>
+</div>
+
+<script>
+/* ── SAVE ── */
+const SAVE_KEY = 'baskettap_v1';
+try {
+  const d = JSON.parse(localStorage.getItem(SAVE_KEY) || '{}');
+  if (d.diamonds != null) document.getElementById('diamond-display').textContent = d.diamonds;
+  if (d.record   != null) document.getElementById('record-val').textContent = fmtBig(d.record);
+} catch(e) {}
+
+function fmtBig(n) {
+  if (n >= 1e6)  return (n/1e6).toFixed(1)+'M';
+  if (n >= 1000) return (n/1000).toFixed(1)+'K';
+  return String(Math.floor(n || 0));
+}
+
+function navigate(e, href) {
+  if (e) e.preventDefault();
+  document.body.classList.add('exit');
+  setTimeout(() => { window.location.href = href; }, 270);
+}
+
+/* ── NEWS STATE ── */
+const ESPN_URL = 'https://site.api.espn.com/apis/site/v2/sports/basketball/nba/news?limit=24';
+let articles = [];
+let activeCat = 'all';
+
+const CAT_TITLES = {
+  all:     'Latest News of Basketball in the World',
+  players: 'Player News',
+  teams:   'Team News',
+  matches: 'Game Results & Previews',
+};
+
+/* ── HELPERS ── */
+function esc(s) {
+  return String(s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+function buildSkeleton() {
+  const wrap = document.createElement('div');
+  wrap.className = 'skel-grid';
+  const card = `<div class="skel-card"><div class="skel-img"></div><div class="skel-body">
+    <div class="skel-line" style="width:85%"></div>
+    <div class="skel-line" style="width:70%"></div>
+    <div class="skel-line" style="width:55%"></div>
+    <div class="skel-line" style="width:38%"></div>
+  </div></div>`;
+  wrap.innerHTML = card.repeat(8);
+  return wrap;
+}
+
+/* ── FILTER ── */
+function filterArticles() {
+  if (activeCat === 'all') return articles;
+  if (activeCat === 'players')
+    return articles.filter(a => a.categories?.some(c => c.type === 'athlete'));
+  if (activeCat === 'teams')
+    return articles.filter(a =>
+      a.categories?.some(c => c.type === 'team') &&
+      !a.categories?.some(c => c.type === 'event'));
+  if (activeCat === 'matches')
+    return articles.filter(a =>
+      a.categories?.some(c => c.type === 'event') ||
+      /\bvs\.?\b|\bdefeats?\b|\bbeats?\b|\bgame\b|\bscore\b/i.test(a.headline || ''));
+  return articles;
+}
+
+/* ── RENDER GRID ── */
+function renderGrid() {
+  const loadArea = document.getElementById('loading-area');
+  const grid     = document.getElementById('news-grid');
+  loadArea.innerHTML = '';
+
+  const filtered = filterArticles();
+  if (!filtered.length) {
+    grid.style.display = 'none';
+    loadArea.innerHTML = `<div style="padding:50px 0;text-align:center;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);">No news in this category</div>`;
+    return;
+  }
+
+  grid.innerHTML = filtered.map(a => {
+    const idx = articles.indexOf(a);
+    const img = a.images?.[0]?.url || '';
+    return `<div class="news-card" onclick="openArticle(${idx})">
+      <div class="card-img-wrap">
+        ${img
+          ? `<img src="${esc(img)}" alt="" loading="lazy" onerror="this.parentNode.innerHTML='<div class=no-img>🏀</div>'">`
+          : `<div class="no-img">🏀</div>`}
+      </div>
+      <div class="card-body">
+        <div class="card-title">${esc(a.headline || '')}</div>
+        <div class="card-desc">${esc(a.description || '')}</div>
+        <div class="card-read">Read News →</div>
+      </div>
+    </div>`;
+  }).join('');
+  grid.style.display = 'grid';
+}
+
+/* ── FETCH ── */
+async function loadNews() {
+  const loadArea = document.getElementById('loading-area');
+  const grid     = document.getElementById('news-grid');
+  const errEl    = document.getElementById('news-error');
+
+  grid.style.display = 'none';
+  errEl.classList.remove('visible');
+  loadArea.innerHTML = '';
+  loadArea.appendChild(buildSkeleton());
+
+  try {
+    const res  = await fetch(ESPN_URL);
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    const data = await res.json();
+    articles   = data.articles || [];
+    loadArea.innerHTML = '';
+    if (!articles.length) throw new Error('empty');
+    renderGrid();
+  } catch(err) {
+    loadArea.innerHTML = '';
+    grid.style.display = 'none';
+    errEl.classList.add('visible');
+  }
+}
+
+/* ── CATEGORY SWITCH ── */
+function setCategory(cat, el) {
+  activeCat = cat;
+  document.querySelectorAll('.cat-item').forEach(e => e.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById('section-title').textContent = CAT_TITLES[cat] || CAT_TITLES.all;
+  showList();
+  if (articles.length) renderGrid();
+}
+
+/* ── ARTICLE DETAIL ── */
+function openArticle(idx) {
+  const a = articles[idx];
+  if (!a) return;
+
+  const catObj   = a.categories?.find(c => ['team','athlete','event'].includes(c.type));
+  const catLabel = catObj?.description || 'Latest News';
+  const shortHead = (a.headline || '').length > 30
+    ? (a.headline || '').slice(0, 30) + '...'
+    : (a.headline || '');
+
+  document.getElementById('art-breadcrumb').innerHTML =
+    `<span class="bc-link" onclick="showList()">Home</span>
+     <span class="bc-sep">→</span>
+     <span class="bc-link" onclick="showList()">News</span>
+     <span class="bc-sep">→</span>
+     <span>${esc(catLabel)}</span>
+     <span class="bc-sep">→</span>
+     <span class="bc-cur">${esc(shortHead)}</span>`;
+
+  const imgUrl = a.images?.[0]?.url || '';
+  document.getElementById('art-img').innerHTML = imgUrl
+    ? `<img src="${esc(imgUrl)}" alt="">`
+    : `<div class="no-img" style="height:100%;display:flex;align-items:center;justify-content:center;font-size:60px;">🏀</div>`;
+
+  document.getElementById('art-title').textContent = a.headline || '';
+  document.getElementById('art-desc').textContent  = a.description || '';
+  document.getElementById('art-date').textContent  = a.published
+    ? new Date(a.published).toLocaleDateString('en-US', { year:'numeric', month:'long', day:'numeric' })
+    : '';
+  document.getElementById('art-link').href = a.links?.web?.href || '#';
+
+  const body = a.description || a.headline || '';
+  document.getElementById('art-body').textContent = Array(8).fill(body).join('  ');
+
+  showArticle();
+  document.querySelector('.news-content').scrollTop = 0;
+}
+
+function showList() {
+  document.getElementById('list-view').classList.remove('hidden');
+  document.getElementById('article-view').classList.remove('visible');
+}
+
+function showArticle() {
+  document.getElementById('list-view').classList.add('hidden');
+  document.getElementById('article-view').classList.add('visible');
+}
+
+/* ── INIT ── */
+loadNews();
+</script>
+</body>
+</html>
