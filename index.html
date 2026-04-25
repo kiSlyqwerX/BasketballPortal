@@ -14,14 +14,17 @@
   <header>
     <div class="header-left">
       <div class="logo">BasketTap</div>
-      <div class="diamond-counter"><span class="diamond-icon">💎</span><span id="diamond-display">0</span></div>
+      <a class="mob-back" href="home.html" onclick="navigate(event,'home.html')">← Home</a>
     </div>
     <nav class="game-nav">
       <a href="home.html" class="game-nav-link" onclick="navigate(event,'home.html')">Home</a>
       <a href="#" class="game-nav-link active">Game</a>
       <a href="news.html" class="game-nav-link" onclick="navigate(event,'news.html')">News</a>
     </nav>
-    <div class="record-display">Rec&nbsp;<span id="record-val">0</span></div>
+    <div class="header-right">
+      <div class="diamond-counter"><span class="diamond-icon">💎</span><span id="diamond-display">0</span></div>
+      <div class="record-display">Rec&nbsp;<span id="record-val">0</span></div>
+    </div>
   </header>
 
   <!-- SIDEBAR (desktop) -->

@@ -48,7 +48,8 @@
       flex-shrink:0; position:relative;
     }
 
-    .header-left { display:flex; align-items:center; gap:12px; }
+    .header-left  { display:flex; align-items:center; gap:12px; }
+    .header-right { display:flex; align-items:center; gap:14px; }
 
     .logo {
       font-family:'Bebas Neue', sans-serif;
@@ -173,11 +174,37 @@
 
     @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.4;transform:scale(1.6)} }
 
+    /* ── MOBILE BOTTOM NAV ── */
+    .mob-nav {
+      display:none; position:fixed; bottom:0; left:0; right:0; height:60px;
+      background:rgba(10,10,10,0.97); border-top:1px solid rgba(255,255,255,0.08);
+      backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px);
+      z-index:40; align-items:center; justify-content:space-around; padding:0 8px;
+    }
+    .mob-nav a {
+      display:flex; flex-direction:column; align-items:center; gap:3px; min-width:68px;
+      font-size:9px; font-weight:600; letter-spacing:1.5px; text-transform:uppercase;
+      color:rgba(255,255,255,0.28); text-decoration:none; padding:7px 12px; border-radius:12px;
+      transition:color 0.18s, background 0.18s; -webkit-tap-highlight-color:transparent;
+    }
+    .mob-nav a:active { background:rgba(255,255,255,0.05); }
+    .mob-nav a.active { color:var(--orange); background:rgba(255,106,0,0.12); }
+    .mob-nav-icon { font-size:20px; line-height:1.1; }
+    .mob-nav-dot  { width:3px; height:3px; border-radius:50%; background:transparent; margin-top:1px; }
+    .mob-nav a.active .mob-nav-dot { background:var(--orange); }
+
     /* ── MOBILE ── */
     @media (max-width: 600px) {
-      .home-nav { display:none; }
-      .hero-title { font-size:clamp(26px,8vw,48px); padding:0 16px; }
-      header { padding:0 16px; }
+      .home-nav     { display:none; }
+      .record-display { display:none; }
+      header        { padding:0 16px; }
+      .hero         { padding-top:5vh; padding-bottom:68px; }
+      .hero-title   { font-size:clamp(26px,8vw,48px); padding:0 16px; }
+      .hero-sub     { margin-bottom:28px; }
+      .hero-btns    { flex-direction:column; align-items:stretch; padding:0 20px; gap:10px; }
+      .btn-play, .btn-news { text-align:center; padding:13px; font-size:18px; }
+      .ball-stage   { width:min(80vw,320px); height:min(80vw,320px); }
+      .mob-nav      { display:flex; }
     }
   </style>
 </head>
@@ -187,7 +214,6 @@
   <header>
     <div class="header-left">
       <div class="logo">BasketTap</div>
-      <div class="diamond-counter"><span class="diamond-icon">💎</span><span id="diamond-display">0</span></div>
     </div>
 
     <ul class="home-nav">
@@ -196,7 +222,10 @@
       <li><a href="news.html" onclick="navigate(event,'news.html')">News</a></li>
     </ul>
 
-    <div class="record-display">Record&nbsp;<span id="record-val">0</span></div>
+    <div class="header-right">
+      <div class="diamond-counter"><span class="diamond-icon">💎</span><span id="diamond-display">0</span></div>
+      <div class="record-display">Record&nbsp;<span id="record-val">0</span></div>
+    </div>
   </header>
 
   <main class="hero">
@@ -241,6 +270,19 @@
   </footer>
 
 </div>
+
+<nav class="mob-nav">
+  <a class="active" href="home.html">
+    <span class="mob-nav-icon">🏠</span><span>Home</span><span class="mob-nav-dot"></span>
+  </a>
+  <a href="index.html" onclick="navigate(event,'index.html')">
+    <span class="mob-nav-icon">🏀</span><span>Game</span><span class="mob-nav-dot"></span>
+  </a>
+  <a href="news.html" onclick="navigate(event,'news.html')">
+    <span class="mob-nav-icon">📰</span><span>News</span><span class="mob-nav-dot"></span>
+  </a>
+</nav>
+
 <script>
 const SAVE_KEY = 'baskettap_v1';
 try {

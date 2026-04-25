@@ -200,6 +200,8 @@ header {
 .diamond-counter { display:flex; align-items:center; gap:4px; font-family:'Bebas Neue',sans-serif; font-size:16px; color:var(--diamond); letter-spacing:1px; }
 .diamond-icon { font-size:13px; }
 
+.header-right { display:flex; align-items:center; gap:14px; }
+
 /* Page transitions — horizontal swipe */
 @keyframes pageIn  { from{opacity:0;transform:translateX(55px)} to{opacity:1;transform:translateX(0)} }
 @keyframes pageOut { from{opacity:1;transform:translateX(0)}    to{opacity:0;transform:translateX(-55px)} }
@@ -218,6 +220,15 @@ body.exit { animation:pageOut 0.27s cubic-bezier(0.55,0,1,0.45) forwards; }
   animation:ballSpinIn 1.0s cubic-bezier(0.22,1,0.36,1) forwards;
   pointer-events:none;
 }
+
+/* Mobile-only nav links in game header */
+.mob-back {
+  display:flex; align-items:center; gap:5px;
+  font-size:9px; font-weight:600; letter-spacing:1.5px; text-transform:uppercase;
+  color:var(--muted); text-decoration:none; transition:color 0.15s;
+  -webkit-tap-highlight-color:transparent;
+}
+.mob-back:active { color:var(--text); }
 
 /* Hide game-nav on mobile */
 .game-nav { display:none; }
@@ -410,6 +421,7 @@ footer { display:none; grid-area:footer; border-top:1px solid var(--border); ali
   /* padding-right = sidebar(280) - icon-nav(64) = 216px → centers ball in viewport */
   .center { padding-bottom:0; padding-right:216px; }
   .game-nav { display:flex; }
+  .mob-back  { display:none; }
   .ball-wrap { width:clamp(200px,23vw,270px); height:clamp(200px,23vw,270px); }
   header { padding:0 22px 0 26px; }
   .logo  { font-size:32px; letter-spacing:8px; }
