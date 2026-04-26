@@ -306,9 +306,8 @@
 
 <script>
 /* ── SAVE ── */
-const SAVE_KEY = 'baskettap_v1';
 try {
-  const d = JSON.parse(localStorage.getItem(SAVE_KEY) || '{}');
+  const d = JSON.parse(localStorage.getItem('baskettap_v3') || '{}');
   if (d.diamonds != null) document.getElementById('diamond-display').textContent = d.diamonds;
   if (d.record   != null) document.getElementById('record-val').textContent = fmtBig(d.record);
 } catch(e) {}

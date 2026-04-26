@@ -166,6 +166,99 @@ header {
 }
 .hold-prompt.visible { opacity:1; }
 
+/* ─── HOLD BACKDROP (clears screen) ──────────── */
+.hold-backdrop {
+  position:fixed; inset:0; z-index:20; pointer-events:none;
+  background:rgba(0,0,0,0);
+  transition:background 0.38s cubic-bezier(0.4,0,0.2,1);
+}
+.hold-backdrop.active { background:rgba(0,0,0,0.90); }
+
+/* Center rises above backdrop during hold */
+.center.hold-mode { z-index:25; }
+
+/* Hide everything in center EXCEPT ball + hoop + hold UI */
+.center.hold-mode .tap-counter,
+.center.hold-mode .heat-wrap,
+.center.hold-mode .combo-display,
+.center.hold-mode .click-hint {
+  opacity:0; pointer-events:none; transition:opacity 0.22s;
+}
+
+/* Ball glows during hold */
+.center.hold-mode .ball-wrap {
+  filter:drop-shadow(0 0 45px rgba(255,106,0,0.55));
+  transition:filter 0.35s;
+}
+
+/* ─── BASKETBALL HOOP ─────────────────────────── */
+.hoop-wrap {
+  position:absolute; top:6px; left:50%;
+  transform:translateX(calc(-50% + clamp(30px, 6vw, 60px)));
+  width:clamp(120px,19vw,170px); pointer-events:none; z-index:10;
+  opacity:0; transition:opacity 0.42s ease;
+}
+.hoop-wrap.visible {
+  opacity:1;
+  animation:hoopGlow 1.8s ease-in-out infinite;
+}
+@keyframes hoopGlow {
+  0%,100%{ filter:drop-shadow(0 0 12px rgba(255,106,0,0.40)); }
+  50%    { filter:drop-shadow(0 0 28px rgba(255,180,0,0.80)); }
+}
+
+@keyframes netBounce {
+  0%,100%{ transform:scaleY(1) translateY(0); }
+  25%    { transform:scaleY(1.28) translateY(4px); }
+  60%    { transform:scaleY(0.88) translateY(-2px); }
+  80%    { transform:scaleY(1.08) translateY(1px); }
+}
+.hoop-net.bounce { animation:netBounce 0.65s ease-out; transform-origin:top; }
+
+@keyframes rimPulse {
+  0%,100% { stroke:#ff6a00; filter:none; }
+  50%     { stroke:#ffe060; filter:drop-shadow(0 0 8px #ffe06088); }
+}
+.hoop-rim.flash { animation:rimPulse 0.18s ease-out 3; }
+
+/* ─── SHOT BALL ──────────────────────────────── */
+.shot-ball {
+  position:fixed; width:42px; height:42px; border-radius:50%; pointer-events:none; z-index:55;
+  background:radial-gradient(circle at 34% 30%,#ffc060 0%,#ff8c00 34%,#cc5500 66%,#7a2800 100%);
+  box-shadow:inset -5px -5px 12px rgba(0,0,0,0.45), 0 6px 18px rgba(0,0,0,0.55);
+}
+.shot-ball svg { position:absolute; inset:0; width:100%; height:100%; border-radius:50%; overflow:hidden; }
+
+/* ─── HOOP EFFECTS ──────────────────────────── */
+.hoop-flash {
+  position:fixed; inset:0; pointer-events:none; z-index:60;
+  background:radial-gradient(circle at 50% 18%, rgba(255,210,60,.70), transparent 55%);
+  animation:hoopFlash 0.6s ease-out forwards;
+}
+@keyframes hoopFlash { 0%{opacity:1} 100%{opacity:0} }
+
+.hoop-score {
+  position:fixed; pointer-events:none; z-index:58; white-space:nowrap;
+  font-family:'Bebas Neue',sans-serif; letter-spacing:4px; color:#fff;
+  text-shadow:0 0 40px rgba(255,190,0,.95), 0 0 80px rgba(255,106,0,.6);
+  animation:hoopScore 1.9s cubic-bezier(0.22,1,0.36,1) forwards;
+}
+@keyframes hoopScore {
+  0%  { opacity:0; transform:translate(-50%,0) scale(0.35); }
+  18% { opacity:1; transform:translate(-50%,0) scale(1.18); }
+  55% { opacity:1; transform:translate(-50%,0) scale(1); }
+  100%{ opacity:0; transform:translate(-50%,-90px) scale(0.85); }
+}
+
+.confetti-p {
+  position:fixed; pointer-events:none; z-index:56; border-radius:2px;
+  animation:confettiFly var(--dur,0.9s) ease-out forwards;
+}
+@keyframes confettiFly {
+  0%  { opacity:1; transform:translate(0,0) rotate(0deg) scale(1); }
+  100%{ opacity:0; transform:translate(var(--dx),var(--dy)) rotate(var(--rot)) scale(0.2); }
+}
+
 /* Floater */
 .floater {
   position:absolute; font-family:'Bebas Neue',sans-serif;
@@ -345,7 +438,7 @@ footer { display:none; grid-area:footer; border-top:1px solid var(--border); ali
 
 /* ─── PRESTIGE OVERLAY ────────────────────────── */
 .prestige-overlay { position:fixed; inset:0; background:rgba(0,0,0,0.82); display:flex; align-items:center; justify-content:center; z-index:100; opacity:0; pointer-events:none; transition:opacity 0.25s; padding:18px; }
-.prestige-overlay.visible { opacity:1; pointer-events:all; }
+.prestige-overlay.visible { opacity:1; pointer-events:auto; }
 .prestige-modal { background:var(--surface); border:1px solid var(--prestige); border-radius:14px; padding:26px 22px; max-width:360px; width:100%; text-align:center; box-shadow:0 0 60px rgba(168,85,247,0.22); }
 .prestige-modal-icon  { font-size:38px; margin-bottom:10px; }
 .prestige-modal-title { font-family:'Bebas Neue',sans-serif; font-size:28px; letter-spacing:4px; color:var(--prestige); margin-bottom:9px; }
@@ -390,7 +483,7 @@ footer { display:none; grid-area:footer; border-top:1px solid var(--border); ali
 
 /* ─── BOTTOM SHEET ────────────────────────────── */
 .sheet-backdrop { position:fixed; inset:0; background:rgba(0,0,0,0.60); z-index:48; opacity:0; pointer-events:none; transition:opacity 0.28s; }
-.sheet-backdrop.open { opacity:1; pointer-events:all; }
+.sheet-backdrop.open { opacity:1; pointer-events:auto; }
 
 .bottom-sheet { position:fixed; bottom:0; left:0; right:0; height:65dvh; background:var(--surface); border-top:1px solid var(--border); border-radius:18px 18px 0 0; z-index:49; display:flex; flex-direction:column; transform:translateY(100%); transition:transform 0.32s cubic-bezier(0.32,0.72,0,1); will-change:transform; }
 .bottom-sheet.open { transform:translateY(0); }
@@ -402,6 +495,19 @@ footer { display:none; grid-area:footer; border-top:1px solid var(--border); ali
 .sheet-content { flex:1; overflow-y:auto; padding:11px 14px 14px; display:flex; flex-direction:column; gap:7px; }
 .sheet-content::-webkit-scrollbar { width:3px; }
 .sheet-content::-webkit-scrollbar-thumb { background:var(--orange-dim); }
+
+/* ─── PRESTIGE READY PULSE ──────────────────────── */
+@keyframes prestigeReady {
+  0%,100% { border-color:var(--prestige); box-shadow:0 0 8px rgba(168,85,247,0.30); }
+  50%     { border-color:#d8a4ff;         box-shadow:0 0 22px rgba(168,85,247,0.80); }
+}
+.icon-nav-btn.prestige-nav.ready {
+  animation:prestigeReady 1.4s ease-in-out infinite;
+  background:var(--prestige-dim);
+}
+.mob-btn.p-ready .mob-label { color:var(--prestige); }
+.mob-btn.p-ready .mob-dot   { background:var(--prestige); }
+.mob-btn.p-ready .mob-icon  { display:inline-block; animation:prestigeReady 1.4s ease-in-out infinite; border-radius:8px; }
 
 /* ─── ANIMATIONS ──────────────────────────────── */
 @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.4;transform:scale(1.6)} }

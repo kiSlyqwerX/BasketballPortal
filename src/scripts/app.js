@@ -47,10 +47,10 @@ const SKILL_DEFS = [
 ];
 
 const AUTO_DEFS = [
-  { id:'au-0', icon:'🤖', name:'Auto Dribble',   desc:'+1 tap/s — first step',  cost:10000,   autoAdd:1,  isPremium:true, unlocks:'au-1' },
-  { id:'au-1', icon:'🏟️', name:'Stadium',        desc:'+8 taps/s',              cost:200000,  autoAdd:8,  isPremium:true, unlocks:'au-2' },
-  { id:'au-2', icon:'🛸', name:'Hyperdrive',     desc:'+50 taps/s',             cost:2000000, autoAdd:50, isPremium:true, unlocks:'au-3' },
-  { id:'au-3', icon:'🌌', name:'Galaxy Bot',     desc:'+200 taps/s',            cost:20000000,autoAdd:200,isPremium:true, unlocks:null   },
+  { id:'au-0', icon:'🤖', name:'Auto Dribble',   desc:'+1 tap/s — first step',  cost:5,   autoAdd:1,   isPremium:true, unlocks:'au-1' },
+  { id:'au-1', icon:'🏟️', name:'Stadium',        desc:'+8 taps/s',              cost:20,  autoAdd:8,   isPremium:true, unlocks:'au-2' },
+  { id:'au-2', icon:'🛸', name:'Hyperdrive',     desc:'+50 taps/s',             cost:50,  autoAdd:50,  isPremium:true, unlocks:'au-3' },
+  { id:'au-3', icon:'🌌', name:'Galaxy Bot',     desc:'+200 taps/s',            cost:150, autoAdd:200, isPremium:true, unlocks:null   },
 ];
 
 /* Awards: goal = taps needed, reward = diamonds given */
@@ -105,6 +105,8 @@ const dom = {
   diamondDisplay: document.getElementById('diamond-display'),
   statTps:        document.getElementById('stat-tps'),
   statMulti:      document.getElementById('stat-multi'),
+  hoopWrap:       document.getElementById('hoop-wrap'),
+  holdBackdrop:   document.getElementById('hold-backdrop'),
   ball:           document.getElementById('ball'),
   ballWrap:       document.getElementById('ball-wrap'),
   ringSvg:        document.getElementById('ring-svg'),
@@ -235,7 +237,7 @@ function buildAutoHTML() {
           <div class="card-name">${def.name}${bought ? ' ✓' : ''}</div>
           <div class="card-desc">${def.desc}</div>
         </div>
-        <div class="card-cost diamond-cost">${fmtBig(def.cost)}</div>
+        <div class="card-cost diamond-cost">💎 ${def.cost}</div>
       </div>${connector}`;
   }).join('');
 
@@ -300,6 +302,11 @@ function render() {
   dom.autoCards.innerHTML       = buildAutoHTML().replace(/<div class="stat-row">[\s\S]*?<\/div>\s*<\/div>\s*<div class="stat-row">[\s\S]*?<\/div>\s*<\/div>\s*<div style="height:10px"><\/div>/,'');
   dom.awardsList.innerHTML      = buildAwardsHTML();
   dom.prestigeContent.innerHTML = buildPrestigeHTML();
+
+  // Prestige-ready indicator on nav buttons
+  const canPrestige = state.taps >= nextPrestigeThreshold();
+  document.querySelector('.icon-nav-btn.prestige-nav')?.classList.toggle('ready', canPrestige);
+  document.querySelector('.mob-btn[data-sheet="prestige"]')?.classList.toggle('p-ready', canPrestige);
 
   // Re-render open mobile sheet so it reflects the latest state
   renderSheetContent();
@@ -521,6 +528,9 @@ function activateHoldEvent() {
 
   dom.holdPrompt.classList.add('visible');
   dom.holdBarWrap.classList.add('visible');
+  dom.holdBackdrop.classList.add('active');
+  dom.centerEl.classList.add('hold-mode');
+  dom.hoopWrap.classList.add('visible');
 }
 
 function startHold() {
@@ -544,14 +554,9 @@ function animateHoldRing() {
 function claimHoldBonus() {
   const bonus  = state.clickPower * state.multi * state.prestigeBonus * CONFIG.HOLD_BONUS_MULT;
   addTaps(bonus);
-  const r      = dom.ballWrap.getBoundingClientRect();
-  const centre = { clientX: r.left + r.width / 2, clientY: r.top + r.height / 2 };
-  spawnFloater(centre, '🔥 +' + fmtBig(Math.floor(bonus)), 'bonus');
-  spawnParticles(centre, true);
-  shakeCenter();
   animateCounterBump();
-  resetHoldEvent();
-  // Resume combo timer — the streak survives the hold event
+  resetHoldEvent(true); // keep hoop visible for the shot animation
+  shootHoopAnimation(Math.floor(bonus));
   if (state.combo > 0) {
     state.comboTimer = setTimeout(resetCombo, CONFIG.COMBO_RESET_MS);
   }
@@ -569,7 +574,7 @@ function endHold() {
   dom.holdBar.style.width = '0%';
 }
 
-function resetHoldEvent() {
+function resetHoldEvent(keepHoop = false) {
   state.holdEventActive = false;
   state.holdInProgress  = false;
   cancelAnimationFrame(state.holdRafId);
@@ -579,6 +584,11 @@ function resetHoldEvent() {
   dom.holdBar.style.width   = '0%';
   dom.holdBarWrap.classList.remove('visible');
   dom.holdPrompt.classList.remove('visible');
+  if (!keepHoop) {
+    dom.hoopWrap.classList.remove('visible');
+    dom.holdBackdrop.classList.remove('active');
+    dom.centerEl.classList.remove('hold-mode');
+  }
   // If combo was paused for this hold, resume the decay timer
   if (state.combo > 0 && state.comboPausedAt) {
     state.comboTimer = setTimeout(resetCombo, CONFIG.COMBO_RESET_MS);
@@ -604,8 +614,8 @@ function buySkill(id) {
 function buyAutoById(id) {
   const def = AUTO_DEFS.find(d => d.id === id);
   if (!def || state.autoBought[id]) return;
-  if (state.taps < def.cost) { flashCurrentCard(id); return; }
-  state.taps -= def.cost;
+  if (state.diamonds < def.cost) { flashCurrentCard(id); return; }
+  state.diamonds -= def.cost;
   state.autoBought[id] = true;
   state.autoTps += def.autoAdd;
   render();
@@ -739,6 +749,116 @@ function shakeCenter() {
 }
 
 /* ════════════════════════════════════════════════════
+   HOOP SHOT ANIMATION
+════════════════════════════════════════════════════ */
+function shootHoopAnimation(bonus) {
+  const hoopWrap = dom.hoopWrap;
+  const ballRect = dom.ballWrap.getBoundingClientRect();
+  const hoopRect = hoopWrap.getBoundingClientRect();
+
+  const ballCX = ballRect.left + ballRect.width  / 2;
+  const ballCY = ballRect.top  + ballRect.height / 2;
+  const hoopCX = hoopRect.left + hoopRect.width  / 2;
+  const hoopCY = hoopRect.top  + hoopRect.height * 0.54; // rim height
+
+  // ── Shot ball element ──
+  const sb = document.createElement('div');
+  sb.className = 'shot-ball';
+  sb.style.left      = ballCX + 'px';
+  sb.style.top       = ballCY + 'px';
+  sb.style.transform = 'translate(-50%,-50%)';
+  sb.innerHTML = `<svg viewBox="0 0 42 42" xmlns="http://www.w3.org/2000/svg">
+    <path d="M21 2 Q29 11 29 21 Q29 31 21 40" stroke="rgba(50,12,0,.55)" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+    <path d="M21 2 Q13 11 13 21 Q13 31 21 40" stroke="rgba(50,12,0,.55)" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+    <path d="M2 21 Q11 16 21 16 Q31 16 40 21"  stroke="rgba(50,12,0,.55)" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+    <path d="M2 21 Q11 26 21 26 Q31 26 40 21"  stroke="rgba(50,12,0,.55)" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+  </svg>`;
+  document.body.appendChild(sb);
+
+  const dx = hoopCX - ballCX;
+  const dy = hoopCY - ballCY;
+  const arcDx = dx * 0.28 - 35;
+  const arcDy = dy - 230;
+
+  // ── Arc animation ──
+  const anim = sb.animate([
+    { transform: 'translate(-50%,-50%) scale(1) rotate(0deg)',      opacity: 1 },
+    { transform: `translate(calc(-50% + ${arcDx}px), calc(-50% + ${arcDy}px)) scale(0.88) rotate(310deg)`, opacity: 1, offset: 0.42 },
+    { transform: `translate(calc(-50% + ${dx}px), calc(-50% + ${dy - 4}px)) scale(0.72) rotate(570deg)`,   opacity: 1, offset: 0.82 },
+    { transform: `translate(calc(-50% + ${dx}px), calc(-50% + ${dy + 55}px)) scale(0) rotate(700deg)`,      opacity: 0 }
+  ], { duration: 870, easing: 'cubic-bezier(0.3,0,0.45,1)', fill: 'forwards' });
+
+  anim.onfinish = () => sb.remove();
+
+  // ── Effects at impact ──
+  setTimeout(() => {
+    // Stop pulsing glow, switch to full brightness
+    hoopWrap.style.animation = 'none';
+    hoopWrap.style.filter    = 'drop-shadow(0 0 40px rgba(255,200,60,0.90))';
+
+    // Net + rim flash
+    const net = hoopWrap.querySelector('.hoop-net');
+    const rim = hoopWrap.querySelector('.hoop-rim');
+    if (net) { net.classList.add('bounce');  setTimeout(() => net.classList.remove('bounce'), 700); }
+    if (rim) { rim.classList.add('flash');   setTimeout(() => rim.classList.remove('flash'),  600); }
+
+    // Screen flash
+    const flash = document.createElement('div');
+    flash.className = 'hoop-flash';
+    document.body.appendChild(flash);
+    setTimeout(() => flash.remove(), 650);
+
+    // Confetti
+    spawnHoopConfetti(hoopCX, hoopCY);
+
+    // Bonus score pop
+    const scoreEl = document.createElement('div');
+    scoreEl.className = 'hoop-score';
+    scoreEl.textContent = '+' + fmtBig(bonus);
+    scoreEl.style.cssText += `left:${hoopCX}px; top:${hoopCY - 40}px; font-size:clamp(38px,7vw,66px);`;
+    document.body.appendChild(scoreEl);
+    setTimeout(() => scoreEl.remove(), 1950);
+
+    shakeCenter();
+
+    // Fade out hoop + backdrop after celebration
+    setTimeout(() => {
+      hoopWrap.classList.remove('visible');
+      dom.holdBackdrop.classList.remove('active');
+      dom.centerEl.classList.remove('hold-mode');
+      // Reset inline styles for next time
+      setTimeout(() => { hoopWrap.style.animation = ''; hoopWrap.style.filter = ''; }, 500);
+    }, 1400);
+  }, 700);
+}
+
+function spawnHoopConfetti(cx, cy) {
+  const colors = ['#ffc060','#ff8c00','#ff6a00','#ffffff','#67e8f9','#facc15','#a855f7'];
+  for (let i = 0; i < 32; i++) {
+    const el    = document.createElement('div');
+    el.className = 'confetti-p';
+    const angle = (Math.PI * 2 / 32) * i + (Math.random() - 0.5) * 0.5;
+    const dist  = 70 + Math.random() * 160;
+    const dur   = (0.65 + Math.random() * 0.55).toFixed(2);
+    const w     = 4 + Math.random() * 7;
+    const h     = 4 + Math.random() * 7;
+    el.style.cssText = `
+      left:${cx}px; top:${cy}px;
+      width:${w}px; height:${h}px;
+      border-radius:${Math.random() > 0.45 ? '50%' : '2px'};
+      background:${colors[i % colors.length]};
+      --dx:${(Math.cos(angle) * dist).toFixed(1)}px;
+      --dy:${(Math.sin(angle) * dist).toFixed(1)}px;
+      --rot:${(Math.random() * 800 - 400).toFixed(0)}deg;
+      --dur:${dur}s;
+      transform:translate(-50%,-50%);
+    `;
+    document.body.appendChild(el);
+    setTimeout(() => el.remove(), parseFloat(dur) * 1000 + 50);
+  }
+}
+
+/* ════════════════════════════════════════════════════
    STATE HELPERS
 ════════════════════════════════════════════════════ */
 function addTaps(amount) {
@@ -763,7 +883,7 @@ function fmtBig(n) {
    PERSISTENCE  — save to localStorage after every change,
    load on startup so progress survives page reloads.
 ════════════════════════════════════════════════════ */
-const SAVE_KEY = 'baskettap_v1';
+const SAVE_KEY     = 'baskettap_v3'; // bumped: full reset for all players
 
 // Fields we persist (transient things like heat/combo are excluded)
 const SAVE_FIELDS = [
@@ -774,20 +894,38 @@ const SAVE_FIELDS = [
 ];
 
 function saveGame() {
-  const data = {};
+  const data = { lastSave: Date.now() };
   SAVE_FIELDS.forEach(k => data[k] = state[k]);
   try { localStorage.setItem(SAVE_KEY, JSON.stringify(data)); }
   catch(e) { /* storage full or unavailable — silently ignore */ }
 }
 
+let offlineNotice = null;
+
 function loadGame() {
   try {
     const raw = localStorage.getItem(SAVE_KEY);
     if (!raw) return;
+
     const data = JSON.parse(raw);
     SAVE_FIELDS.forEach(k => {
       if (data[k] !== undefined) state[k] = data[k];
     });
+
+    // Offline auto-tap income (capped at 4 hours)
+    if (data.lastSave && state.autoTps > 0) {
+      const away = (Date.now() - data.lastSave) / 1000;
+      if (away > 15) {
+        const seconds = Math.min(away, 4 * 3600);
+        const income  = Math.floor(state.autoTps * state.multi * state.prestigeBonus * seconds);
+        if (income > 0) {
+          state.taps        += income;
+          state.lifetimeTaps += income;
+          if (state.taps > state.record) state.record = Math.floor(state.taps);
+          offlineNotice = { income, away };
+        }
+      }
+    }
   } catch(e) { /* corrupt save — start fresh */ }
 }
 
@@ -821,6 +959,11 @@ window.addEventListener('beforeunload', saveGame);
    INIT
 ════════════════════════════════════════════════════ */
 loadGame();
+if (offlineNotice) {
+  const mins = Math.round(offlineNotice.away / 60);
+  const timeStr = mins < 60 ? `${mins}m` : `${(mins / 60).toFixed(1)}h`;
+  setTimeout(() => showDiamondNotify(`⏰ +${fmtBig(offlineNotice.income)} taps (${timeStr} away)`), 500);
+}
 scheduleNextHoldEvent();
 render();
 
