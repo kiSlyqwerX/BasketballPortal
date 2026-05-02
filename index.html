@@ -180,10 +180,12 @@
 
 <!-- MOBILE NAV -->
 <nav class="mobile-nav">
-  <button class="mob-btn" data-sheet="skills"   onclick="openSheet('skills',this)">  <span class="mob-icon">🌳</span><span class="mob-label">Skills</span>  <span class="mob-dot"></span></button>
-  <button class="mob-btn" data-sheet="auto"     onclick="openSheet('auto',this)">    <span class="mob-icon">⚙️</span><span class="mob-label">Auto</span>    <span class="mob-dot"></span></button>
-  <button class="mob-btn" data-sheet="awards"   onclick="openSheet('awards',this)">  <span class="mob-icon">🏆</span><span class="mob-label">Awards</span>  <span class="mob-dot"></span></button>
-  <button class="mob-btn" data-sheet="prestige" onclick="openSheet('prestige',this)"><span class="mob-icon">👑</span><span class="mob-label">Prestige</span><span class="mob-dot"></span></button>
+  <button class="mob-btn mob-nav-link" onclick="navigate(event,'home.html','back')">   <span class="mob-icon">🏠</span><span class="mob-label">Home</span>    <span class="mob-dot"></span></button>
+  <button class="mob-btn" data-sheet="skills"   onclick="openSheet('skills',this)">   <span class="mob-icon">🌳</span><span class="mob-label">Skills</span>  <span class="mob-dot"></span></button>
+  <button class="mob-btn" data-sheet="auto"     onclick="openSheet('auto',this)">     <span class="mob-icon">⚙️</span><span class="mob-label">Auto</span>    <span class="mob-dot"></span></button>
+  <button class="mob-btn" data-sheet="awards"   onclick="openSheet('awards',this)">   <span class="mob-icon">🏆</span><span class="mob-label">Awards</span>  <span class="mob-dot"></span></button>
+  <button class="mob-btn" data-sheet="prestige" onclick="openSheet('prestige',this)"> <span class="mob-icon">👑</span><span class="mob-label">Prestige</span><span class="mob-dot"></span></button>
+  <button class="mob-btn mob-nav-link" onclick="navigate(event,'news.html','forward')"><span class="mob-icon">📰</span><span class="mob-label">News</span>    <span class="mob-dot"></span></button>
 </nav>
 
 <!-- BOTTOM SHEET -->

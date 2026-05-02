@@ -53,10 +53,10 @@ const SKILL_DEFS = [
 ];
 
 const AUTO_DEFS = [
-  { id:'au-0', icon:'🤖', name:'Auto Dribble',   desc:'+1 tap/s — first step',  cost:5,   autoAdd:1,   isPremium:true, unlocks:'au-1' },
-  { id:'au-1', icon:'🏟️', name:'Stadium',        desc:'+8 taps/s',              cost:20,  autoAdd:8,   isPremium:true, unlocks:'au-2' },
-  { id:'au-2', icon:'🛸', name:'Hyperdrive',     desc:'+50 taps/s',             cost:50,  autoAdd:50,  isPremium:true, unlocks:'au-3' },
-  { id:'au-3', icon:'🌌', name:'Galaxy Bot',     desc:'+200 taps/s',            cost:150, autoAdd:200, isPremium:true, unlocks:null   },
+  { id:'au-0', icon:'🤖', name:'Auto Dribble',   desc:'+1 tap/s — first step',  cost:5000,    autoAdd:1,   unlocks:'au-1' },
+  { id:'au-1', icon:'🏟️', name:'Stadium',        desc:'+8 taps/s',              cost:50000,   autoAdd:8,   unlocks:'au-2' },
+  { id:'au-2', icon:'🛸', name:'Hyperdrive',     desc:'+50 taps/s',             cost:300000,  autoAdd:50,  unlocks:'au-3' },
+  { id:'au-3', icon:'🌌', name:'Galaxy Bot',     desc:'+200 taps/s',            cost:1500000, autoAdd:200, unlocks:null   },
 ];
 
 /* Awards: goal = taps needed, reward = diamonds given */
@@ -238,7 +238,7 @@ function buildAutoHTML() {
   const cards = AUTO_DEFS.map((def, i) => {
     const bought  = !!state.autoBought[def.id];
     const locked  = i > 0 && !state.autoBought[AUTO_DEFS[i-1].id];
-    const cls = bought ? 'bought premium' : locked ? 'locked premium' : 'premium';
+    const cls = bought ? 'bought' : locked ? 'locked' : '';
     const onclick = (!bought && !locked) ? `onclick="buyAutoById('${def.id}')"` : '';
     const connector = i < AUTO_DEFS.length - 1 ? '<div class="tree-connector"></div>' : '';
 
@@ -249,7 +249,7 @@ function buildAutoHTML() {
           <div class="card-name">${def.name}${bought ? ' ✓' : ''}</div>
           <div class="card-desc">${def.desc}</div>
         </div>
-        <div class="card-cost diamond-cost">💎 ${def.cost}</div>
+        <div class="card-cost">${fmtBig(def.cost)}</div>
       </div>${connector}`;
   }).join('');
 
@@ -685,8 +685,8 @@ function buySkill(id) {
 function buyAutoById(id) {
   const def = AUTO_DEFS.find(d => d.id === id);
   if (!def || state.autoBought[id]) return;
-  if (state.diamonds < def.cost) { flashCurrentCard(id); return; }
-  state.diamonds -= def.cost;
+  if (state.taps < def.cost) { flashCurrentCard(id); return; }
+  state.taps -= def.cost;
   state.autoBought[id] = true;
   state.autoTps += def.autoAdd;
   render();
