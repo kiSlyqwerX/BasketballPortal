@@ -3,11 +3,29 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>BasketTap</title>
+  <title>BasketTap — Play Free Basketball Tap Game Online</title>
+  <meta name="description" content="Play BasketTap — tap the basketball to score, upgrade your skills, earn diamonds and unlock automation. Free browser game, no download required!" />
+  <meta name="keywords" content="basketball tap game, basketball clicker, free online basketball, browser game, idle clicker, tap game" />
+  <meta name="robots" content="index, follow" />
+  <meta name="theme-color" content="#ff6a00" />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <link rel="apple-touch-icon" href="favicon.svg" />
+  <link rel="canonical" href="https://baskettap.com/game" />
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://baskettap.com/game" />
+  <meta property="og:title" content="BasketTap — Play Free Basketball Tap Game" />
+  <meta property="og:description" content="Tap the basketball to score, upgrade your skills and dominate the court. Free browser game — no download needed." />
+  <meta property="og:site_name" content="BasketTap" />
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="BasketTap — Play Free Basketball Tap Game" />
+  <meta name="twitter:description" content="Tap the basketball to score, upgrade your skills and dominate the court. Free browser game — no download needed." />
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="src/styles/styles.css" />
 </head>
 <body>
+<script>(function(){var d=sessionStorage.getItem('bt_dir');sessionStorage.removeItem('bt_dir');if(d==='back')document.body.classList.add('back');})()</script>
 <div id="hold-backdrop" class="hold-backdrop"></div>
 <div class="layout">
 
@@ -15,16 +33,16 @@
   <header>
     <div class="header-left">
       <div class="logo">BasketTap</div>
-      <a class="mob-back" href="home.html" onclick="navigate(event,'home.html')">← Home</a>
     </div>
     <nav class="game-nav">
-      <a href="home.html" class="game-nav-link" onclick="navigate(event,'home.html')">Home</a>
+      <a href="home.html" class="game-nav-link" onclick="navigate(event,'home.html','back')">Home</a>
       <a href="#" class="game-nav-link active">Game</a>
-      <a href="news.html" class="game-nav-link" onclick="navigate(event,'news.html')">News</a>
+      <a href="news.html" class="game-nav-link" onclick="navigate(event,'news.html','forward')">News</a>
     </nav>
     <div class="header-right">
       <div class="diamond-counter"><span class="diamond-icon">💎</span><span id="diamond-display">0</span></div>
       <div class="record-display">Rec&nbsp;<span id="record-val">0</span></div>
+      <button class="tut-toggle" id="tut-toggle" onclick="toggleTutorial()" aria-label="How to play">?</button>
     </div>
   </header>
 
@@ -107,8 +125,43 @@
       </div>
     </div>
     <div class="hold-bar-wrap" id="hold-bar-wrap"><div class="hold-bar" id="hold-bar"></div></div>
+    <div class="timing-bar-wrap" id="timing-bar-wrap">
+      <div class="timing-bar-label">🎯 Release!</div>
+      <div class="timing-track"><div class="timing-marker" id="timing-marker"></div></div>
+    </div>
     <div class="click-hint">+<b id="click-power-display">1</b> per click</div>
   </main>
+
+  <!-- TUTORIAL PANEL -->
+  <aside class="tutorial-panel hidden" id="tutorial-panel" aria-label="How to play BasketTap">
+    <div class="tut-header">
+      <span class="tut-title">How to Play</span>
+      <button class="tut-close" onclick="closeTutorial()" aria-label="Close tutorial">✕</button>
+    </div>
+    <ul class="tut-list">
+      <li class="tut-step">
+        <span class="tut-icon">🏀</span>
+        <div><strong>Tap the ball</strong> to score taps and earn points</div>
+      </li>
+      <li class="tut-step">
+        <span class="tut-icon">🌳</span>
+        <div><strong>Buy Skills</strong> to multiply every tap you make</div>
+      </li>
+      <li class="tut-step">
+        <span class="tut-icon">⚡</span>
+        <div><strong>Hold the ball</strong> to charge a power shot at the hoop</div>
+      </li>
+      <li class="tut-step">
+        <span class="tut-icon">⚙️</span>
+        <div><strong>Automation</strong> — hire auto-tappers that score for you</div>
+      </li>
+      <li class="tut-step">
+        <span class="tut-icon">👑</span>
+        <div><strong>Prestige</strong> resets your run for permanent multipliers</div>
+      </li>
+    </ul>
+    <p class="tut-note">BasketTap is a free browser basketball clicker — no download, no account needed.</p>
+  </aside>
 
   <!-- DESKTOP ICON NAV -->
   <nav class="icon-nav">
@@ -159,10 +212,24 @@
 
 <script src="src/scripts/app.js"></script>
 <script>
-function navigate(e, href) {
+function navigate(e, href, dir) {
   e.preventDefault();
+  sessionStorage.setItem('bt_dir', dir || 'forward');
   document.body.classList.add('exit');
+  if (dir === 'back') document.body.classList.add('back');
   setTimeout(() => { window.location.href = href; }, 270);
+}
+
+function toggleTutorial() {
+  const panel = document.getElementById('tutorial-panel');
+  const btn   = document.getElementById('tut-toggle');
+  const open  = panel.classList.toggle('hidden');
+  btn.classList.toggle('active', !open);
+}
+
+function closeTutorial() {
+  document.getElementById('tutorial-panel').classList.add('hidden');
+  document.getElementById('tut-toggle').classList.remove('active');
 }
 </script>
 </body>

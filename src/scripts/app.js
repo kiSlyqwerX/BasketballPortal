@@ -32,6 +32,12 @@ const CONFIG = {
   PRESTIGE_BONUS_STEP:   0.5,   // +×0.5 per prestige level
   PRESTIGE_DIAMONDS:      10,   // diamonds per prestige
   AWARD_DIAMONDS:          1,   // diamonds per award unlocked
+  MINIGAME_SPEED:          1.3, // oscillations per second
+  MINIGAME_PERFECT:       0.10, // ±10% from center = perfect
+  MINIGAME_SWEET:         0.20, // ±20% from center = good
+  MINIGAME_PERFECT_MULT:   1.5,
+  MINIGAME_GOOD_MULT:      1.0,
+  MINIGAME_MISS_MULT:      0.25,
 };
 
 /* ════════════════════════════════════════════════════
@@ -89,6 +95,10 @@ const state = {
   holdStartTime:   null,
   holdRafId:       null,
   comboPausedAt:   null,  // timestamp when combo timer was paused for a hold event
+  minigameActive:    false,
+  minigameStartTime: null,
+  minigameMarkerPos: 0.5,
+  minigameRafId:     null,
   prestigeLevel:   0,
   prestigeBonus:   1,
   sessionStart:    Date.now(),
@@ -128,6 +138,8 @@ const dom = {
   sheetTitle:     document.getElementById('sheet-title'),
   prestigeOverlay:document.getElementById('prestige-overlay'),
   prestigeModalBody:document.getElementById('prestige-modal-body'),
+  timingBarWrap:  document.getElementById('timing-bar-wrap'),
+  timingMarker:   document.getElementById('timing-marker'),
 };
 
 /* ════════════════════════════════════════════════════
@@ -280,43 +292,34 @@ function buildPrestigeHTML() {
     ${!canP ? `<div class="prestige-requirement">Need <b>${fmtBig(threshold)}</b> taps · +<b>10 💎</b> on prestige</div>` : ''}`;
 }
 
-/* ════════════════════════════════════════════════════
-   FULL RENDER — called after every state change.
-   Rebuilds desktop sidebar panels + re-renders open sheet.
-════════════════════════════════════════════════════ */
-function render() {
+/* Cheap tick update — only text writes, no innerHTML rebuilds.
+   Called every auto-tap tick (50 ms) to avoid panel-rebuild jank. */
+function renderCounters() {
   const t   = Math.floor(state.taps);
   const tps = (state.autoTps * state.multi * state.prestigeBonus).toFixed(1);
   const pw  = Math.floor(state.clickPower * state.multi * state.prestigeBonus);
-
-  // Core counters
-  dom.tapNumber.textContent    = fmt(t);
-  dom.recordVal.textContent    = fmtBig(state.record);
+  dom.tapNumber.textContent      = fmt(t);
+  dom.recordVal.textContent      = fmtBig(state.record);
   dom.diamondDisplay.textContent = state.diamonds;
-  dom.clickPowerD.textContent  = pw;
-  dom.statTps.textContent      = tps;
-  dom.statMulti.textContent    = '×' + state.multi;
+  dom.clickPowerD.textContent    = pw;
+  dom.statTps.textContent        = tps;
+  dom.statMulti.textContent      = '×' + state.multi;
+  updateComboDisplay();
+  updateHeatBar();
+  checkAwards();
+}
 
-  // Rebuild desktop sidebar panels
+/* Full render — rebuilds all panel HTML. Call on state changes (purchases, prestige, tap). */
+function render() {
+  renderCounters();
   dom.skillCards.innerHTML      = buildSkillCardsHTML();
   dom.autoCards.innerHTML       = buildAutoHTML().replace(/<div class="stat-row">[\s\S]*?<\/div>\s*<\/div>\s*<div class="stat-row">[\s\S]*?<\/div>\s*<\/div>\s*<div style="height:10px"><\/div>/,'');
   dom.awardsList.innerHTML      = buildAwardsHTML();
   dom.prestigeContent.innerHTML = buildPrestigeHTML();
-
-  // Prestige-ready indicator on nav buttons
   const canPrestige = state.taps >= nextPrestigeThreshold();
   document.querySelector('.icon-nav-btn.prestige-nav')?.classList.toggle('ready', canPrestige);
   document.querySelector('.mob-btn[data-sheet="prestige"]')?.classList.toggle('p-ready', canPrestige);
-
-  // Re-render open mobile sheet so it reflects the latest state
   renderSheetContent();
-
-  // Combo + heat
-  updateComboDisplay();
-  updateHeatBar();
-
-  // Check awards on lifetime taps
-  checkAwards();
 }
 
 /* ════════════════════════════════════════════════════
@@ -364,12 +367,13 @@ dom.ball.addEventListener('mousedown', e => {
 });
 
 dom.ball.addEventListener('mouseup', e => {
+  const wasMinigame = state.minigameActive;
   endHold();
-  // Only count as a tap if the mouse barely moved (not a drag)
+  // Only count as a tap if the mouse barely moved (not a drag) and minigame wasn't resolving
   if (_mouseDownPos) {
     const dx = e.clientX - _mouseDownPos.x;
     const dy = e.clientY - _mouseDownPos.y;
-    if (Math.sqrt(dx*dx + dy*dy) < 10) {
+    if (!wasMinigame && Math.sqrt(dx*dx + dy*dy) < 10) {
       handleTap({ clientX: e.clientX, clientY: e.clientY });
     }
     _mouseDownPos = null;
@@ -390,9 +394,12 @@ dom.ball.addEventListener('touchstart', e => {
 
 dom.ball.addEventListener('touchend', e => {
   e.preventDefault();
+  const wasMinigame = state.minigameActive;
   endHold();
-  const t = e.changedTouches[0];
-  handleTap({ clientX: t.clientX, clientY: t.clientY });
+  if (!wasMinigame) {
+    const t = e.changedTouches[0];
+    handleTap({ clientX: t.clientX, clientY: t.clientY });
+  }
 }, { passive: false });
 
 // Keyboard: Space
@@ -405,9 +412,12 @@ document.addEventListener('keydown', e => {
 document.addEventListener('keyup', e => {
   if (e.code !== 'Space') return;
   e.preventDefault();
+  const wasMinigame = state.minigameActive;
   endHold();
-  const r = dom.ballWrap.getBoundingClientRect();
-  handleTap({ clientX: r.left + r.width / 2, clientY: r.top + r.height / 2 });
+  if (!wasMinigame) {
+    const r = dom.ballWrap.getBoundingClientRect();
+    handleTap({ clientX: r.left + r.width / 2, clientY: r.top + r.height / 2 });
+  }
 });
 
 /* ════════════════════════════════════════════════════
@@ -547,16 +557,69 @@ function animateHoldRing() {
   const progress = Math.min((performance.now() - state.holdStartTime) / CONFIG.HOLD_DURATION_MS, 1);
   dom.ringProgress.style.strokeDashoffset = RING_CIRC * (1 - progress);
   dom.holdBar.style.width = (progress * 100) + '%';
-  if (progress >= 1) claimHoldBonus();
+  if (progress >= 1) startMinigame();
   else state.holdRafId = requestAnimationFrame(animateHoldRing);
 }
 
-function claimHoldBonus() {
-  const bonus  = state.clickPower * state.multi * state.prestigeBonus * CONFIG.HOLD_BONUS_MULT;
+function startMinigame() {
+  state.minigameActive    = true;
+  state.minigameStartTime = performance.now();
+  state.minigameMarkerPos = 0.5;
+  dom.holdBar.style.width      = '100%';
+  dom.holdBar.style.background = 'var(--orange)';
+  dom.holdPrompt.textContent   = '🎯 Release!';
+  dom.timingBarWrap.classList.add('visible');
+  state.minigameRafId = requestAnimationFrame(animateMinigame);
+}
+
+function animateMinigame() {
+  if (!state.minigameActive) return;
+  const t   = (performance.now() - state.minigameStartTime) / 1000;
+  const pos = 0.5 + 0.5 * Math.sin(t * CONFIG.MINIGAME_SPEED * Math.PI * 2);
+  state.minigameMarkerPos = pos;
+  dom.timingMarker.style.left = (pos * 100) + '%';
+  state.minigameRafId = requestAnimationFrame(animateMinigame);
+}
+
+function resolveMinigame() {
+  cancelAnimationFrame(state.minigameRafId);
+  state.minigameActive = false;
+  dom.timingBarWrap.classList.remove('visible');
+  dom.holdPrompt.textContent   = '⚡ Hold!';
+  dom.holdBar.style.background = '';
+
+  const dist = Math.abs(state.minigameMarkerPos - 0.5);
+  let mult, cls, label;
+  if (dist <= CONFIG.MINIGAME_PERFECT) {
+    mult = CONFIG.MINIGAME_PERFECT_MULT; cls = 'perfect'; label = '🎯 PERFECT!';
+  } else if (dist <= CONFIG.MINIGAME_SWEET) {
+    mult = CONFIG.MINIGAME_GOOD_MULT;   cls = 'good';    label = '✓ GOOD!';
+  } else {
+    mult = CONFIG.MINIGAME_MISS_MULT;   cls = 'miss';    label = 'MISS';
+  }
+
+  const fb = document.createElement('div');
+  fb.className = `timing-feedback ${cls}`;
+  fb.textContent = label;
+  fb.style.cssText = 'position:fixed;left:50%;top:46%;z-index:70;pointer-events:none;';
+  document.body.appendChild(fb);
+  setTimeout(() => fb.remove(), 1000);
+
+  state.holdInProgress = false;
+  cancelAnimationFrame(state.holdRafId);
+  dom.ball.classList.remove('pressed');
+  dom.ringSvg.classList.remove('visible');
+  dom.ringProgress.style.strokeDashoffset = RING_CIRC;
+  dom.holdBar.style.width = '0%';
+  claimHoldBonus(mult, cls === 'miss');
+}
+
+function claimHoldBonus(mult = 1, isMiss = false) {
+  const bonus  = state.clickPower * state.multi * state.prestigeBonus * CONFIG.HOLD_BONUS_MULT * mult;
   addTaps(bonus);
   animateCounterBump();
   resetHoldEvent(true); // keep hoop visible for the shot animation
-  shootHoopAnimation(Math.floor(bonus));
+  if (isMiss) shootMissAnimation(); else shootHoopAnimation(Math.floor(bonus));
   if (state.combo > 0) {
     state.comboTimer = setTimeout(resetCombo, CONFIG.COMBO_RESET_MS);
   }
@@ -566,6 +629,7 @@ function claimHoldBonus() {
 
 function endHold() {
   if (!state.holdInProgress) return;
+  if (state.minigameActive) { resolveMinigame(); return; }
   state.holdInProgress = false;
   cancelAnimationFrame(state.holdRafId);
   dom.ball.classList.remove('pressed');
@@ -578,6 +642,13 @@ function resetHoldEvent(keepHoop = false) {
   state.holdEventActive = false;
   state.holdInProgress  = false;
   cancelAnimationFrame(state.holdRafId);
+  if (state.minigameActive) {
+    cancelAnimationFrame(state.minigameRafId);
+    state.minigameActive = false;
+    dom.timingBarWrap.classList.remove('visible');
+    dom.holdPrompt.textContent   = '⚡ Hold!';
+    dom.holdBar.style.background = '';
+  }
   dom.ball.classList.remove('pressed');
   dom.ringSvg.classList.remove('visible');
   dom.ringProgress.style.strokeDashoffset = RING_CIRC;
@@ -832,6 +903,54 @@ function shootHoopAnimation(bonus) {
   }, 700);
 }
 
+function shootMissAnimation() {
+  const hoopWrap = dom.hoopWrap;
+  const ballRect = dom.ballWrap.getBoundingClientRect();
+  const hoopRect = hoopWrap.getBoundingClientRect();
+  const ballCX = ballRect.left + ballRect.width  / 2;
+  const ballCY = ballRect.top  + ballRect.height / 2;
+  const hoopCX = hoopRect.left + hoopRect.width  / 2;
+  const hoopCY = hoopRect.top  + hoopRect.height * 0.54;
+
+  const sb = document.createElement('div');
+  sb.className = 'shot-ball';
+  sb.style.left = ballCX + 'px'; sb.style.top = ballCY + 'px';
+  sb.style.transform = 'translate(-50%,-50%)';
+  sb.innerHTML = `<svg viewBox="0 0 42 42" xmlns="http://www.w3.org/2000/svg">
+    <path d="M21 2 Q29 11 29 21 Q29 31 21 40" stroke="rgba(50,12,0,.55)" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+    <path d="M21 2 Q13 11 13 21 Q13 31 21 40" stroke="rgba(50,12,0,.55)" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+    <path d="M2 21 Q11 16 21 16 Q31 16 40 21"  stroke="rgba(50,12,0,.55)" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+    <path d="M2 21 Q11 26 21 26 Q31 26 40 21"  stroke="rgba(50,12,0,.55)" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+  </svg>`;
+  document.body.appendChild(sb);
+
+  const dx   = hoopCX - ballCX;
+  const dy   = hoopCY - ballCY;
+  const side = Math.random() > 0.5 ? 1 : -1;
+  const missX = dx + side * (55 + Math.random() * 35);
+
+  const anim = sb.animate([
+    { transform: 'translate(-50%,-50%) scale(1) rotate(0deg)',   opacity: 1 },
+    { transform: `translate(calc(-50% + ${dx * 0.52}px), calc(-50% + ${dy * 0.60 - 60}px)) scale(0.86) rotate(230deg)`, opacity: 1, offset: 0.48 },
+    { transform: `translate(calc(-50% + ${missX}px), calc(-50% + ${dy + 90}px)) scale(0.35) rotate(540deg)`, opacity: 0 },
+  ], { duration: 680, easing: 'ease-in', fill: 'forwards' });
+  anim.onfinish = () => sb.remove();
+
+  // Rim impact: red flash + shake
+  setTimeout(() => {
+    const rim = hoopWrap.querySelector('.hoop-rim');
+    if (rim) { rim.classList.add('miss-flash'); setTimeout(() => rim.classList.remove('miss-flash'), 520); }
+    hoopWrap.style.filter = 'drop-shadow(0 0 20px rgba(239,68,68,0.70))';
+    shakeCenter();
+    setTimeout(() => {
+      hoopWrap.classList.remove('visible');
+      dom.holdBackdrop.classList.remove('active');
+      dom.centerEl.classList.remove('hold-mode');
+      setTimeout(() => { hoopWrap.style.filter = ''; }, 400);
+    }, 750);
+  }, 360);
+}
+
 function spawnHoopConfetti(cx, cy) {
   const colors = ['#ffc060','#ff8c00','#ff6a00','#ffffff','#67e8f9','#facc15','#a855f7'];
   for (let i = 0; i < 32; i++) {
@@ -933,11 +1052,11 @@ function loadGame() {
    INTERVALS
 ════════════════════════════════════════════════════ */
 
-// Auto-tap
+// Auto-tap — use renderCounters() to avoid 20×/s panel-rebuild jank
 setInterval(() => {
   if (state.autoTps === 0) return;
   addTaps((state.autoTps * state.multi * state.prestigeBonus) / (1000 / CONFIG.AUTO_TICK_MS));
-  render();
+  renderCounters();
 }, CONFIG.AUTO_TICK_MS);
 
 // Heat decay
