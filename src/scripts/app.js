@@ -59,6 +59,15 @@ const AUTO_DEFS = [
   { id:'au-3', icon:'🌌', name:'Galaxy Bot',     desc:'+200 taps/s',            cost:1500000, autoAdd:200, unlocks:null   },
 ];
 
+const SHOP_DEFS = [
+  { id:'sh-0', icon:'🏀', name:'Bounce Boost',  desc:'+5 base taps per click, permanent',    cost:5  },
+  { id:'sh-1', icon:'⚡', name:'Quick Cool',     desc:'Overheat penalty cut to 3.5 seconds',  cost:10 },
+  { id:'sh-2', icon:'🔥', name:'Hot Start',      desc:'Every run starts at 10× combo streak', cost:15 },
+  { id:'sh-3', icon:'🎯', name:'Sharp Eye',      desc:'Double all hold event tap bonuses',     cost:20 },
+  { id:'sh-4', icon:'🤖', name:'Bot Starter',    desc:'+2 auto tap/s from the very start',     cost:25 },
+  { id:'sh-5', icon:'✨', name:'Prestige Edge',  desc:'All prestige bonuses ×1.5',            cost:50 },
+];
+
 /* Awards: goal = taps needed, reward = diamonds given */
 const AWARD_DEFS = [
   { id:'aw-100',    goal:100,      icon:'🏀', name:'First Steps',    desc:'Reach 100 taps'        },
@@ -85,6 +94,7 @@ const state = {
   skillBought: {},   // { 'sk-0': true, ... }
   autoBought:  {},
   awardClaimed:{},   // { 'aw-100': true, ... }
+  shopBought:  {},
   combo:       0,
   comboTimer:  null,
   heat:        0,
@@ -102,7 +112,7 @@ const state = {
   prestigeLevel:   0,
   prestigeBonus:   1,
   sessionStart:    Date.now(),
-  openSheetPanel:  null,  // track which sheet panel is open for live updates
+  openSheetPanel:  null,
 };
 
 /* ════════════════════════════════════════════════════
@@ -132,6 +142,7 @@ const dom = {
   autoCards:      document.getElementById('auto-cards'),
   awardsList:     document.getElementById('awards-list'),
   prestigeContent:document.getElementById('prestige-content'),
+  shopContent:    document.getElementById('shop-cards'),
   bottomSheet:    document.getElementById('bottom-sheet'),
   sheetBackdrop:  document.getElementById('sheet-backdrop'),
   sheetContent:   document.getElementById('sheet-content'),
@@ -158,7 +169,7 @@ function showPanel(name, btnEl) {
    the sheet content inside updateUI() so it always
    stays in sync with state after every purchase.
 ════════════════════════════════════════════════════ */
-const SHEET_LABELS = { skills:'Skills', auto:'Automation', awards:'Awards', prestige:'👑 Prestige' };
+const SHEET_LABELS = { skills:'Skills', auto:'Automation', awards:'Awards', shop:'💠 Shop', prestige:'👑 Prestige' };
 
 function openSheet(panelId, btnEl) {
   document.querySelectorAll('.mob-btn[data-sheet]').forEach(b => b.classList.remove('active','p-active'));
@@ -194,6 +205,7 @@ function buildPanelHTML(panelId) {
   if (panelId === 'skills')  return buildSkillCardsHTML();
   if (panelId === 'auto')    return buildAutoHTML();
   if (panelId === 'awards')  return buildAwardsHTML();
+  if (panelId === 'shop')    return buildShopHTML();
   if (panelId === 'prestige') return buildPrestigeHTML();
   return '';
 }
@@ -292,6 +304,33 @@ function buildPrestigeHTML() {
     ${!canP ? `<div class="prestige-requirement">Need <b>${fmtBig(threshold)}</b> taps · +<b>10 💎</b> on prestige</div>` : ''}`;
 }
 
+function buildShopHTML() {
+  const cards = SHOP_DEFS.map(def => {
+    const bought    = !!state.shopBought[def.id];
+    const canAfford = state.diamonds >= def.cost;
+    const cls       = bought ? 'bought' : '';
+    const onclick   = !bought ? `onclick="buyShopItem('${def.id}')"` : '';
+    const costLabel = bought ? '✓' : `💎 ${def.cost}`;
+    return `
+      <div class="card premium ${cls}" ${onclick}>
+        <div class="card-icon">${def.icon}</div>
+        <div class="card-body">
+          <div class="card-name">${def.name}${bought ? ' ✓' : ''}</div>
+          <div class="card-desc">${def.desc}</div>
+        </div>
+        <div class="card-cost diamond-cost">${costLabel}</div>
+      </div>`;
+  }).join('');
+
+  return `
+    <div class="stat-row">
+      <div class="stat-label">Your Diamonds</div>
+      <div class="stat-value diamond">💎 ${state.diamonds}</div>
+    </div>
+    <div style="height:8px"></div>
+    ${cards}`;
+}
+
 /* Cheap tick update — only text writes, no innerHTML rebuilds.
    Called every auto-tap tick (50 ms) to avoid panel-rebuild jank. */
 function renderCounters() {
@@ -315,6 +354,7 @@ function render() {
   dom.skillCards.innerHTML      = buildSkillCardsHTML();
   dom.autoCards.innerHTML       = buildAutoHTML().replace(/<div class="stat-row">[\s\S]*?<\/div>\s*<\/div>\s*<div class="stat-row">[\s\S]*?<\/div>\s*<\/div>\s*<div style="height:10px"><\/div>/,'');
   dom.awardsList.innerHTML      = buildAwardsHTML();
+  dom.shopContent.innerHTML     = buildShopHTML();
   dom.prestigeContent.innerHTML = buildPrestigeHTML();
   const canPrestige = state.taps >= nextPrestigeThreshold();
   document.querySelector('.icon-nav-btn.prestige-nav')?.classList.toggle('ready', canPrestige);
@@ -502,12 +542,13 @@ function triggerOverheat() {
   state.overheated = true;
   resetCombo();
   dom.ball.classList.add('overheated');
+  const cooldown = CONFIG.HEAT_COOLDOWN_MS * (state.shopBought['sh-1'] ? 0.5 : 1);
   setTimeout(() => {
     state.overheated = false;
     state.heat = 0;
     dom.ball.classList.remove('overheated');
     updateHeatBar();
-  }, CONFIG.HEAT_COOLDOWN_MS);
+  }, cooldown);
 }
 
 function updateHeatBar() {
@@ -615,7 +656,8 @@ function resolveMinigame() {
 }
 
 function claimHoldBonus(mult = 1, isMiss = false) {
-  const bonus  = state.clickPower * state.multi * state.prestigeBonus * CONFIG.HOLD_BONUS_MULT * mult;
+  let bonus = state.clickPower * state.multi * state.prestigeBonus * CONFIG.HOLD_BONUS_MULT * mult;
+  if (state.shopBought['sh-3']) bonus *= 2;
   addTaps(bonus);
   animateCounterBump();
   resetHoldEvent(true); // keep hoop visible for the shot animation
@@ -693,6 +735,24 @@ function buyAutoById(id) {
   saveGame();
 }
 
+function buyShopItem(id) {
+  const def = SHOP_DEFS.find(d => d.id === id);
+  if (!def || state.shopBought[id]) return;
+  if (state.diamonds < def.cost) { flashCurrentCard(id); return; }
+
+  state.diamonds -= def.cost;
+  state.shopBought[id] = true;
+
+  if (id === 'sh-0') { state.clickPower += 5; }
+  if (id === 'sh-2') { state.combo = 10; }
+  if (id === 'sh-4') { state.autoTps += 2; }
+  if (id === 'sh-5') { state.prestigeBonus *= 1.5; }
+
+  showDiamondNotify(`💠 ${def.name} unlocked!`);
+  render();
+  saveGame();
+}
+
 /* Flash the card whether it's in the sidebar or in the sheet */
 function flashCurrentCard(id) {
   // Try to find any rendered card element with onclick containing this id
@@ -735,7 +795,7 @@ function confirmPrestige() {
   state.prestigeBonus = 1 + state.prestigeLevel * CONFIG.PRESTIGE_BONUS_STEP;
   state.diamonds     += CONFIG.PRESTIGE_DIAMONDS;
 
-  // Wipe run (keep record, lifetimeTaps, diamonds, awardClaimed)
+  // Wipe run (keep record, lifetimeTaps, diamonds, awardClaimed, shopBought)
   state.taps        = 0;
   state.clickPower  = 1;
   state.autoTps     = 0;
@@ -745,6 +805,12 @@ function confirmPrestige() {
   state.overheated  = false;
   state.skillBought = {};
   state.autoBought  = {};
+
+  // Re-apply permanent shop effects after wipe
+  if (state.shopBought['sh-0']) state.clickPower += 5;
+  if (state.shopBought['sh-2']) state.combo = 10;
+  if (state.shopBought['sh-4']) state.autoTps += 2;
+  if (state.shopBought['sh-5']) state.prestigeBonus *= 1.5;
 
   clearTimeout(state.comboTimer);
   dom.ball.classList.remove('overheated');
@@ -1008,7 +1074,7 @@ const SAVE_KEY     = 'baskettap_v3'; // bumped: full reset for all players
 const SAVE_FIELDS = [
   'taps', 'clickPower', 'autoTps', 'multi', 'record',
   'diamonds', 'lifetimeTaps',
-  'skillBought', 'autoBought', 'awardClaimed',
+  'skillBought', 'autoBought', 'awardClaimed', 'shopBought',
   'prestigeLevel', 'prestigeBonus',
 ];
 
@@ -1031,11 +1097,11 @@ function loadGame() {
       if (data[k] !== undefined) state[k] = data[k];
     });
 
-    // Offline auto-tap income (capped at 4 hours)
+    // Offline auto-tap income (capped at 8 hours)
     if (data.lastSave && state.autoTps > 0) {
       const away = (Date.now() - data.lastSave) / 1000;
       if (away > 15) {
-        const seconds = Math.min(away, 4 * 3600);
+        const seconds = Math.min(away, 8 * 3600);
         const income  = Math.floor(state.autoTps * state.multi * state.prestigeBonus * seconds);
         if (income > 0) {
           state.taps        += income;
@@ -1078,6 +1144,10 @@ window.addEventListener('beforeunload', saveGame);
    INIT
 ════════════════════════════════════════════════════ */
 loadGame();
+
+// Apply Hot Start shop effect (combo is transient, not saved)
+if (state.shopBought['sh-2']) state.combo = 10;
+
 if (offlineNotice) {
   const mins = Math.round(offlineNotice.away / 60);
   const timeStr = mins < 60 ? `${mins}m` : `${(mins / 60).toFixed(1)}h`;

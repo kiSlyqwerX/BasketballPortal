@@ -41,11 +41,12 @@
     </nav>
     <div class="header-right">
       <div class="diamond-counter"><span class="diamond-icon">💎</span><span id="diamond-display">0</span></div>
-      <div class="record-display">Rec&nbsp;<span id="record-val">0</span></div>
-      <button class="tut-toggle" id="tut-toggle" onclick="toggleTutorial()" aria-label="How to play">?</button>
+      <div class="record-display">Record&nbsp;<span id="record-val">0</span></div>
+      <button class="tut-toggle" id="tut-toggle" onclick="toggleTutorial()" aria-label="How to play">How to Play</button>
     </div>
   </header>
 
+  <div class="layout-body">
   <!-- SIDEBAR (desktop) -->
   <aside class="sidebar">
     <div class="panel active" id="panel-skills">
@@ -66,6 +67,10 @@
     <div class="panel" id="panel-prestige">
       <div class="panel-title">👑 Prestige</div>
       <div id="prestige-content"></div>
+    </div>
+    <div class="panel" id="panel-shop">
+      <div class="panel-title">💠 Shop</div>
+      <div id="shop-cards"></div>
     </div>
   </aside>
 
@@ -168,8 +173,10 @@
     <button class="icon-nav-btn active" data-label="Skills"     onclick="showPanel('skills',this)">🌳</button>
     <button class="icon-nav-btn"        data-label="Automation" onclick="showPanel('auto',this)">⚙️</button>
     <button class="icon-nav-btn"        data-label="Awards"     onclick="showPanel('awards',this)">🏆</button>
+    <button class="icon-nav-btn shop-nav" data-label="Shop"     onclick="showPanel('shop',this)">💠</button>
     <button class="icon-nav-btn prestige-nav" data-label="Prestige" onclick="showPanel('prestige',this)">👑</button>
   </nav>
+  </div><!-- /.layout-body -->
 
   <!-- DESKTOP FOOTER -->
   <footer>
@@ -184,6 +191,7 @@
   <button class="mob-btn" data-sheet="skills"   onclick="openSheet('skills',this)">   <span class="mob-icon">🌳</span><span class="mob-label">Skills</span>  <span class="mob-dot"></span></button>
   <button class="mob-btn" data-sheet="auto"     onclick="openSheet('auto',this)">     <span class="mob-icon">⚙️</span><span class="mob-label">Auto</span>    <span class="mob-dot"></span></button>
   <button class="mob-btn" data-sheet="awards"   onclick="openSheet('awards',this)">   <span class="mob-icon">🏆</span><span class="mob-label">Awards</span>  <span class="mob-dot"></span></button>
+  <button class="mob-btn" data-sheet="shop"     onclick="openSheet('shop',this)">     <span class="mob-icon">💠</span><span class="mob-label">Shop</span>    <span class="mob-dot"></span></button>
   <button class="mob-btn" data-sheet="prestige" onclick="openSheet('prestige',this)"> <span class="mob-icon">👑</span><span class="mob-label">Prestige</span><span class="mob-dot"></span></button>
   <button class="mob-btn mob-nav-link" onclick="navigate(event,'news.html','forward')"><span class="mob-icon">📰</span><span class="mob-label">News</span>    <span class="mob-dot"></span></button>
 </nav>

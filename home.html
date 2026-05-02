@@ -95,8 +95,7 @@
     /* ── HERO ────────────────────────────────────── */
     .hero {
       min-height: calc(100dvh - 52px);
-      display: grid;
-      grid-template-columns: 1fr 1fr;
+      display: flex;
       align-items: center;
       padding: 60px 72px;
       gap: 40px;
@@ -117,7 +116,7 @@
     }
 
     /* ── HERO TEXT ── */
-    .hero-content { display:flex; flex-direction:column; align-items:flex-start; position: relative; z-index: 1; }
+    .hero-content { flex:1; display:flex; flex-direction:column; align-items:flex-start; position: relative; z-index: 1; }
 
     .hero-eyebrow {
       font-size: 10px; font-weight: 700; letter-spacing: 4px; text-transform: uppercase;
@@ -182,6 +181,7 @@
 
     /* ── HERO BALL ── */
     .hero-visual {
+      flex: 1;
       display: flex; align-items: center; justify-content: center;
       position: relative; z-index: 1;
     }
@@ -283,17 +283,18 @@
       margin-bottom: 14px;
     }
     .sect-sub {
-      font-size: 14px; color: var(--muted); line-height: 1.75;
+      font-size: 14px; color: rgba(255,255,255,0.88); line-height: 1.75;
       max-width: 580px; margin-bottom: 52px;
     }
 
     /* ── FEATURES ────────────────────────────────── */
     .feat-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
+      display: flex;
+      flex-wrap: wrap;
       gap: 16px;
     }
     .feat-card {
+      flex: 1 1 calc(25% - 12px);
       background: var(--surface); border: 1px solid var(--border);
       border-radius: 14px; padding: 28px 22px;
       transition: border-color 0.22s, transform 0.22s;
@@ -301,25 +302,26 @@
     .feat-card:hover { border-color: rgba(255,106,0,0.40); transform: translateY(-4px); }
     .feat-icon { font-size: 30px; margin-bottom: 16px; }
     .feat-name { font-family:'Bebas Neue',sans-serif; font-size:22px; letter-spacing:2px; color:#fff; margin-bottom:8px; }
-    .feat-desc { font-size: 12px; color: var(--muted); line-height: 1.65; }
+    .feat-desc { font-size: 12px; color: rgba(255,255,255,0.82); line-height: 1.65; }
 
     /* ── HOW TO PLAY ─────────────────────────────── */
     .how-sect { background: var(--surface); }
-    .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; }
-    .step { display:flex; flex-direction:column; gap:12px; }
+    .steps { display: flex; flex-wrap: wrap; gap: 40px; }
+    .step  { flex: 1 1 calc(33.333% - 26.667px); display:flex; flex-direction:column; gap:12px; }
     .step-num {
       font-family: 'Bebas Neue', sans-serif; font-size: 52px; letter-spacing: 2px;
-      color: rgba(255,106,0,0.18); line-height: 1;
+      color: rgba(255,106,0,0.55); line-height: 1;
     }
     .step-icon { font-size: 26px; }
     .step-name { font-family:'Bebas Neue',sans-serif; font-size:22px; letter-spacing:2px; color:#fff; }
-    .step-desc { font-size: 13px; color: var(--muted); line-height: 1.68; }
+    .step-desc { font-size: 13px; color: rgba(255,255,255,0.88); line-height: 1.68; }
 
     /* ── WHY BASKETTAP ───────────────────────────── */
-    .why-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start; }
+    .why-layout { display: flex; gap: 80px; align-items: flex-start; }
+    .why-text { flex: 1; }
     .why-text .sect-sub { margin-bottom: 0; }
 
-    .why-list { list-style: none; display:flex; flex-direction:column; gap:12px; }
+    .why-list { flex: 1; list-style: none; display:flex; flex-direction:column; gap:12px; }
     .why-item {
       display:flex; align-items:flex-start; gap:14px;
       padding: 16px 18px; background: var(--surface2);
@@ -327,19 +329,20 @@
     }
     .why-icon  { font-size: 20px; flex-shrink: 0; margin-top: 1px; }
     .why-item-title { font-size:13px; font-weight:600; color:#fff; margin-bottom:3px; }
-    .why-item-desc  { font-size:11px; color:var(--muted); line-height:1.60; }
+    .why-item-desc  { font-size:11px; color:rgba(255,255,255,0.82); line-height:1.60; }
 
     /* ── FAQ ─────────────────────────────────────── */
     .faq-grid {
-      display: grid; grid-template-columns: 1fr 1fr; gap: 14px;
+      display: flex; flex-wrap: wrap; gap: 14px;
       margin-top: 52px;
     }
     .faq-item {
+      flex: 1 1 calc(50% - 7px);
       padding: 22px 24px; background: var(--surface);
       border: 1px solid var(--border); border-radius: 12px;
     }
     .faq-q { font-family:'Bebas Neue',sans-serif; font-size:18px; letter-spacing:1.5px; color:#fff; margin-bottom:8px; }
-    .faq-a { font-size:12px; color:var(--muted); line-height:1.65; }
+    .faq-a { font-size:12px; color:rgba(255,255,255,0.85); line-height:1.65; }
 
     /* ── CTA ─────────────────────────────────────── */
     .cta-sect {
@@ -385,7 +388,7 @@
     /* ── TABLET ──────────────────────────────────── */
     @media (max-width: 1080px) {
       .hero { padding: 50px 44px; }
-      .feat-grid { grid-template-columns: repeat(2, 1fr); }
+      .feat-card { flex: 1 1 calc(50% - 8px); }
       .sect-inner { padding: 0 40px; }
     }
 
@@ -396,7 +399,7 @@
       .record-display { display:none; }
 
       .hero {
-        grid-template-columns: 1fr;
+        flex-direction: column;
         min-height: calc(100dvh - 52px);
         padding: 32px 20px 80px;
         text-align: center;
@@ -418,15 +421,16 @@
       .sect-inner { padding: 0 20px; }
       .sect-sub { margin-bottom: 36px; font-size:13px; }
 
-      .feat-grid  { grid-template-columns:1fr 1fr; gap:10px; }
-      .feat-card  { padding:18px 14px; }
+      .feat-grid  { gap:10px; }
+      .feat-card  { flex: 1 1 calc(50% - 5px); padding:18px 14px; }
       .feat-name  { font-size:18px; }
 
-      .steps { grid-template-columns:1fr; gap:28px; }
+      .steps { flex-direction:column; gap:28px; }
+      .step  { flex: none; }
 
-      .why-layout { grid-template-columns:1fr; gap:32px; }
+      .why-layout { flex-direction:column; gap:32px; }
 
-      .faq-grid   { grid-template-columns:1fr; }
+      .faq-item   { flex: 1 1 100%; }
 
       .mob-nav  { display:flex; }
       footer    { display:none; }
@@ -434,7 +438,7 @@
     }
 
     @media (max-width: 420px) {
-      .feat-grid { grid-template-columns:1fr; }
+      .feat-card { flex: 1 1 100%; }
     }
 
     /* ── LARGE MONITORS (1600px+) ──────────────── */

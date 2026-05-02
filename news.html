@@ -128,10 +128,11 @@
     }
 
     /* ── GRID ── */
-    .news-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:16px; }
+    .news-grid { display:flex; flex-wrap:wrap; gap:16px; }
 
     /* ── CARD ── */
     .news-card {
+      flex: 1 1 calc(50% - 8px);
       display:flex; flex-direction:column;
       border:1px solid var(--border); border-radius:14px;
       overflow:hidden; background:var(--surface);
@@ -211,8 +212,8 @@
     .news-card:hover .card-read { gap:10px; }
 
     /* ── SKELETON ── */
-    .skel-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:16px; }
-    .skel-card { display:flex; flex-direction:column; border:1px solid var(--border); border-radius:14px; overflow:hidden; background:var(--surface); }
+    .skel-grid { display:flex; flex-wrap:wrap; gap:16px; }
+    .skel-card { flex: 1 1 calc(50% - 8px); display:flex; flex-direction:column; border:1px solid var(--border); border-radius:14px; overflow:hidden; background:var(--surface); }
     .skel-img  { width:100%; aspect-ratio:16/9; background:var(--surface2); }
     .skel-body { padding:15px 16px; display:flex; flex-direction:column; gap:10px; }
     .skel-line { height:10px; background:var(--surface2); border-radius:4px; animation:shimmer 1.5s ease-in-out infinite; }
@@ -258,8 +259,10 @@
       .sidebar-title  { font-size:19px; letter-spacing:5px; }
       .cat-item       { font-size:11px; padding:11px 14px; }
       .news-content   { padding:28px 32px 28px; }
-      .news-grid      { grid-template-columns:repeat(3,1fr); gap:18px; }
-      .skel-grid      { grid-template-columns:repeat(3,1fr); gap:18px; }
+      .news-grid      { gap:18px; }
+      .skel-grid      { gap:18px; }
+      .news-card      { flex: 1 1 calc(33.333% - 12px); }
+      .skel-card      { flex: 1 1 calc(33.333% - 12px); }
       .card-title     { font-size:19px; }
       .news-section-title { font-size:clamp(20px,2.4vw,30px); }
     }
@@ -297,8 +300,10 @@
       .mob-cats       { display:flex; }
       .news-content   { padding:12px 12px 76px; }
       .news-section-title { font-size:18px; letter-spacing:3px; margin-bottom:12px; }
-      .news-grid      { grid-template-columns:1fr; gap:10px; }
-      .skel-grid      { grid-template-columns:1fr; gap:10px; }
+      .news-grid      { gap:10px; }
+      .skel-grid      { gap:10px; }
+      .news-card      { flex: 1 1 100%; }
+      .skel-card      { flex: 1 1 100%; }
       .card-body      { padding:12px 13px 11px; }
       .card-title     { font-size:16px; margin-bottom:6px; }
       .card-desc      { font-size:11px; -webkit-line-clamp:2; }
