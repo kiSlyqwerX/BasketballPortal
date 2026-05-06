@@ -1,0 +1,25 @@
+{
+  "copy": [
+    { "from": "public", "to": "dist" },
+    { "from": "src",    "to": "dist" }
+  ],
+
+  "ignore": [
+    "src/pages",
+    "src/templates",
+    "src/service"
+  ],
+
+  "newsCategories": [
+    { "label": "NBA",        "slug": "nba",        "query": "NBA basketball" },
+    { "label": "EuroLeague", "slug": "euroleague",  "query": "EuroLeague basketball" },
+    { "label": "Transfers",  "slug": "transfers",   "query": "basketball trade transfer signing" },
+    { "label": "Training",   "slug": "training",    "query": "basketball training practice workout" }
+  ],
+
+  "newsApi": {
+    "baseUrl":  "https://newsapi.org/v2",
+    "query":    "basketball",
+    "pageSize": 50
+  }
+}

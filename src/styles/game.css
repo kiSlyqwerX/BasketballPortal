@@ -1,34 +1,12 @@
-/* ─── TOKENS ──────────────────────────────────── */
+/* ─── GAME-PAGE TOKEN OVERRIDES ───────────────── */
 :root {
-  --orange:        #ff6a00;
-  --orange-dim:    rgba(255,106,0,0.12);
-  --orange-glow:   rgba(255,106,0,0.22);
-  --green:         #22c55e;
-  --red:           #ef4444;
-  --yellow:        #facc15;
-  --diamond:       #67e8f9;
-  --diamond-dim:   rgba(103,232,249,0.12);
-  --diamond-glow:  rgba(103,232,249,0.30);
-  --prestige:      #a855f7;
-  --prestige-dim:  rgba(168,85,247,0.14);
-  --bg:            #0c0c0c;
-  --surface:       #141414;
-  --surface2:      #1c1c1c;
-  --border:        rgba(255,255,255,0.07);
-  --text:          #e8e8e8;
-  --muted:         rgba(255,255,255,0.70);
+  --bg:      #0c0c0c;
+  --surface2:#1c1c1c;
+  --border:  rgba(255,255,255,0.07);
 }
 
-/* ─── RESET ───────────────────────────────────── */
-*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
 html { height:100%; overflow:hidden; }
-body {
-  min-height:100%; height:100dvh;
-  background:var(--bg);
-  font-family:'Inter',sans-serif;
-  color:var(--text);
-  overflow:hidden;
-}
+body { min-height:100%; height:100dvh; overflow:hidden; }
 
 /* ─── MOBILE-FIRST LAYOUT ─────────────────────── */
 .layout {
@@ -96,7 +74,7 @@ header {
   display:flex; flex-direction:column;
   align-items:center; justify-content:center;
   position:relative;
-  padding-bottom:62px; /* space for mobile nav */
+  padding-bottom:62px;
 }
 
 /* Tap counter */
@@ -172,7 +150,7 @@ header {
 }
 .hold-prompt.visible { opacity:1; visibility:visible; pointer-events:none; transition:opacity 0.3s; }
 
-/* ─── HOLD BACKDROP (clears screen) ──────────── */
+/* ─── HOLD BACKDROP ───────────────────────────── */
 .hold-backdrop {
   position:fixed; inset:0; z-index:20; pointer-events:none;
   background:rgba(0,0,0,0);
@@ -180,18 +158,14 @@ header {
 }
 .hold-backdrop.active { background:rgba(0,0,0,0.90); }
 
-/* Center rises above backdrop during hold */
 .center.hold-mode { z-index:25; }
 
-/* Hide everything in center EXCEPT ball + hoop + hold UI */
 .center.hold-mode .tap-counter,
 .center.hold-mode .heat-wrap,
-.center.hold-mode .combo-display,
 .center.hold-mode .click-hint {
   opacity:0; pointer-events:none; transition:opacity 0.22s;
 }
 
-/* Ball glows during hold */
 .center.hold-mode .ball-wrap {
   filter:drop-shadow(0 0 45px rgba(255,106,0,0.55));
   transition:filter 0.35s;
@@ -332,7 +306,6 @@ header {
   box-shadow:0 0 8px rgba(255,255,255,0.90);
 }
 
-/* Timing feedback pop-up (appended to body via JS) */
 .timing-feedback {
   font-family:'Bebas Neue',sans-serif; font-size:clamp(30px,6vw,46px);
   letter-spacing:5px; white-space:nowrap; pointer-events:none;
@@ -357,16 +330,6 @@ header {
 
 .header-right { display:flex; align-items:center; gap:14px; }
 
-/* Page transitions — directional swipe */
-@keyframes pageIn      { from{opacity:0;transform:translateX( 55px)} to{opacity:1;transform:translateX(0)} }
-@keyframes pageInBack  { from{opacity:0;transform:translateX(-55px)} to{opacity:1;transform:translateX(0)} }
-@keyframes pageOut     { from{opacity:1;transform:translateX(0)} to{opacity:0;transform:translateX(-55px)} }
-@keyframes pageOutBack { from{opacity:1;transform:translateX(0)} to{opacity:0;transform:translateX( 55px)} }
-body           { animation:pageIn      0.34s cubic-bezier(0.22,1,0.36,1); }
-body.back      { animation:pageInBack  0.34s cubic-bezier(0.22,1,0.36,1); }
-body.exit      { animation:pageOut     0.27s cubic-bezier(0.55,0,1,0.45) forwards; }
-body.exit.back { animation:pageOutBack 0.27s cubic-bezier(0.55,0,1,0.45) forwards; }
-
 /* Ball spin-in on page enter */
 @keyframes ballSpinIn {
   0%   { transform:scale(2.2) rotate(0deg);   opacity:0; }
@@ -380,7 +343,7 @@ body.exit.back { animation:pageOutBack 0.27s cubic-bezier(0.55,0,1,0.45) forward
   pointer-events:none;
 }
 
-/* Mobile-only nav links in game header */
+/* Mobile-only back link */
 .mob-back {
   display:flex; align-items:center; gap:5px;
   font-size:9px; font-weight:600; letter-spacing:1.5px; text-transform:uppercase;
@@ -428,8 +391,8 @@ body.exit.back { animation:pageOutBack 0.27s cubic-bezier(0.55,0,1,0.45) forward
 .icon-nav-btn.active { border-color:var(--orange); background:var(--orange-dim); box-shadow:0 0 10px var(--orange-glow); }
 .icon-nav-btn.prestige-nav.active { border-color:var(--prestige); background:var(--prestige-dim); box-shadow:0 0 10px rgba(168,85,247,0.30); }
 .icon-nav-btn.prestige-nav:hover  { border-color:rgba(168,85,247,0.55); background:var(--prestige-dim); }
-.icon-nav-btn.shop-nav.active { border-color:var(--diamond); background:var(--diamond-dim); box-shadow:0 0 10px var(--diamond-glow); }
-.icon-nav-btn.shop-nav:hover  { border-color:rgba(103,232,249,0.55); background:var(--diamond-dim); }
+.icon-nav-btn.quests-nav.active { border-color:var(--diamond); background:var(--diamond-dim); box-shadow:0 0 10px var(--diamond-glow); }
+.icon-nav-btn.quests-nav:hover  { border-color:rgba(103,232,249,0.55); background:var(--diamond-dim); }
 .icon-nav-btn::after {
   content:attr(data-label); position:absolute; right:calc(100% + 10px); top:50%; transform:translateY(-50%);
   background:var(--surface2); border:1px solid var(--border); border-radius:5px; padding:3px 10px;
@@ -457,10 +420,62 @@ footer { display:none; flex-shrink:0; border-top:1px solid var(--border); align-
 .card.bought { opacity:0.30; cursor:not-allowed; }
 .card.flash  { border-color:rgba(239,68,68,0.7) !important; background:rgba(239,68,68,0.06) !important; }
 
-/* Premium card style for automation */
-.card.premium { border-color:rgba(103,232,249,0.20); }
-@media (hover:hover) { .card.premium:hover:not(.locked):not(.bought) { border-color:rgba(103,232,249,0.50); background:var(--diamond-dim); } }
-.card.premium:active:not(.locked):not(.bought) { background:var(--diamond-dim); }
+/* ─── HOT SPOT ──────────────────────────────────── */
+.hot-spot {
+  position:absolute;
+  width:clamp(30px,10%,46px); height:clamp(30px,10%,46px);
+  border-radius:50%;
+  background:radial-gradient(circle, rgba(255,240,80,0.95) 0%, rgba(255,180,0,0.60) 55%, transparent 100%);
+  transform:translate(-50%,-50%);
+  pointer-events:none;
+  opacity:0;
+  transition:opacity 0.10s;
+  box-shadow:0 0 18px 6px rgba(255,210,0,0.70), 0 0 40px 12px rgba(255,140,0,0.35);
+  z-index:5;
+}
+.hot-spot.visible {
+  opacity:1;
+  animation:hotSpotPulse 0.35s ease-in-out infinite alternate;
+}
+@keyframes hotSpotPulse {
+  from { box-shadow:0 0 14px 4px rgba(255,210,0,0.65), 0 0 30px 8px rgba(255,140,0,0.30); transform:translate(-50%,-50%) scale(0.92); }
+  to   { box-shadow:0 0 26px 10px rgba(255,230,0,0.90), 0 0 55px 18px rgba(255,160,0,0.50); transform:translate(-50%,-50%) scale(1.12); }
+}
+
+/* ─── QUEST CARDS ───────────────────────────────── */
+.quest-header-row {
+  display:flex; justify-content:space-between; align-items:center;
+  padding-bottom:8px; border-bottom:1px solid var(--border); margin-bottom:4px;
+}
+.quest-count-label { font-size:9px; font-weight:700; letter-spacing:2.5px; text-transform:uppercase; color:rgba(255,106,0,0.75); }
+.quest-reset-label { font-size:9px; color:var(--muted); }
+
+.quest-card {
+  display:flex; align-items:center; gap:10px;
+  padding:11px 12px; border-radius:8px;
+  border:1px solid var(--border);
+}
+.quest-card.done    { border-color:rgba(34,197,94,0.30); background:rgba(34,197,94,0.04); }
+.quest-card.claimed { opacity:0.38; }
+
+.quest-icon { font-size:18px; flex-shrink:0; }
+.quest-body { flex:1; min-width:0; }
+.quest-name { font-size:11px; font-weight:600; color:var(--text); }
+.quest-bar-wrap { margin-top:5px; height:3px; background:rgba(255,255,255,0.06); border-radius:2px; overflow:hidden; }
+.quest-bar  { height:100%; border-radius:2px; background:var(--orange); transition:width 0.3s; }
+.quest-sub  { font-size:9px; color:var(--muted); margin-top:3px; }
+
+.quest-right { display:flex; flex-direction:column; align-items:center; gap:4px; flex-shrink:0; }
+.quest-reward { font-family:'Bebas Neue',sans-serif; font-size:15px; color:var(--diamond); white-space:nowrap; }
+.quest-claim-btn {
+  padding:3px 9px; border-radius:6px;
+  background:var(--orange-dim); border:1px solid var(--orange);
+  font-family:'Bebas Neue',sans-serif; font-size:13px; letter-spacing:1.5px;
+  color:var(--orange); cursor:pointer; white-space:nowrap;
+  transition:background 0.15s;
+}
+.quest-claim-btn:hover { background:rgba(255,106,0,0.20); }
+.quest-done-mark { font-size:14px; color:var(--green); }
 
 .card-icon { font-size:17px; width:34px; height:34px; border-radius:7px; background:var(--surface2); display:flex; align-items:center; justify-content:center; flex-shrink:0; }
 .card-body { flex:1; min-width:0; }
@@ -600,7 +615,7 @@ footer { display:none; flex-shrink:0; border-top:1px solid var(--border); align-
 
 /* ─── TUTORIAL PANEL ──────────────────────────── */
 .tutorial-panel {
-  display:none; /* hidden on mobile, shown via media query below */
+  display:none;
   position:fixed;
   top:62px; right:16px;
   width:234px;
@@ -644,9 +659,6 @@ footer { display:none; flex-shrink:0; border-top:1px solid var(--border); align-
   padding-top:9px; border-top:1px solid var(--border);
 }
 
-/* ─── ANIMATIONS ──────────────────────────────── */
-@keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.4;transform:scale(1.6)} }
-
 /* ═══════════════════════════════════════════════
    DESKTOP  (min-width: 769px)
 ═══════════════════════════════════════════════ */
@@ -659,7 +671,6 @@ footer { display:none; flex-shrink:0; border-top:1px solid var(--border); align-
   .mobile-nav { display:none; }
   .bottom-sheet   { display:none !important; }
   .sheet-backdrop { display:none !important; }
-  /* padding-right = sidebar(280) - icon-nav(64) = 216px → centers ball in viewport */
   .center { padding-bottom:0; padding-right:216px; }
   .game-nav { display:flex; }
   .mob-back  { display:none; }

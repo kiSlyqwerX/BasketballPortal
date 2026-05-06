@@ -2,7 +2,22 @@
   "permissions": {
     "allow": [
       "Bash(git clone *)",
-      "WebFetch(domain:devtools.abect.com)"
+      "WebFetch(domain:devtools.abect.com)",
+      "Bash(dir /s /b \"C:\\\\Users\\\\romas\\\\OneDrive\\\\Робочий стіл\\\\project\\\\BasketTap\\\\src\" \"C:\\\\Users\\\\romas\\\\OneDrive\\\\Робочий стіл\\\\project\\\\BasketTap\\\\public\")",
+      "Bash(node build.js)",
+      "Skill(code-reviewer)",
+      "Bash(fc /b \"src\\\\scripts\\\\game.js\" \"dist\\\\scripts\\\\game.js\")",
+      "Bash(fc /b \"src\\\\scripts\\\\ui.js\" \"dist\\\\scripts\\\\ui.js\")",
+      "Bash(fc /b \"src\\\\styles\\\\global.css\" \"dist\\\\styles\\\\global.css\")",
+      "Bash(fc /b \"src\\\\styles\\\\game.css\" \"dist\\\\styles\\\\game.css\")",
+      "Bash(fc /b \"src\\\\styles\\\\home.css\" \"dist\\\\styles\\\\home.css\")",
+      "Bash(fc /b \"src\\\\styles\\\\news.css\" \"dist\\\\styles\\\\news.css\")",
+      "Bash(findstr /n /i \"onclick\\\\|onchange\\\\|onsubmit\\\\|onkeydown\\\\|oninput\\\\|onload\\\\|onmouseover\" src\\\\pages\\\\*.html src\\\\templates\\\\*.html)",
+      "Bash(Get-ChildItem -Path \"C:\\\\Users\\\\romas\\\\OneDrive\\\\Робочий стіл\\\\project\\\\BasketTap\" -Force)",
+      "Bash(Select-Object Name, PSIsContainer)",
+      "Bash(Format-Table -AutoSize)",
+      "Bash(npx serve *)",
+      "Bash(curl -s http://localhost:3000/)"
     ]
   }
 }

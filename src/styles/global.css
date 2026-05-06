@@ -1,0 +1,44 @@
+/* ─── TOKENS ──────────────────────────────────── */
+:root {
+  --orange:       #ff6a00;
+  --orange-dim:   rgba(255,106,0,0.12);
+  --orange-glow:  rgba(255,106,0,0.22);
+  --green:        #22c55e;
+  --red:          #ef4444;
+  --yellow:       #facc15;
+  --diamond:      #67e8f9;
+  --diamond-dim:  rgba(103,232,249,0.12);
+  --diamond-glow: rgba(103,232,249,0.30);
+  --prestige:     #a855f7;
+  --prestige-dim: rgba(168,85,247,0.14);
+  --bg:           #0a0a0a;
+  --surface:      #141414;
+  --surface2:     #1a1a1a;
+  --border:       rgba(255,255,255,0.08);
+  --text:         #e8e8e8;
+  --muted:        rgba(255,255,255,0.70);
+}
+
+/* ─── RESET ───────────────────────────────────── */
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+
+body {
+  background: var(--bg);
+  font-family: 'Inter', sans-serif;
+  color: var(--text);
+}
+
+/* ─── PAGE TRANSITIONS ────────────────────────── */
+@keyframes pageIn      { from{opacity:0;transform:translateX( 55px)} to{opacity:1;transform:translateX(0)} }
+@keyframes pageInBack  { from{opacity:0;transform:translateX(-55px)} to{opacity:1;transform:translateX(0)} }
+@keyframes pageOut     { from{opacity:1;transform:translateX(0)} to{opacity:0;transform:translateX(-55px)} }
+@keyframes pageOutBack { from{opacity:1;transform:translateX(0)} to{opacity:0;transform:translateX( 55px)} }
+@keyframes fadeIn      { from{opacity:0;transform:translateY(12px)} to{opacity:1;transform:translateY(0)} }
+
+body           { animation: pageIn      0.34s cubic-bezier(0.22,1,0.36,1); }
+body.back      { animation: pageInBack  0.34s cubic-bezier(0.22,1,0.36,1); }
+body.exit      { animation: pageOut     0.27s cubic-bezier(0.55,0,1,0.45) forwards; }
+body.exit.back { animation: pageOutBack 0.27s cubic-bezier(0.55,0,1,0.45) forwards; }
+
+/* ─── SHARED ANIMATIONS ───────────────────────── */
+@keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.4;transform:scale(1.6)} }

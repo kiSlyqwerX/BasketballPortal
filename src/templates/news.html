@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{pageTitle}} — BasketTap</title>
+  <meta name="description" content="Tap the basketball, upgrade skills, earn diamonds and unlock auto-tappers. Free browser clicker game — no download needed!">
+  <meta name="keywords" content="basketball tap game, basketball clicker, free online basketball, browser game, idle clicker, tap game, no download game">
+  <meta name="author" content="Yura Fedoryshyn">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="{{canonicalUrl}}">
+  <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="apple-touch-icon" href="/favicon.svg" />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles/global.css" />
+  <link rel="stylesheet" href="/styles/news.css" />
+</head>
+<body class="news-list">
+<script src="/scripts/ui.js"></script>
+<div class="page-wrap">
+
+  <header>
+    <div class="header-left">
+      <div class="logo">BasketTap</div>
+    </div>
+    <ul class="home-nav">
+      <li><a href="/" data-dir="back">Home</a></li>
+      <li><a href="/game/" data-dir="back">Game</a></li>
+      <li><a href="/news/" class="active">News</a></li>
+    </ul>
+    <div class="header-right">
+      <div class="diamond-counter">💎 <span id="diamond-display">0</span></div>
+      <div class="record-display">Record&nbsp;<span id="record-val">0</span></div>
+    </div>
+  </header>
+
+  <div class="news-layout">
+
+    <aside class="news-sidebar">
+      <div class="sidebar-title">Categories</div>
+      <a class="cat-item {{activeCategoryAll}}" href="/news/"><span class="cat-dot"></span>Latest News</a>
+      <a class="cat-item {{activeCategoryNba}}" href="/news/nba/"><span class="cat-dot"></span>NBA</a>
+      <a class="cat-item {{activeCategoryEuroleague}}" href="/news/euroleague/"><span class="cat-dot"></span>EuroLeague</a>
+      <a class="cat-item {{activeCategoryTransfers}}" href="/news/transfers/"><span class="cat-dot"></span>Transfers</a>
+      <a class="cat-item {{activeCategoryTraining}}" href="/news/training/"><span class="cat-dot"></span>Training</a>
+    </aside>
+
+    <div class="news-content">
+      <div class="news-section-title">{{pageTitle}}</div>
+
+      <div class="mob-cats">
+        <a class="mob-cat {{activeCategoryAll}}" href="/news/"><span class="mob-cat-dot"></span>Latest</a>
+        <a class="mob-cat {{activeCategoryNba}}" href="/news/nba/"><span class="mob-cat-dot"></span>NBA</a>
+        <a class="mob-cat {{activeCategoryEuroleague}}" href="/news/euroleague/"><span class="mob-cat-dot"></span>EuroLeague</a>
+        <a class="mob-cat {{activeCategoryTransfers}}" href="/news/transfers/"><span class="mob-cat-dot"></span>Transfers</a>
+        <a class="mob-cat {{activeCategoryTraining}}" href="/news/training/"><span class="mob-cat-dot"></span>Training</a>
+      </div>
+
+      <div class="news-grid">{{articleCards}}</div>
+    </div>
+
+  </div>
+
+  <footer>
+    <div class="foot-online">
+      <div class="foot-dot"></div>
+      Online
+    </div>
+  </footer>
+
+</div>
+
+<nav class="mob-nav">
+  <a href="/" data-dir="back"><span class="mob-nav-icon">🏠</span><span>Home</span><span class="mob-nav-dot"></span></a>
+  <a href="/game/" data-dir="back"><span class="mob-nav-icon">🏀</span><span>Game</span><span class="mob-nav-dot"></span></a>
+  <a class="active" href="/news/"><span class="mob-nav-icon">📰</span><span>News</span><span class="mob-nav-dot"></span></a>
+</nav>
+
+<script src="/scripts/news.js"></script>
+</body>
+</html>
