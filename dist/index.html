@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>BasketTap — Free Basketball Tap &amp; Clicker Game</title>
+  <meta name="description" content="Tap the basketball, upgrade skills, earn diamonds and unlock auto-tappers. Free browser clicker game — no download needed!">
+  <meta name="keywords" content="basketball tap game, basketball clicker, free online basketball, browser game, idle clicker, tap game, no download game">
+  <meta name="author" content="Yura Fedoryshyn">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://basketball-portal-seven.vercel.app/">
+  <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="apple-touch-icon" href="/favicon.svg" />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles/global.css" />
+  <link rel="stylesheet" href="/styles/home.css" />
+</head>
+<body>
+<script src="/scripts/ui.js"></script>
+
+<header>
+  <div class="header-left">
+    <div class="logo">BasketTap</div>
+  </div>
+  <ul class="home-nav">
+    <li><a href="/" class="active">Home</a></li>
+    <li><a href="/game/" data-dir="forward">Game</a></li>
+    <li><a href="/news/" data-dir="forward">News</a></li>
+  </ul>
+  <div class="header-right">
+    <div class="diamond-counter"><span>💎</span><span id="diamond-display">0</span></div>
+    <div class="record-display">Record&nbsp;<span id="record-val">0</span></div>
+  </div>
+</header>
+
+<!-- ═══ HERO ═══ -->
+<section class="hero">
+
+  <div class="hero-content">
+    <span class="hero-eyebrow">Free Browser Game</span>
+    <h1 class="hero-title">First Tap Basketball<br>Game in the World</h1>
+    <p class="hero-sub">Tap &middot; Upgrade &middot; Dominate</p>
+    <div class="hero-btns">
+      <button class="btn-play"      data-href="/game/" data-dir="forward">Play Now</button>
+      <button class="btn-secondary" data-href="/news/" data-dir="forward">NBA News</button>
+    </div>
+    <div class="hero-stats">
+      <div class="hero-stat">
+        <div class="h-stat-val">100%</div>
+        <div class="h-stat-label">Free</div>
+      </div>
+      <div class="hero-stat">
+        <div class="h-stat-val">0</div>
+        <div class="h-stat-label">Downloads</div>
+      </div>
+      <div class="hero-stat">
+        <div class="h-stat-val">20+</div>
+        <div class="h-stat-label">Upgrades</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-visual">
+    <div class="ball-glow"></div>
+    <div class="ball-float-wrap">
+      <div class="ball-stage">
+        <svg viewBox="0 0 260 260" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <radialGradient id="ballGrad" cx="34%" cy="30%" r="70%">
+              <stop offset="0%"   stop-color="#ffc060"/>
+              <stop offset="34%"  stop-color="#ff8c00"/>
+              <stop offset="66%"  stop-color="#cc5500"/>
+              <stop offset="100%" stop-color="#7a2800"/>
+            </radialGradient>
+            <clipPath id="ballClip"><circle cx="130" cy="130" r="128"/></clipPath>
+          </defs>
+          <g clip-path="url(#ballClip)">
+            <circle cx="130" cy="130" r="128" fill="url(#ballGrad)"/>
+            <path d="M130 8 Q178 68 178 130 Q178 192 130 252" stroke="rgba(50,12,0,.58)" stroke-width="4.5" fill="none" stroke-linecap="round"/>
+            <path d="M130 8 Q82 68 82 130 Q82 192 130 252"   stroke="rgba(50,12,0,.58)" stroke-width="4.5" fill="none" stroke-linecap="round"/>
+            <path d="M8 130 Q68 96 130 96 Q192 96 252 130"   stroke="rgba(50,12,0,.58)" stroke-width="4.5" fill="none" stroke-linecap="round"/>
+            <path d="M8 130 Q68 164 130 164 Q192 164 252 130" stroke="rgba(50,12,0,.58)" stroke-width="4.5" fill="none" stroke-linecap="round"/>
+            <ellipse cx="88" cy="78" rx="28" ry="13" fill="rgba(255,235,160,.10)" transform="rotate(-22,88,78)"/>
+          </g>
+        </svg>
+      </div>
+      <div class="ball-shadow"></div>
+    </div>
+  </div>
+
+  <!-- Scroll hint -->
+  <div class="scroll-hint">
+    <span>Scroll</span>
+    <svg viewBox="0 0 16 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M8 4v16M4 16l4 4 4-4" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </div>
+
+</section>
+
+<!-- ═══ FEATURES ═══ -->
+<section class="sect" id="features">
+  <div class="sect-inner">
+    <p class="sect-label">What's Inside</p>
+    <h2 class="sect-title">Everything to Dominate the Court</h2>
+    <p class="sect-sub">BasketTap is a free basketball clicker game packed with deep progression — unlock a full skill tree, automate your scoring, collect awards and prestige for permanent power boosts.</p>
+    <div class="feat-grid">
+      <div class="feat-card">
+        <div class="feat-icon">🌳</div>
+        <div class="feat-name">Skill Tree</div>
+        <p class="feat-desc">Unlock 20+ upgrades that compound every tap. Chain power boosts, crit multipliers and combo streaks to skyrocket your score.</p>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon">⚙️</div>
+        <div class="feat-name">Automation</div>
+        <p class="feat-desc">Hire auto-tappers that keep scoring even when you're away. Stack taps-per-second and multipliers to reach astronomical numbers.</p>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon">🏆</div>
+        <div class="feat-name">Awards</div>
+        <p class="feat-desc">Complete hidden challenges and earn rare badges. Each award is a milestone that proves your dominance on the court.</p>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon">👑</div>
+        <div class="feat-name">Prestige</div>
+        <p class="feat-desc">Reset your run for permanent diamond multipliers. The deeper you go, the stronger you come back — endless replayability guaranteed.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ HOW TO PLAY ═══ -->
+<section class="sect how-sect" id="how-to-play">
+  <div class="sect-inner">
+    <p class="sect-label">How It Works</p>
+    <h2 class="sect-title">Simple to Start. Deep to Master.</h2>
+    <p class="sect-sub">No tutorial required — the game speaks for itself. Here's the loop that keeps you coming back for one more run.</p>
+    <div class="steps">
+      <div class="step">
+        <span class="step-num">01</span>
+        <span class="step-icon">🏀</span>
+        <div class="step-name">Tap the Ball</div>
+        <p class="step-desc">Click or tap the basketball to score points. Each tap earns currency that fuels your upgrades. Hold down for a special power shot at the hoop.</p>
+      </div>
+      <div class="step">
+        <span class="step-num">02</span>
+        <span class="step-icon">💡</span>
+        <div class="step-name">Buy Upgrades</div>
+        <p class="step-desc">Spend your points in the Skill Tree to unlock multipliers, crit shots, combo streaks and auto-tappers. Every upgrade compounds on the last.</p>
+      </div>
+      <div class="step">
+        <span class="step-num">03</span>
+        <span class="step-icon">👑</span>
+        <div class="step-name">Prestige &amp; Repeat</div>
+        <p class="step-desc">When you're ready, Prestige to reset and earn permanent diamond multipliers. Each run is faster and more powerful than the one before it.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ WHY BASKETTAP ═══ -->
+<section class="sect" id="why">
+  <div class="sect-inner">
+    <div class="why-layout">
+      <div class="why-text">
+        <p class="sect-label">Why BasketTap</p>
+        <h2 class="sect-title">No Account.<br>No Download.<br>Just Ball.</h2>
+        <p class="sect-sub">We built BasketTap to be instant, free and frictionless. Open the link, start tapping. Your progress saves automatically right in your browser — no sign-up, no app store, no nonsense.</p>
+      </div>
+      <ul class="why-list">
+        <li class="why-item">
+          <span class="why-icon">🆓</span>
+          <div>
+            <div class="why-item-title">Completely Free</div>
+            <div class="why-item-desc">No paywalls, no ads, no premium currency to buy. Everything in the game is earnable just by playing.</div>
+          </div>
+        </li>
+        <li class="why-item">
+          <span class="why-icon">⚡</span>
+          <div>
+            <div class="why-item-title">Instant — No Install</div>
+            <div class="why-item-desc">Runs entirely in your browser. Works on Chrome, Safari, Firefox and Edge on any device.</div>
+          </div>
+        </li>
+        <li class="why-item">
+          <span class="why-icon">💾</span>
+          <div>
+            <div class="why-item-title">Auto-Saved Progress</div>
+            <div class="why-item-desc">Your game is saved locally in your browser. Pick up exactly where you left off, every time.</div>
+          </div>
+        </li>
+        <li class="why-item">
+          <span class="why-icon">📱</span>
+          <div>
+            <div class="why-item-title">Works on Any Device</div>
+            <div class="why-item-desc">Optimized for mobile tap and desktop click. Same great game on phone, tablet or desktop.</div>
+          </div>
+        </li>
+        <li class="why-item">
+          <span class="why-icon">📰</span>
+          <div>
+            <div class="why-item-title">Live NBA News</div>
+            <div class="why-item-desc">Stay current with the latest basketball news, player updates and game results — built right into the app.</div>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ FAQ ═══ -->
+<section class="sect" id="faq">
+  <div class="sect-inner">
+    <p class="sect-label">FAQ</p>
+    <h2 class="sect-title">Questions &amp; Answers</h2>
+    <div class="faq-grid">
+      <div class="faq-item">
+        <div class="faq-q">Is BasketTap free to play?</div>
+        <p class="faq-a">Yes — 100% free. No in-app purchases, no subscription and no hidden costs. Just open it and play.</p>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Do I need to download anything?</div>
+        <p class="faq-a">No download or install required. BasketTap runs entirely in your web browser — just visit the site and start tapping.</p>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Does my progress save between sessions?</div>
+        <p class="faq-a">Yes. Your progress is automatically saved to your browser's local storage. It will be there the next time you open the game.</p>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">What devices does BasketTap support?</div>
+        <p class="faq-a">Any device with a modern browser. The UI is optimized for both mobile touch and desktop mouse and keyboard.</p>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">What is Prestige?</div>
+        <p class="faq-a">Prestige lets you restart the game in exchange for permanent diamond multipliers that carry into every future run — making each reset worthwhile.</p>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Where does the basketball news come from?</div>
+        <p class="faq-a">We pull live NBA news from the ESPN API, updated every two hours so you always have the freshest stories and game results.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ CTA ═══ -->
+<section class="sect cta-sect" id="play">
+  <div class="sect-inner cta-inner">
+    <h2 class="cta-title">Ready to Dominate?</h2>
+    <p class="cta-sub">Free forever. No sign-up. Open the game and start your first run right now.</p>
+    <button class="btn-cta" data-href="/game/" data-dir="forward">Play Now →</button>
+  </div>
+</section>
+
+<footer>
+  <div class="foot-online">
+    <div class="foot-dot"></div>
+    Online
+  </div>
+</footer>
+
+<nav class="mob-nav">
+  <a class="active" href="/"><span class="mob-nav-icon">🏠</span><span>Home</span><span class="mob-nav-dot"></span></a>
+  <a href="/game/" data-dir="forward"><span class="mob-nav-icon">🏀</span><span>Game</span><span class="mob-nav-dot"></span></a>
+  <a href="/news/" data-dir="forward"><span class="mob-nav-icon">📰</span><span>News</span><span class="mob-nav-dot"></span></a>
+</nav>
+
+<button class="back-to-top" id="back-to-top" aria-label="Back to top">↑</button>
+
+<script src="/scripts/home.js"></script>
+</body>
+</html>

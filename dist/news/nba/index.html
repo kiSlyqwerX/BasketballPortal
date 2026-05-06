@@ -1,0 +1,782 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>NBA News — BasketTap</title>
+  <meta name="description" content="Tap the basketball, upgrade skills, earn diamonds and unlock auto-tappers. Free browser clicker game — no download needed!">
+  <meta name="keywords" content="basketball tap game, basketball clicker, free online basketball, browser game, idle clicker, tap game, no download game">
+  <meta name="author" content="Yura Fedoryshyn">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://basketball-portal-seven.vercel.app/news/nba/">
+  <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="apple-touch-icon" href="/favicon.svg" />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles/global.css" />
+  <link rel="stylesheet" href="/styles/news.css" />
+</head>
+<body class="news-list">
+<script src="/scripts/ui.js"></script>
+<div class="page-wrap">
+
+  <header>
+    <div class="header-left">
+      <div class="logo">BasketTap</div>
+    </div>
+    <ul class="home-nav">
+      <li><a href="/" data-dir="back">Home</a></li>
+      <li><a href="/game/" data-dir="back">Game</a></li>
+      <li><a href="/news/" class="active">News</a></li>
+    </ul>
+    <div class="header-right">
+      <div class="diamond-counter">💎 <span id="diamond-display">0</span></div>
+      <div class="record-display">Record&nbsp;<span id="record-val">0</span></div>
+    </div>
+  </header>
+
+  <div class="news-layout">
+
+    <aside class="news-sidebar">
+      <div class="sidebar-title">Categories</div>
+      <a class="cat-item " href="/news/"><span class="cat-dot"></span>Latest News</a>
+      <a class="cat-item active" href="/news/nba/"><span class="cat-dot"></span>NBA</a>
+      <a class="cat-item " href="/news/euroleague/"><span class="cat-dot"></span>EuroLeague</a>
+      <a class="cat-item " href="/news/transfers/"><span class="cat-dot"></span>Transfers</a>
+      <a class="cat-item " href="/news/training/"><span class="cat-dot"></span>Training</a>
+    </aside>
+
+    <div class="news-content">
+      <div class="news-section-title">NBA News</div>
+
+      <div class="mob-cats">
+        <a class="mob-cat " href="/news/"><span class="mob-cat-dot"></span>Latest</a>
+        <a class="mob-cat active" href="/news/nba/"><span class="mob-cat-dot"></span>NBA</a>
+        <a class="mob-cat " href="/news/euroleague/"><span class="mob-cat-dot"></span>EuroLeague</a>
+        <a class="mob-cat " href="/news/transfers/"><span class="mob-cat-dot"></span>Transfers</a>
+        <a class="mob-cat " href="/news/training/"><span class="mob-cat-dot"></span>Training</a>
+      </div>
+
+      <div class="news-grid"><a class="news-card" href="/news/nba/timberwolves-anthony-edwards-once-and-for-all-put-the-pre-draft-not-loving-baske/">
+  <div class="card-img-wrap">
+    <img src="https://s.yimg.com/os/en/the_sporting_news_articles_584/b8a3da4010afd349f5e5ed710d383f74" alt="Timberwolves' Anthony Edwards, once and for all, put the pre-draft 'not loving basketball' narratives to rest" loading="lazy" />
+    <span class="card-badge nba">NBA</span>
+  </div>
+  <div class="card-body">
+    <div class="card-title">Timberwolves' Anthony Edwards, once and for all, put the pre-draft 'not loving basketball' narratives to rest</div>
+    <div class="card-desc">Edwards played one of the most impressive games of his life on Monday.</div>
+    <div class="card-footer">
+      <div class="card-meta">May 5, 2026</div>
+      <span class="card-read">Read →</span>
+    </div>
+  </div>
+</a>
+<a class="news-card" href="/news/nba/anthony-edwards-admirably-listed-all-the-things-he-did-wrong-after-heroic-game-1/">
+  <div class="card-img-wrap">
+    <img src="https://s.yimg.com/ny/api/res/1.2/PCMaxkvU5ptgII4lW2u3XQ--/YXBwaWQ9aGlnaGxhbmRlcjt3PTEyMDA7aD02NDE7Y2Y9d2VicA--/https://media.zenfs.com/en/ftw_outdoors_usa_today_article_609/9cc2f34a3969c620fae1b5ba5e5c0894" alt="Anthony Edwards admirably listed all the things he did wrong after heroic Game 1" loading="lazy" />
+    <span class="card-badge nba">NBA</span>
+  </div>
+  <div class="card-body">
+    <div class="card-title">Anthony Edwards admirably listed all the things he did wrong after heroic Game 1</div>
+    <div class="card-desc">Anthony Edwards showed what taking accountability really means after the Timberwolves stole Game 1 in San Antonio.</div>
+    <div class="card-footer">
+      <div class="card-meta">May 5, 2026</div>
+      <span class="card-read">Read →</span>
+    </div>
+  </div>
+</a>
+<a class="news-card" href="/news/nba/nba-star-michael-porter-jr-hits-back-at-disney-channel-ex-madison-pettis-after-s/">
+  <div class="card-img-wrap">
+    <img src="https://i.dailymail.com/1s/2026/05/05/16/107119925-0-image-m-53_1777996391412.jpg" alt="NBA star Michael Porter Jr. hits back at Disney Channel ex Madison Pettis after she labeled him a 'psychopath'" loading="lazy" />
+    <span class="card-badge nba">NBA</span>
+  </div>
+  <div class="card-body">
+    <div class="card-title">NBA star Michael Porter Jr. hits back at Disney Channel ex Madison Pettis after she labeled him a 'psychopath'</div>
+    <div class="card-desc">The Brooklyn Nets forward, 27, dated actress Madison Pettis, also 27, during their younger years from 2016 to mid-2017 before going their separate ways seemingly on a sour note.</div>
+    <div class="card-footer">
+      <div class="card-meta">May 5, 2026</div>
+      <span class="card-read">Read →</span>
+    </div>
+  </div>
+</a>
+<a class="news-card" href="/news/nba/while-toronto-tempo-are-new-to-wnba-women-s-basketball-has-long-history-in-canad/">
+  <div class="card-img-wrap">
+    <img src="https://i.cbc.ca/ais/8f3d8501-370b-4e95-afa7-7456673ed64a,1777997071425/full/max/0/default.jpg?im=Crop%2Crect%3D%2820%2C0%2C1139%2C640%29%3BResize%3D620" alt="While Toronto Tempo are new to WNBA, women's basketball has long history in Canada" loading="lazy" />
+    <span class="card-badge nba">NBA</span>
+  </div>
+  <div class="card-body">
+    <div class="card-title">While Toronto Tempo are new to WNBA, women's basketball has long history in Canada</div>
+    <div class="card-desc">The WNBA, not surprisingly, chose Canada as the country to extend its footprint outside the United States for the first time. Canadian players have been playing in America for more than 30 years.</div>
+    <div class="card-footer">
+      <div class="card-meta">May 5, 2026</div>
+      <span class="card-read">Read →</span>
+    </div>
+  </div>
+</a>
+<a class="news-card" href="/news/nba/what-rick-barnes-could-address-for-tennessee-basketball-with-two-roster-spots/">
+  <div class="card-img-wrap">
+    <img src="https://s.yimg.com/ny/api/res/1.2/R09w7RziObWVG1M2MFGDhA--/YXBwaWQ9aGlnaGxhbmRlcjt3PTEyMDA7aD04MjE7Y2Y9d2VicA--/https://media.zenfs.com/en/the_tennessean_natl_articles_921/e3b72af477f68d87b19f58266d8f1702" alt="What Rick Barnes could address for Tennessee basketball with two roster spots" loading="lazy" />
+    <span class="card-badge nba">NBA</span>
+  </div>
+  <div class="card-body">
+    <div class="card-title">What Rick Barnes could address for Tennessee basketball with two roster spots</div>
+    <div class="card-desc">Tennessee basketball has two scholarship roster spots open for the 2026-27 season after landing Juke Harris on May 4. Here's what the Vols need.</div>
+    <div class="card-footer">
+      <div class="card-meta">May 5, 2026</div>
+      <span class="card-read">Read →</span>
+    </div>
+  </div>
+</a>
+<a class="news-card" href="/news/nba/nba-dfs-playoffs-draftkings-fanduel-daily-fantasy-basketball-picks-for-may-5-inc/">
+  <div class="card-img-wrap">
+    <img src="https://sportshub.cbsistatic.com/i/r/2026/05/05/be383675-fd3f-4dd8-8d81-3861407b2075/thumbnail/1200x675/eeadda091b59b32298eb9ae85ea3eacc/lebron-james-los-angeles-lakers-imagn-images.jpg" alt="NBA DFS, playoffs: DraftKings, FanDuel daily Fantasy basketball picks for May 5 include LeBron James" loading="lazy" />
+    <span class="card-badge nba">NBA</span>
+  </div>
+  <div class="card-body">
+    <div class="card-title">NBA DFS, playoffs: DraftKings, FanDuel daily Fantasy basketball picks for May 5 include LeBron James</div>
+    <div class="card-desc">SportsLine's Mike McClure, a daily Fantasy pro with more than $2 million in winnings, gives optimal NBA DFS lineup advice for NBA playoff action on Tuesday, May 5</div>
+    <div class="card-footer">
+      <div class="card-meta">May 5, 2026</div>
+      <span class="card-read">Read →</span>
+    </div>
+  </div>
+</a>
+<a class="news-card" href="/news/nba/disney-expanded-something-in-a-foreign-country-that-has-nothing-to-do-with-theme/">
+  <div class="card-img-wrap">
+    <img src="https://insidethemagic.net/wp-content/uploads/2026/05/disney-cruise-line-el1.jpg" alt="Disney Expanded Something in a Foreign Country That Has Nothing to Do With Theme Parks" loading="lazy" />
+    <span class="card-badge nba">NBA</span>
+  </div>
+  <div class="card-body">
+    <div class="card-title">Disney Expanded Something in a Foreign Country That Has Nothing to Do With Theme Parks</div>
+    <div class="card-desc">Disney Cruise Line is enhancing play opportunities for local children in the Bahamas through The Play Project, launched in 2024 with Lookout Cay at Lighthouse Point. This initiative has created over 32,000 hours of play each year and revitalized six primary s…</div>
+    <div class="card-footer">
+      <div class="card-meta">May 5, 2026</div>
+      <span class="card-read">Read →</span>
+    </div>
+  </div>
+</a>
+<a class="news-card" href="/news/nba/puerto-rican-basketball-legend-jos-piculin-ortiz-dies-at-the-age-of-62/">
+  <div class="card-img-wrap">
+    <img src="https://s.yimg.com/ny/api/res/1.2/Wdu9YsLsOthk5w.B0gEHsA--/YXBwaWQ9aGlnaGxhbmRlcjt3PTEyMDA7aD05MzY7Y2Y9d2VicA--/https://media.zenfs.com/en/usa_today_sports_articles_558/1e72005014ff937e7057a7e4843ff3f1" alt="Puerto Rican basketball legend José ‘Piculin’ Ortiz dies at the age of 62" loading="lazy" />
+    <span class="card-badge nba">NBA</span>
+  </div>
+  <div class="card-body">
+    <div class="card-title">Puerto Rican basketball legend José ‘Piculin’ Ortiz dies at the age of 62</div>
+    <div class="card-desc">FIBA Hall of Famer and Puerto Rican basketball icon José ‘Piculin’ Ortiz died at age 62 following a fight with cancer.</div>
+    <div class="card-footer">
+      <div class="card-meta">May 5, 2026</div>
+      <span class="card-read">Read →</span>
+    </div>
+  </div>
+</a>
+<a class="news-card" href="/news/nba/evaluating-masai-ujiri-s-post-championship-run/">
+  <div class="card-img-wrap">
+    <img src="https://s.yimg.com/ny/api/res/1.2/z9IWL1TZ.uKJwvprkdOTRA--/YXBwaWQ9aGlnaGxhbmRlcjt3PTEyMDA7aD04MDA7Y2Y9d2VicA--/https://media.zenfs.com/en/sb_nation_articles_115/6b4cc64087970aa9c031d2f6838af402" alt="Evaluating Masai Ujiri’s post-championship run" loading="lazy" />
+    <span class="card-badge nba">NBA</span>
+  </div>
+  <div class="card-body">
+    <div class="card-title">Evaluating Masai Ujiri’s post-championship run</div>
+    <div class="card-desc">Does unc still got it? Or is he chopped?</div>
+    <div class="card-footer">
+      <div class="card-meta">May 5, 2026</div>
+      <span class="card-read">Read →</span>
+    </div>
+  </div>
+</a>
+<a class="news-card" href="/news/nba/oakley-drops-new-signature-styles-with-kylian-mbapp-and-jaylen-brown/">
+  <div class="card-img-wrap">
+    <img src="https://images-prod.dazeddigital.com/1200/462-0-2532-1688/azure/dazed-prod/1440/4/1444422.jpg" alt="Oakley drops new signature styles with Kylian Mbappé and Jaylen Brown" loading="lazy" />
+    <span class="card-badge nba">NBA</span>
+  </div>
+  <div class="card-body">
+    <div class="card-title">Oakley drops new signature styles with Kylian Mbappé and Jaylen Brown</div>
+    <div class="card-desc">As Oakley’s partners, the Real Madrid striker and Boston Celtics guard-forward collaborated to infuse their style into the new Oakley designs</div>
+    <div class="card-footer">
+      <div class="card-meta">May 5, 2026</div>
+      <span class="card-read">Read →</span>
+    </div>
+  </div>
+</a>
+<a class="news-card" href="/news/nba/former-gator-xaivian-lee-invited-to-nba-g-league-draft-combine-2026/">
+  <div class="card-img-wrap">
+    <img src="https://s.yimg.com/ny/api/res/1.2/IFXQbPLxPaxbn_Gi8CKMvg--/YXBwaWQ9aGlnaGxhbmRlcjt3PTEyMDA7aD04MDA7Y2Y9d2VicA--/https://media.zenfs.com/en/gators_wire_usa_today_articles_447/989a281ef780d92d5adea8781689ab3d" alt="Former Gator Xaivian Lee invited to NBA G League Draft Combine 2026" loading="lazy" />
+    <span class="card-badge nba">NBA</span>
+  </div>
+  <div class="card-body">
+    <div class="card-title">Former Gator Xaivian Lee invited to NBA G League Draft Combine 2026</div>
+    <div class="card-desc">Former Florida basketball guard Xavian Lee received his second-ever invitation to the NBA G League Draft Combine, this time for the 2026 edition.</div>
+    <div class="card-footer">
+      <div class="card-meta">May 5, 2026</div>
+      <span class="card-read">Read →</span>
+    </div>
+  </div>
+</a>
+<a class="news-card" href="/news/nba/there-is-one-knicks-concern-emerging-from-game-1-rout-of-76ers-new-york-post/">
+  <div class="card-img-wrap">
+    <div class="no-img">🏀</div>
+    <span class="card-badge nba">NBA</span>
+  </div>
+  <div class="card-body">
+    <div class="card-title">There is one Knicks concern emerging from Game 1 rout of 76ers - New York Post</div>
+    <div class="card-desc">There is one Knicks concern emerging from Game 1 rout of 76ersNew York Post Knicks stay on historic roll, crush 76ers by 39 in Game 1ESPN Experts release new Knicks vs. Sixers Game 2 prediction after Brunson, Knicks dominate Game 1Syracuse.com The Knicks’ off…</div>
+    <div class="card-footer">
+      <div class="card-meta">May 5, 2026</div>
+      <span class="card-read">Read →</span>
+    </div>
+  </div>
+</a>
+<a class="news-card" href="/news/nba/the-best-looks-from-texans-at-the-2026-met-gala/">
+  <div class="card-img-wrap">
+    <img src="https://www.dallasobserver.com/wp-content/uploads/sites/3/2026/05/Beyonce_Dimitrios-KambourisGetty-Images.jpg" alt="The Best Looks From Texans at the 2026 Met Gala" loading="lazy" />
+    <span class="card-badge nba">NBA</span>
+  </div>
+  <div class="card-body">
+    <div class="card-title">The Best Looks From Texans at the 2026 Met Gala</div>
+    <div class="card-desc">Monday was the Met Gala, which is an unofficial American holiday where the chronically online become expert fashion critics and the gatekeepers of taste for a night.</div>
+    <div class="card-footer">
+      <div class="card-meta">May 5, 2026</div>
+      <span class="card-read">Read →</span>
+    </div>
+  </div>
+</a>
+<a class="news-card" href="/news/nba/wnba-is-new-in-toronto-this-season-but-women-s-basketball-has-a-long-history-in-/">
+  <div class="card-img-wrap">
+    <img src="https://s.yimg.com/ny/api/res/1.2/EyUmiQ9EgSssbJlcbvICMQ--/YXBwaWQ9aGlnaGxhbmRlcjt3PTEyMDA7aD04NzU7Y2Y9d2VicA--/https://media.zenfs.com/en/ap.org/9a956352c40496b3841f26ac3289ce4f" alt="WNBA is new in Toronto this season but women's basketball has a long history in Canada" loading="lazy" />
+    <span class="card-badge nba">NBA</span>
+  </div>
+  <div class="card-body">
+    <div class="card-title">WNBA is new in Toronto this season but women's basketball has a long history in Canada</div>
+    <div class="card-desc">The WNBA, not surprisingly, chose Canada as the country to extend its footprint outside of the U.S. for the first time. Kelly Boucher was the first Canadian player to compete in the league, playing a season with the Charlotte Sting in 1998. Stacey Dales was t…</div>
+    <div class="card-footer">
+      <div class="card-meta">May 5, 2026</div>
+      <span class="card-read">Read →</span>
+    </div>
+  </div>
+</a>
+<a class="news-card" href="/news/nba/nba-longshot-parlay-picks-bets-player-props-for-tuesday-may-5-this-parlay-could-/">
+  <div class="card-img-wrap">
+    <img src="https://sportshub.cbsistatic.com/i/r/2026/05/05/748f1547-5ec7-4def-a865-c68ce274abb6/thumbnail/1200x675/8a9349989b9a35ad2587545a427c5dc6/duncan-robinson-pistons-imagn.jpg" alt="NBA longshot parlay picks, bets, player props for Tuesday, May 5: This parlay could return almost $1.8 million" loading="lazy" />
+    <span class="card-badge nba">NBA</span>
+  </div>
+  <div class="card-body">
+    <div class="card-title">NBA longshot parlay picks, bets, player props for Tuesday, May 5: This parlay could return almost $1.8 million</div>
+    <div class="card-desc">SportsLine's model reveals an NBA playoffs parlay that could return almost $1.8 million on a $10 bet</div>
+    <div class="card-footer">
+      <div class="card-meta">May 5, 2026</div>
+      <span class="card-read">Read →</span>
+    </div>
+  </div>
+</a>
+<a class="news-card" href="/news/nba/thunder-vs-lakers-gm-1-rd-2-nba-playoffs-predictions-odds-stats-trends-and-best-/">
+  <div class="card-img-wrap">
+    <img src="https://s.yimg.com/ny/api/res/1.2/hPMeWyejwYc9Gc3i.IdV4Q--/YXBwaWQ9aGlnaGxhbmRlcjt3PTEyMDA7aD02NzU7Y2Y9d2VicA--/https://media.zenfs.com/en/nbcsports.com/13bed4fad6f65a237c889d0c6a31811e" alt="Thunder vs. Lakers – Gm. 1 Rd. 2 NBA Playoffs – predictions: Odds, stats, trends and best bets for May 5" loading="lazy" />
+    <span class="card-badge nba">NBA</span>
+  </div>
+  <div class="card-body">
+    <div class="card-title">Thunder vs. Lakers – Gm. 1 Rd. 2 NBA Playoffs – predictions: Odds, stats, trends and best bets for May 5</div>
+    <div class="card-desc">Oklahoma City Thunder vs. Los Angeles Lakers Game 1, Round 2 NBA Playoff Betting Preview</div>
+    <div class="card-footer">
+      <div class="card-meta">May 5, 2026</div>
+      <span class="card-read">Read →</span>
+    </div>
+  </div>
+</a>
+<a class="news-card" href="/news/nba/luka-doncic-injury-update-lakers-star-not-running-yet-still-weeks-from-return/">
+  <div class="card-img-wrap">
+    <img src="https://d.ibtimes.com.au/en/full/1893925/luka-doncic-cheers-lakers-bench-game-2.jpg" alt="Luka Doncic Injury Update: Lakers Star Not Running Yet, Still Weeks From Return" loading="lazy" />
+    <span class="card-badge nba">NBA</span>
+  </div>
+  <div class="card-body">
+    <div class="card-title">Luka Doncic Injury Update: Lakers Star Not Running Yet, Still Weeks From Return</div>
+    <div class="card-desc">LOS ANGELES — Los Angeles Lakers superstar Luka Doncic has not yet begun running as he continues recovering from a Grade 2 left hamstring strain suffered more than a month ago, with team officials and medical experts emphasizing a cautious approach that keeps…</div>
+    <div class="card-footer">
+      <div class="card-meta">May 5, 2026</div>
+      <span class="card-read">Read →</span>
+    </div>
+  </div>
+</a>
+<a class="news-card" href="/news/nba/why-timothee-chalamet-skipped-the-2026-met-gala-with-kylie-jenner/">
+  <div class="card-img-wrap">
+    <img src="https://imgix.bustle.com/uploads/image/2026/5/5/85fe6997/untitled-design-10.jpg?w=1200&amp;h=630&amp;fit=crop&amp;crop=faces&amp;fm=jpg" alt="Why Timothee Chalamet Skipped The 2026 Met Gala With Kylie Jenner" loading="lazy" />
+    <span class="card-badge nba">NBA</span>
+  </div>
+  <div class="card-body">
+    <div class="card-title">Why Timothee Chalamet Skipped The 2026 Met Gala With Kylie Jenner</div>
+    <div class="card-desc">As Kylie Jenner was turning heads at the 2026 Met Gala, her boyfriend was about a half hour downtown at another major event.</div>
+    <div class="card-footer">
+      <div class="card-meta">May 5, 2026</div>
+      <span class="card-read">Read →</span>
+    </div>
+  </div>
+</a>
+<a class="news-card" href="/news/nba/a-new-hub-for-women-s-hoops-meet-your-one-stop-shop-for-news-and-analysis/">
+  <div class="card-img-wrap">
+    <img src="https://s.yimg.com/cv/apiv2/sports/share/PD_010626-Social_Share_GENRIC_YAHOO_SPORTS-1200x630.jpg" alt="A new hub for women’s hoops. Meet your one-stop shop for news and analysis" loading="lazy" />
+    <span class="card-badge nba">NBA</span>
+  </div>
+  <div class="card-body">
+    <div class="card-title">A new hub for women’s hoops. Meet your one-stop shop for news and analysis</div>
+    <div class="card-desc">No Offseason Newsletter  | This is The Athletic’s women’s basketball newsletter. Sign up here to receive No Offseason directly in your inbox. Welcome to the first edition of No Offseason, your new weekly guide through the world of women’s basketball. Let’s …</div>
+    <div class="card-footer">
+      <div class="card-meta">May 5, 2026</div>
+      <span class="card-read">Read →</span>
+    </div>
+  </div>
+</a>
+<a class="news-card" href="/news/nba/blue-ox-films-lands-double-emmy-nominations-with-debut-feature-documentaries/">
+  <div class="card-img-wrap">
+    <img src="https://mma.prnewswire.com/media/2972148/BlueOx_H_B_Logo.jpg?p=facebook" alt="BLUE OX FILMS LANDS DOUBLE EMMY NOMINATIONS WITH DEBUT FEATURE DOCUMENTARIES" loading="lazy" />
+    <span class="card-badge nba">NBA</span>
+  </div>
+  <div class="card-body">
+    <div class="card-title">BLUE OX FILMS LANDS DOUBLE EMMY NOMINATIONS WITH DEBUT FEATURE DOCUMENTARIES</div>
+    <div class="card-desc">PORTLAND, Ore., May 5, 2026 /PRNewswire/ -- Blue Ox Films, an independent production company known for bold, character-driven storytelling, has achieved a significant milestone: both of its debut feature-length documentaries have been nominated for Emmy Award…</div>
+    <div class="card-footer">
+      <div class="card-meta">May 5, 2026</div>
+      <span class="card-read">Read →</span>
+    </div>
+  </div>
+</a>
+<a class="news-card" href="/news/nba/joe-tsai-alibaba-leading-big-ai-revolution-in-nba/">
+  <div class="card-img-wrap">
+    <img src="https://s.yimg.com/ny/api/res/1.2/lKROpI90mYdKE1JZu.W4HA--/YXBwaWQ9aGlnaGxhbmRlcjt3PTEyMDA7aD04MDA7Y2Y9d2VicA--/https://media.zenfs.com/en/sb_nation_articles_115/b6062e4c70b03322013d870c49f8befc" alt="Joe Tsai, Alibaba leading big AI revolution in NBA" loading="lazy" />
+    <span class="card-badge nba">NBA</span>
+  </div>
+  <div class="card-body">
+    <div class="card-title">Joe Tsai, Alibaba leading big AI revolution in NBA</div>
+    <div class="card-desc">Things are changing and Joe Tsai is pushing it.</div>
+    <div class="card-footer">
+      <div class="card-meta">May 5, 2026</div>
+      <span class="card-read">Read →</span>
+    </div>
+  </div>
+</a>
+<a class="news-card" href="/news/nba/uva-basketball-lands-commitment-from-arkansas-state-s-christian-harmon/">
+  <div class="card-img-wrap">
+    <img src="https://s.yimg.com/ny/api/res/1.2/cP4vYoWeGuhy5vVolZuLew--/YXBwaWQ9aGlnaGxhbmRlcjt3PTEyMDA7aD04MDA7Y2Y9d2VicA--/https://media.zenfs.com/en/sb_nation_articles_115/88f8748b407b96157667efe5a32c1f29" alt="UVA basketball lands commitment from Arkansas State’s Christian Harmon" loading="lazy" />
+    <span class="card-badge nba">NBA</span>
+  </div>
+  <div class="card-body">
+    <div class="card-title">UVA basketball lands commitment from Arkansas State’s Christian Harmon</div>
+    <div class="card-desc">Virginia gets its second portal commitment of the cycle.</div>
+    <div class="card-footer">
+      <div class="card-meta">May 5, 2026</div>
+      <span class="card-read">Read →</span>
+    </div>
+  </div>
+</a>
+<a class="news-card" href="/news/nba/pistons-vs-cavaliers-game-1-nba-playoffs-predictions-odds-recent-stats-trends-an/">
+  <div class="card-img-wrap">
+    <img src="https://s.yimg.com/ny/api/res/1.2/banHzi4pcBgS07DoxOO.Qg--/YXBwaWQ9aGlnaGxhbmRlcjt3PTEyMDA7aD02NzU7Y2Y9d2VicA--/https://media.zenfs.com/en/nbcsports.com/d4eec0f39b99ee405322fb9d360dff49" alt="Pistons vs Cavaliers Game 1 NBA Playoffs – predictions: Odds, recent stats, trends and best bets for May 5" loading="lazy" />
+    <span class="card-badge nba">NBA</span>
+  </div>
+  <div class="card-body">
+    <div class="card-title">Pistons vs Cavaliers Game 1 NBA Playoffs – predictions: Odds, recent stats, trends and best bets for May 5</div>
+    <div class="card-desc">Detroit Pistons vs Cleveland Cavaliers Game 1 Preview</div>
+    <div class="card-footer">
+      <div class="card-meta">May 5, 2026</div>
+      <span class="card-read">Read →</span>
+    </div>
+  </div>
+</a>
+<a class="news-card" href="/news/nba/three-vols-invited-to-nba-draft-combine/">
+  <div class="card-img-wrap">
+    <div class="no-img">🏀</div>
+    <span class="card-badge nba">NBA</span>
+  </div>
+  <div class="card-body">
+    <div class="card-title">Three Vols invited to NBA draft combine</div>
+    <div class="card-desc">Tennessee basketball players are invited to the NBA draft combine.</div>
+    <div class="card-footer">
+      <div class="card-meta">May 5, 2026</div>
+      <span class="card-read">Read →</span>
+    </div>
+  </div>
+</a>
+<a class="news-card" href="/news/nba/why-lebron-james-kevin-durant-and-other-nba-stars-need-to-stay-off-social-media/">
+  <div class="card-img-wrap">
+    <div class="no-img">🏀</div>
+    <span class="card-badge nba">NBA</span>
+  </div>
+  <div class="card-body">
+    <div class="card-title">Why LeBron James, Kevin Durant, and Other NBA Stars Need to Stay Off Social Media</div>
+    <div class="card-desc">LeBron James, Kevin Durant and Jaylen Brown show how the conversation online has become just as important as the competition on the court.Read more...</div>
+    <div class="card-footer">
+      <div class="card-meta">May 5, 2026</div>
+      <span class="card-read">Read →</span>
+    </div>
+  </div>
+</a>
+<a class="news-card" href="/news/nba/lebron-james-is-playing-two-games-but-only-one-counts/">
+  <div class="card-img-wrap">
+    <div class="no-img">🏀</div>
+    <span class="card-badge nba">NBA</span>
+  </div>
+  <div class="card-body">
+    <div class="card-title">LeBron James is Playing Two Games, But Only One Counts</div>
+    <div class="card-desc">Last week, LeBron James once again set the sports world ablaze. In a candid interview with ESPN, he opened up about his mindset heading into the playoffs in his 23rd NBA season and revisited one of the most enduring debates in sports history: his place in the…</div>
+    <div class="card-footer">
+      <div class="card-meta">May 5, 2026</div>
+      <span class="card-read">Read →</span>
+    </div>
+  </div>
+</a>
+<a class="news-card" href="/news/nba/lakers-vs-thunder-nba-playoff-predictions-odds-schedule-and-how-to-watch/">
+  <div class="card-img-wrap">
+    <img src="https://s.yimg.com/ny/api/res/1.2/jA5PjSKfYuQXwkhlTdNZWw--/YXBwaWQ9aGlnaGxhbmRlcjt3PTEyMDA7aD04MDA7Y2Y9d2VicA--/https://media.zenfs.com/en/usa_today_sports_articles_558/6beb30b2a177a9189ef67341d79a6f74" alt="Lakers vs. Thunder NBA playoff predictions, odds, schedule and how to watch" loading="lazy" />
+    <span class="card-badge nba">NBA</span>
+  </div>
+  <div class="card-body">
+    <div class="card-title">Lakers vs. Thunder NBA playoff predictions, odds, schedule and how to watch</div>
+    <div class="card-desc">From odds and picks to TV info, here’s everything to know about the reigning champion Thunder taking on the Lakers in an NBA playoff matchup.</div>
+    <div class="card-footer">
+      <div class="card-meta">May 5, 2026</div>
+      <span class="card-read">Read →</span>
+    </div>
+  </div>
+</a>
+<a class="news-card" href="/news/nba/unc-pursuing-7-3-italian-big-man-to-bolster-frontcourt/">
+  <div class="card-img-wrap">
+    <img src="https://s.yimg.com/ny/api/res/1.2/CBqmNrmzdIY6mG8AsypXag--/YXBwaWQ9aGlnaGxhbmRlcjt3PTEyMDA7aD04MDA7Y2Y9d2VicA--/https://media.zenfs.com/en/tar_heels_wire_usa_today_articles_552/496ec48ee9dac757b8b84f372561ce5e" alt="UNC pursuing 7-3 Italian big man to bolster frontcourt" loading="lazy" />
+    <span class="card-badge nba">NBA</span>
+  </div>
+  <div class="card-body">
+    <div class="card-title">UNC pursuing 7-3 Italian big man to bolster frontcourt</div>
+    <div class="card-desc">UNC is recruiting European big man Luigi Suigo, who’s in the 2026 NBA Draft mix, as the Tar Heels seek frontcourt help.</div>
+    <div class="card-footer">
+      <div class="card-meta">May 5, 2026</div>
+      <span class="card-read">Read →</span>
+    </div>
+  </div>
+</a>
+<a class="news-card" href="/news/nba/knicks-76ers-notes-mikal-bridges-emergence-has-new-york-s-offense-unlocked-somet/">
+  <div class="card-img-wrap">
+    <img src="https://s.yimg.com/os/en/sny_articles_235/40001cbb28a964ed4ce47af65c343cff" alt="Knicks-76ers Notes: Mikal Bridges' emergence; has New York's offense unlocked something?" loading="lazy" />
+    <span class="card-badge nba">NBA</span>
+  </div>
+  <div class="card-body">
+    <div class="card-title">Knicks-76ers Notes: Mikal Bridges' emergence; has New York's offense unlocked something?</div>
+    <div class="card-desc">A few notes following the Knicks' Game 1 win over the 76ers in the Eastern Conference Semifinals.</div>
+    <div class="card-footer">
+      <div class="card-meta">May 5, 2026</div>
+      <span class="card-read">Read →</span>
+    </div>
+  </div>
+</a>
+<a class="news-card" href="/news/nba/michael-porter-jr-shocked-by-disney-star-ex-girlfriend-s-psychopath-claims/">
+  <div class="card-img-wrap">
+    <img src="https://nypost.com/wp-content/uploads/sites/2/2026/05/newspress-collage-k3601xs13-1777983842338.jpg?quality=75&amp;strip=all&amp;1777969501&amp;w=1200" alt="Michael Porter Jr. shocked by Disney star ex-girlfriend’s ‘psychopath’ claims" loading="lazy" />
+    <span class="card-badge nba">NBA</span>
+  </div>
+  <div class="card-body">
+    <div class="card-title">Michael Porter Jr. shocked by Disney star ex-girlfriend’s ‘psychopath’ claims</div>
+    <div class="card-desc">Nets forward Michael Porter Jr. said his personal life took a hit when his ex, former Disney Channel star Madison Pettis publicly called him a psychopath.</div>
+    <div class="card-footer">
+      <div class="card-meta">May 5, 2026</div>
+      <span class="card-read">Read →</span>
+    </div>
+  </div>
+</a>
+<a class="news-card" href="/news/nba/enraged-celtics-legend-unleashes-nsfw-rant-on-jaylen-brown/">
+  <div class="card-img-wrap">
+    <img src="https://s.yimg.com/os/en/nesn_articles_905/cf95710f22cab3f278d94df422b50e6e" alt="Enraged Celtics Legend Unleashes NSFW Rant On Jaylen Brown" loading="lazy" />
+    <span class="card-badge nba">NBA</span>
+  </div>
+  <div class="card-body">
+    <div class="card-title">Enraged Celtics Legend Unleashes NSFW Rant On Jaylen Brown</div>
+    <div class="card-desc">Kendrick Perkins went off on Jaylen Brown after Boston's catastrophic collapse.</div>
+    <div class="card-footer">
+      <div class="card-meta">May 5, 2026</div>
+      <span class="card-read">Read →</span>
+    </div>
+  </div>
+</a>
+<a class="news-card" href="/news/nba/y-sports-am-softball-s-slugfest/">
+  <div class="card-img-wrap">
+    <img src="https://s.yimg.com/ny/api/res/1.2/0k2WDFDYgkfZbGfUTeLCiw--/YXBwaWQ9aGlnaGxhbmRlcjt3PTEyMDA7aD02MDA7Y2Y9d2VicA--/https://media.zenfs.com/en/yahoo_sports_am_newsletters_819/1f7bf5dd45c44fbbbde29fdc40bebe52" alt=" Y! Sports AM: Softball's slugfest" loading="lazy" />
+    <span class="card-badge nba">NBA</span>
+  </div>
+  <div class="card-body">
+    <div class="card-title"> Y! Sports AM: Softball's slugfest</div>
+    <div class="card-desc">Three players are gunning for the home run record.</div>
+    <div class="card-footer">
+      <div class="card-meta">May 5, 2026</div>
+      <span class="card-read">Read →</span>
+    </div>
+  </div>
+</a>
+<a class="news-card" href="/news/nba/usc-has-multiple-players-in-nba-playoffs-as-second-round-arrives/">
+  <div class="card-img-wrap">
+    <img src="https://s.yimg.com/ny/api/res/1.2/N8EY3zD9.PnZjQVE5NtFtA--/YXBwaWQ9aGlnaGxhbmRlcjt3PTEyMDA7aD0xNzE1O2NmPXdlYnA-/https://media.zenfs.com/en/trojans_wire_usa_today_articles_495/fec6fec8afba14c74e4baadbea8dc922" alt="USC has multiple players in NBA playoffs as second round arrives" loading="lazy" />
+    <span class="card-badge nba">NBA</span>
+  </div>
+  <div class="card-body">
+    <div class="card-title">USC has multiple players in NBA playoffs as second round arrives</div>
+    <div class="card-desc">Multiple USC Trojans have a legitimate shot of making the NBA Finals, one in the East and one in the West</div>
+    <div class="card-footer">
+      <div class="card-meta">May 5, 2026</div>
+      <span class="card-read">Read →</span>
+    </div>
+  </div>
+</a>
+<a class="news-card" href="/news/nba/paul-pierce-predicts-thunder-will-sweep-lakers/">
+  <div class="card-img-wrap">
+    <img src="https://s.yimg.com/ny/api/res/1.2/Qk00UWaveQuHRs.JKyylqw--/YXBwaWQ9aGlnaGxhbmRlcjt3PTEyMDA7aD04MDA7Y2Y9d2VicA--/https://media.zenfs.com/en/lebron_wire_usa_today_sports_articles_234/212faf5a0a380b1ce769b7eb0c332b28" alt="Paul Pierce predicts Thunder will sweep Lakers" loading="lazy" />
+    <span class="card-badge nba">NBA</span>
+  </div>
+  <div class="card-body">
+    <div class="card-title">Paul Pierce predicts Thunder will sweep Lakers</div>
+    <div class="card-desc">Former Celtics star Paul Pierce feels the Lakers are about to get destroyed in the second round of the NBA playoffs by the Thunder.</div>
+    <div class="card-footer">
+      <div class="card-meta">May 5, 2026</div>
+      <span class="card-read">Read →</span>
+    </div>
+  </div>
+</a>
+<a class="news-card" href="/news/nba/shai-gilgeous-alexander-s-rise-is-starting-to-mirror-his-new-nba-playoff-foe-leb/">
+  <div class="card-img-wrap">
+    <img src="https://s.yimg.com/ny/api/res/1.2/50sovSN_ytZYP.HRXGKRNg--/YXBwaWQ9aGlnaGxhbmRlcjt3PTEyMDA7aD04NjI7Y2Y9d2VicA--/https://media.zenfs.com/en/the_oklahoman_natl_articles_469/c70c2994e8b3e838c95f1f1a031304cc" alt="Shai Gilgeous-Alexander's rise is starting to mirror his new NBA playoff foe LeBron James" loading="lazy" />
+    <span class="card-badge nba">NBA</span>
+  </div>
+  <div class="card-body">
+    <div class="card-title">Shai Gilgeous-Alexander's rise is starting to mirror his new NBA playoff foe LeBron James</div>
+    <div class="card-desc">LeBron James won his first two MVPs in Years 6 and 7. Shai Gilgeous-Alexander won his first MVP in Year 7, and he’s about to win another in Year 8.</div>
+    <div class="card-footer">
+      <div class="card-meta">May 5, 2026</div>
+      <span class="card-read">Read →</span>
+    </div>
+  </div>
+</a>
+<a class="news-card" href="/news/nba/william-blair-buys-inner-circle-sports-in-sports-dealmaking-push/">
+  <div class="card-img-wrap">
+    <img src="https://www.sportico.com/wp-content/uploads/2026/05/INNERCIRCLE-SALE.png?w=1024" alt="William Blair Buys Inner Circle Sports in Sports Dealmaking Push" loading="lazy" />
+    <span class="card-badge nba">NBA</span>
+  </div>
+  <div class="card-body">
+    <div class="card-title">William Blair Buys Inner Circle Sports in Sports Dealmaking Push</div>
+    <div class="card-desc">William Blair is buying Inner Circle Sports, a move that will bolster the investment bank's presence in sports dealmaking and M&amp;A transactions.</div>
+    <div class="card-footer">
+      <div class="card-meta">May 5, 2026</div>
+      <span class="card-read">Read →</span>
+    </div>
+  </div>
+</a>
+<a class="news-card" href="/news/nba/why-lakers-biggest-issue-vs-thunder-is-self-imposed-turnovers-really-kill-you/">
+  <div class="card-img-wrap">
+    <img src="https://s.yimg.com/ny/api/res/1.2/WXPCIpqJRjoao9pUnAbwhw--/YXBwaWQ9aGlnaGxhbmRlcjt3PTEyMDA7aD04MDA7Y2Y9d2VicA--/https://media.zenfs.com/en/ny_post_sports_articles_389/015e6a731b2dcbd0fc8ca576e0497d0a" alt="Why Lakers biggest issue vs. Thunder is self-imposed: ‘Turnovers really kill you’" loading="lazy" />
+    <span class="card-badge nba">NBA</span>
+  </div>
+  <div class="card-body">
+    <div class="card-title">Why Lakers biggest issue vs. Thunder is self-imposed: ‘Turnovers really kill you’</div>
+    <div class="card-desc">Before his team’s first round playoff series victory over the Rockets, Lakers coach JJ Redick laid out what needed to happen for his team to have success: take care of the basketball and prevent offensive rebounds.</div>
+    <div class="card-footer">
+      <div class="card-meta">May 5, 2026</div>
+      <span class="card-read">Read →</span>
+    </div>
+  </div>
+</a>
+<a class="news-card" href="/news/nba/why-lakers-biggest-issue-vs-thunder-is-self-imposed-turnovers-really-kill-you/">
+  <div class="card-img-wrap">
+    <img src="https://nypost.com/wp-content/uploads/sites/2/2026/05/Comp-Lakers-Thunder-Ball-Security.jpg?quality=75&amp;strip=all&amp;w=1200" alt="Why Lakers biggest issue vs. Thunder is self-imposed: ‘Turnovers really kill you’" loading="lazy" />
+    <span class="card-badge nba">NBA</span>
+  </div>
+  <div class="card-body">
+    <div class="card-title">Why Lakers biggest issue vs. Thunder is self-imposed: ‘Turnovers really kill you’</div>
+    <div class="card-desc">Before his team’s first round playoff series victory over the Rockets, Lakers coach JJ Redick laid out what needed to happen for his team to have success: take care of the basketball and prevent offensive rebounds.</div>
+    <div class="card-footer">
+      <div class="card-meta">May 5, 2026</div>
+      <span class="card-read">Read →</span>
+    </div>
+  </div>
+</a>
+<a class="news-card" href="/news/nba/how-lebron-james-lakers-pull-off-the-upset-over-thunder/">
+  <div class="card-img-wrap">
+    <img src="https://nypost.com/wp-content/uploads/sites/2/2026/05/newspress-collage-kqvlieq3p-1777930135497.jpg?quality=75&amp;strip=all&amp;1777916268&amp;w=1200" alt="How LeBron James, Lakers pull off the upset over Thunder" loading="lazy" />
+    <span class="card-badge nba">NBA</span>
+  </div>
+  <div class="card-body">
+    <div class="card-title">How LeBron James, Lakers pull off the upset over Thunder</div>
+    <div class="card-desc">The Lakers have lost to the Thunder in all four regular-season meetings, by an average of 29.3 points per game. Now they face them in the second round of the playoffs.</div>
+    <div class="card-footer">
+      <div class="card-meta">May 5, 2026</div>
+      <span class="card-read">Read →</span>
+    </div>
+  </div>
+</a>
+<a class="news-card" href="/news/nba/how-lebron-james-lakers-pull-off-the-upset-over-thunder/">
+  <div class="card-img-wrap">
+    <img src="https://s.yimg.com/ny/api/res/1.2/dJ0uIYYUa1j_TOXtJmFO2Q--/YXBwaWQ9aGlnaGxhbmRlcjt3PTEyMDA7aD04MDA7Y2Y9d2VicA--/https://media.zenfs.com/en/ny_post_sports_articles_389/77c1b48d2f917c75663c584c01315c76" alt="How LeBron James, Lakers pull off the upset over Thunder" loading="lazy" />
+    <span class="card-badge nba">NBA</span>
+  </div>
+  <div class="card-body">
+    <div class="card-title">How LeBron James, Lakers pull off the upset over Thunder</div>
+    <div class="card-desc">The Lakers have lost to the Thunder in all four regular-season meetings, by an average of 29.3 points per game. Now they face them in the second round of the playoffs.</div>
+    <div class="card-footer">
+      <div class="card-meta">May 5, 2026</div>
+      <span class="card-read">Read →</span>
+    </div>
+  </div>
+</a>
+<a class="news-card" href="/news/nba/tina-charles-wnba-s-career-rebound-and-field-goal-leader-retires-after-14-season/">
+  <div class="card-img-wrap">
+    <img src="https://s.yimg.com/os/en/the_athletic_articles_169/bd1530a86c0f414ae4b5a378d1f2caf7" alt="Tina Charles, WNBA’s career rebound and field goal leader, retires after 14 seasons" loading="lazy" />
+    <span class="card-badge nba">NBA</span>
+  </div>
+  <div class="card-body">
+    <div class="card-title">Tina Charles, WNBA’s career rebound and field goal leader, retires after 14 seasons</div>
+    <div class="card-desc">In late March, Tina Charles traveled to China to play in a best-of-five series with Henan Phoenix, a Chinese women’s basketball club looking to move into its league’s top tier. Through four games, Charles, 37, averaged 22 points and eight boards while playing…</div>
+    <div class="card-footer">
+      <div class="card-meta">May 5, 2026</div>
+      <span class="card-read">Read →</span>
+    </div>
+  </div>
+</a>
+<a class="news-card" href="/news/nba/anthony-edwards-gives-mike-conley-his-flowers-after-wolves-game-1-win/">
+  <div class="card-img-wrap">
+    <img src="https://s.yimg.com/os/en/the_sporting_news_articles_584/f8ee17037192eced7ebae7e4d954fb2e" alt="Anthony Edwards gives Mike Conley his flowers after Wolves' Game 1 win" loading="lazy" />
+    <span class="card-badge nba">NBA</span>
+  </div>
+  <div class="card-body">
+    <div class="card-title">Anthony Edwards gives Mike Conley his flowers after Wolves' Game 1 win</div>
+    <div class="card-desc">Anthony Edwards reminds people Mike Conley was once an All-Star</div>
+    <div class="card-footer">
+      <div class="card-meta">May 5, 2026</div>
+      <span class="card-read">Read →</span>
+    </div>
+  </div>
+</a>
+<a class="news-card" href="/news/nba/nba-legend-torches-magic-after-embarrassing-playoff-exit/">
+  <div class="card-img-wrap">
+    <img src="https://static.foxnews.com/foxnews.com/content/uploads/2026/05/paolo-banchero-drives-basket-fox-news-001.jpeg" alt="NBA legend torches Magic after embarrassing playoff exit" loading="lazy" />
+    <span class="card-badge nba">NBA</span>
+  </div>
+  <div class="card-body">
+    <div class="card-title">NBA legend torches Magic after embarrassing playoff exit</div>
+    <div class="card-desc">Hall of Famer Tracy McGrady criticized the Orlando Magic roster after their historic collapse, blowing a 3-1 lead to the Detroit Pistons in round one.</div>
+    <div class="card-footer">
+      <div class="card-meta">May 5, 2026</div>
+      <span class="card-read">Read →</span>
+    </div>
+  </div>
+</a>
+<a class="news-card" href="/news/nba/can-the-new-york-liberty-be-champions-again/">
+  <div class="card-img-wrap">
+    <img src="https://pyxis.nymag.com/v1/imgs/066/29d/734e60532ed550e2af3ab19919fe92478a-NY-Liberty-Coach-NY-Mag-4.1x.rsocial.w1200.jpg" alt="Can the New York Liberty Be Champions Again?" loading="lazy" />
+    <span class="card-badge nba">NBA</span>
+  </div>
+  <div class="card-body">
+    <div class="card-title">Can the New York Liberty Be Champions Again?</div>
+    <div class="card-desc">Can the New York Liberty be champions again? The pressure is on for new head coach Chris DeMarco: “A lot of fans will stop me and say, ‘Better win a championship.’”</div>
+    <div class="card-footer">
+      <div class="card-meta">May 5, 2026</div>
+      <span class="card-read">Read →</span>
+    </div>
+  </div>
+</a>
+<a class="news-card" href="/news/nba/can-the-new-york-liberty-be-champions-again/">
+  <div class="card-img-wrap">
+    <img src="https://pyxis.nymag.com/v1/imgs/066/29d/734e60532ed550e2af3ab19919fe92478a-NY-Liberty-Coach-NY-Mag-4.1x.rsocial.w1200.jpg" alt="Can the New York Liberty Be Champions Again?" loading="lazy" />
+    <span class="card-badge nba">NBA</span>
+  </div>
+  <div class="card-body">
+    <div class="card-title">Can the New York Liberty Be Champions Again?</div>
+    <div class="card-desc">Can the New York Liberty be champions again? The pressure is on for new head coach Chris DeMarco: “A lot of fans will stop me and say, ‘Better win a championship.’”</div>
+    <div class="card-footer">
+      <div class="card-meta">May 5, 2026</div>
+      <span class="card-read">Read →</span>
+    </div>
+  </div>
+</a>
+<a class="news-card" href="/news/nba/tv-and-streaming-viewing-picks-for-may-5-2026-how-to-watch-nba-playoffs-tonight/">
+  <div class="card-img-wrap">
+    <img src="https://s.yimg.com/os/en/awful_announcing_173/7f25fa7fdc20eb0e599831636bdec4af" alt="TV and streaming viewing picks for May 5, 2026: How to watch NBA Playoffs tonight" loading="lazy" />
+    <span class="card-badge nba">NBA</span>
+  </div>
+  <div class="card-body">
+    <div class="card-title">TV and streaming viewing picks for May 5, 2026: How to watch NBA Playoffs tonight</div>
+    <div class="card-desc">All Times Eastern College Baseball Louisville at Vanderbilt — ESPN2/ESPN Unlimited, 8 p.m. College Basketball The Hoops HQ Show — Fubo Sports Network, 11 a.m. College Basketball Talk — CBS Sports Network, noon ACC Network Basketball Podcast — ACC Network, 5 p…</div>
+    <div class="card-footer">
+      <div class="card-meta">May 5, 2026</div>
+      <span class="card-read">Read →</span>
+    </div>
+  </div>
+</a>
+<a class="news-card" href="/news/nba/if-lebron-james-retires-after-thunder-series-maybe-everyone-can-at-last-apprecia/">
+  <div class="card-img-wrap">
+    <img src="https://s.yimg.com/os/en/the_sporting_news_articles_584/ddcd88f1b08cb18c1d899953150c8471" alt="If LeBron James retires after Thunder series, maybe everyone can at last appreciate his supremecy" loading="lazy" />
+    <span class="card-badge nba">NBA</span>
+  </div>
+  <div class="card-body">
+    <div class="card-title">If LeBron James retires after Thunder series, maybe everyone can at last appreciate his supremecy</div>
+    <div class="card-desc">We don't know whether LeBron James will return to play another NBA season at age 42. So we all should enjoy a few more minutes of his greatness.</div>
+    <div class="card-footer">
+      <div class="card-meta">May 5, 2026</div>
+      <span class="card-read">Read →</span>
+    </div>
+  </div>
+</a>
+<a class="news-card" href="/news/nba/the-california-post-s-lakers-thunder-west-semifinals-predictions/">
+  <div class="card-img-wrap">
+    <img src="https://s.yimg.com/ny/api/res/1.2/qQvUnFSgPBL29bE.AKqVnQ--/YXBwaWQ9aGlnaGxhbmRlcjt3PTEyMDA7aD04MDA7Y2Y9d2VicA--/https://media.zenfs.com/en/ny_post_sports_articles_389/6594ffcbe82bf4ecb80d6c50c3809ec5" alt="The California Post’s Lakers-Thunder West semifinals predictions" loading="lazy" />
+    <span class="card-badge nba">NBA</span>
+  </div>
+  <div class="card-body">
+    <div class="card-title">The California Post’s Lakers-Thunder West semifinals predictions</div>
+    <div class="card-desc">California Post sports reporters Khobi Price, Melissa Rohlin and Michael Duarte answer the most pressing questions of the Western Conference semifinals and include a prediction in the end.</div>
+    <div class="card-footer">
+      <div class="card-meta">May 5, 2026</div>
+      <span class="card-read">Read →</span>
+    </div>
+  </div>
+</a>
+<a class="news-card" href="/news/nba/the-california-post-s-lakers-thunder-west-semifinals-predictions/">
+  <div class="card-img-wrap">
+    <img src="https://nypost.com/wp-content/uploads/sites/2/2026/05/LAKERSWIN.jpg?quality=75&amp;strip=all&amp;w=1200" alt="The California Post’s Lakers-Thunder West semifinals predictions" loading="lazy" />
+    <span class="card-badge nba">NBA</span>
+  </div>
+  <div class="card-body">
+    <div class="card-title">The California Post’s Lakers-Thunder West semifinals predictions</div>
+    <div class="card-desc">California Post sports reporters Khobi Price, Melissa Rohlin and Michael Duarte answer the most pressing questions of the Western Conference semifinals and include a prediction in the end.</div>
+    <div class="card-footer">
+      <div class="card-meta">May 5, 2026</div>
+      <span class="card-read">Read →</span>
+    </div>
+  </div>
+</a>
+<a class="news-card" href="/news/nba/former-cats-remaining-in-the-nba-playoffs/">
+  <div class="card-img-wrap">
+    <img src="https://s.yimg.com/ny/api/res/1.2/4SrJHU1KYCE8XPrjiHJ.Jg--/YXBwaWQ9aGlnaGxhbmRlcjt3PTEyMDA7aD03Nzc7Y2Y9d2VicA--/https://media.zenfs.com/en/sb_nation_articles_115/507383e773a6cc212bcf14bc6e18a347" alt="Former Cats remaining in the NBA Playoffs" loading="lazy" />
+    <span class="card-badge nba">NBA</span>
+  </div>
+  <div class="card-body">
+    <div class="card-title">Former Cats remaining in the NBA Playoffs</div>
+    <div class="card-desc">Several Cats are still in the playoffs.</div>
+    <div class="card-footer">
+      <div class="card-meta">May 5, 2026</div>
+      <span class="card-read">Read →</span>
+    </div>
+  </div>
+</a></div>
+    </div>
+
+  </div>
+
+  <footer>
+    <div class="foot-online">
+      <div class="foot-dot"></div>
+      Online
+    </div>
+  </footer>
+
+</div>
+
+<nav class="mob-nav">
+  <a href="/" data-dir="back"><span class="mob-nav-icon">🏠</span><span>Home</span><span class="mob-nav-dot"></span></a>
+  <a href="/game/" data-dir="back"><span class="mob-nav-icon">🏀</span><span>Game</span><span class="mob-nav-dot"></span></a>
+  <a class="active" href="/news/"><span class="mob-nav-icon">📰</span><span>News</span><span class="mob-nav-dot"></span></a>
+</nav>
+
+<script src="/scripts/news.js"></script>
+</body>
+</html>
