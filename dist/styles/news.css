@@ -392,6 +392,47 @@ footer { height:34px; display:flex; align-items:center; justify-content:center; 
 .art-ext-btn:active { transform:scale(0.97); }
 .art-ext-arrow { font-size:16px; }
 
+/* ── SHARE BUTTON ── */
+.art-share {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-top: 32px;
+  padding-top: 24px;
+  border-top: 1px solid var(--border);
+}
+.share-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 28px;
+  background: transparent;
+  border: 1px solid rgba(255, 106, 0, 0.40);
+  border-radius: 50px;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 18px;
+  letter-spacing: 3px;
+  color: var(--orange);
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s, transform 0.1s;
+}
+.share-btn:hover {
+  background: rgba(255, 106, 0, 0.10);
+  border-color: rgba(255, 106, 0, 0.70);
+}
+.share-btn:active { transform: scale(0.97); }
+.share-icon { font-size: 16px; }
+.share-copied {
+  font-size: 11px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--green, #22c55e);
+  opacity: 0;
+  transition: opacity 0.2s;
+  pointer-events: none;
+}
+.share-copied.visible { opacity: 1; }
+
 @media (max-width:600px) {
   .art-header { padding:0 16px; }
   .game-promo { flex-direction:column; text-align:center; padding:22px 20px; gap:16px; }

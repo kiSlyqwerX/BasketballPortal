@@ -1,0 +1,35 @@
+Favicon Package — Installation Guide
+=====================================
+
+Files included:
+  favicon.ico                  Legacy fallback (16×16, 32×32, 48×48 embedded)
+  favicon-16x16.png            Browser tab — small
+  favicon-32x32.png            Browser tab — standard
+  apple-touch-icon.png         iOS / macOS home screen bookmark (180×180)
+  android-chrome-192x192.png   Android Chrome home screen
+  android-chrome-512x512.png   PWA splash screen
+  site.webmanifest             Web App Manifest template
+  docs.txt                     This file
+
+──────────────────────────────────────────────────────────────
+Step 1 — Copy all files to your site root
+  Place them in /public, /static, or whichever folder
+  is served as the web root.
+
+Step 2 — Add to your HTML <head>:
+
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+
+Step 3 — Edit site.webmanifest and fill in:
+  "name"             — Your full app or site name
+  "short_name"       — Short name shown on home screens (max ~12 chars)
+  "theme_color"      — Browser UI color  (e.g. "#1d4ed8")
+  "background_color" — Splash screen background (e.g. "#ffffff")
+
+──────────────────────────────────────────────────────────────
+Generated with Abect Favicon Generator
+https://devtools.abect.com/favicon-generator
