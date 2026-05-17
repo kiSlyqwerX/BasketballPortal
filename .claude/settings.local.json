@@ -21,7 +21,15 @@
       "Bash(git add *)",
       "Bash(git commit *)",
       "Bash(git push *)",
-      "Bash(findstr /n \"share-btn\\\\|art-share\\\\|article.js\" \"dist\\\\news\\\\nba\\\\timberwolves-anthony-edwards-once-and-for-all-put-the-pre-draft-not-loving-baske\\\\index.html\")"
+      "Bash(findstr /n \"share-btn\\\\|art-share\\\\|article.js\" \"dist\\\\news\\\\nba\\\\timberwolves-anthony-edwards-once-and-for-all-put-the-pre-draft-not-loving-baske\\\\index.html\")",
+      "Bash(node -e \"const fs=require\\('fs'\\); const files=fs.readdirSync\\('./dist/news/nba',{withFileTypes:true}\\).filter\\(e=>e.isDirectory\\(\\)\\); console.log\\(files[0]?.name\\)\")",
+      "Bash(node -e \"const fs=require\\('fs'\\); const files=fs.readdirSync\\('./dist/news/nba',{withFileTypes:true}\\).filter\\(e=>e.isDirectory\\(\\)\\); const slug=files[0].name; const html=fs.readFileSync\\('./dist/news/nba/'+slug+'/index.html','utf-8'\\); const checks=['breadcrumbs','art-meta','art-content-wrap','art-toc','art-ad','<h2 id=','toc-list']; checks.forEach\\(c=>console.log\\(c,':', html.includes\\(c\\)?'OK':'MISSING'\\)\\)\")",
+      "Bash(node -e \"const fs=require\\('fs'\\); const files=fs.readdirSync\\('./dist/news/nba',{withFileTypes:true}\\).filter\\(e=>e.isDirectory\\(\\)\\); const slug=files[0].name; const html=fs.readFileSync\\('./dist/news/nba/'+slug+'/index.html','utf-8'\\); const start=html.indexOf\\('<nav class=\\\\\"breadcrumbs\\\\\"'\\); console.log\\(html.substring\\(start, start+400\\)\\)\")",
+      "Bash(node -e ' *)",
+      "WebSearch",
+      "WebFetch(domain:www.nba.com)",
+      "WebFetch(domain:www.gettyimages.com)",
+      "WebFetch(domain:commons.wikimedia.org)"
     ]
   }
 }

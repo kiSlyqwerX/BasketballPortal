@@ -139,6 +139,7 @@ header {
 .card-badge.euroleague { background:rgba(14,165,233,0.85); }
 .card-badge.transfers  { background:rgba(34,197,94,0.85); }
 .card-badge.training   { background:rgba(255,255,255,0.22); }
+.card-badge.test       { background:rgba(139,92,246,0.85); }
 
 .card-body { flex:1; padding:15px 16px 14px; display:flex; flex-direction:column; }
 
@@ -327,16 +328,19 @@ footer { height:34px; display:flex; align-items:center; justify-content:center; 
 
 /* ── ARTICLE BODY ── */
 .art-page {
-  max-width:780px; margin:0 auto;
+  max-width:1040px; margin:0 auto;
   padding:40px 24px 80px;
 }
 
 .art-img-wrap {
   width:100%; border-radius:14px; overflow:hidden;
   background:var(--surface2); margin-bottom:28px;
-  display:flex; align-items:center; justify-content:center;
+  aspect-ratio:16/7;
 }
-.art-img-wrap img { width:100%; height:auto; display:block; }
+.art-img-wrap img {
+  width:100%; height:100%; display:block;
+  object-fit:cover; object-position:center top;
+}
 .no-img-big { width:100%; height:260px; display:flex; align-items:center; justify-content:center; font-size:72px; }
 
 .art-badge {
@@ -348,6 +352,7 @@ footer { height:34px; display:flex; align-items:center; justify-content:center; 
 .art-badge.euroleague { background:#0ea5e9; }
 .art-badge.transfers  { background:var(--green); }
 .art-badge.training   { background:rgba(255,255,255,0.15); }
+.art-badge.test       { background:#8b5cf6; }
 
 .art-title {
   font-family:'Bebas Neue',sans-serif;
@@ -366,11 +371,6 @@ footer { height:34px; display:flex; align-items:center; justify-content:center; 
 .art-desc {
   font-size:16px; color:rgba(255,255,255,0.88);
   line-height:1.75; margin-bottom:20px; font-weight:500;
-}
-
-.art-body {
-  font-size:14px; color:rgba(255,255,255,0.72);
-  line-height:1.85; margin-bottom:36px;
 }
 
 .art-full-hint {
@@ -392,53 +392,188 @@ footer { height:34px; display:flex; align-items:center; justify-content:center; 
 .art-ext-btn:active { transform:scale(0.97); }
 .art-ext-arrow { font-size:16px; }
 
-/* ── SHARE BUTTON ── */
-.art-share {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  margin-top: 32px;
-  padding-top: 24px;
-  border-top: 1px solid var(--border);
+/* ── HEADER RIGHT (back + share) ── */
+.art-header-right {
+  display:flex; align-items:center; gap:16px;
+}
+.art-share-wrap {
+  position:relative; display:flex; align-items:center;
 }
 .share-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 12px 28px;
-  background: transparent;
-  border: 1px solid rgba(255, 106, 0, 0.40);
-  border-radius: 50px;
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: 18px;
-  letter-spacing: 3px;
-  color: var(--orange);
-  cursor: pointer;
-  transition: background 0.15s, border-color 0.15s, transform 0.1s;
+  display:inline-flex; align-items:center; gap:7px;
+  padding:7px 18px;
+  background:transparent;
+  border:1px solid rgba(255,106,0,0.45);
+  border-radius:50px;
+  font-family:'Bebas Neue',sans-serif; font-size:15px; letter-spacing:2.5px;
+  color:var(--orange); cursor:pointer;
+  transition:background 0.15s, border-color 0.15s, transform 0.1s;
+  -webkit-tap-highlight-color:transparent;
 }
-.share-btn:hover {
-  background: rgba(255, 106, 0, 0.10);
-  border-color: rgba(255, 106, 0, 0.70);
-}
-.share-btn:active { transform: scale(0.97); }
-.share-icon { font-size: 16px; }
+.share-btn:hover  { background:rgba(255,106,0,0.10); border-color:rgba(255,106,0,0.75); }
+.share-btn:active { transform:scale(0.96); }
+.share-icon { font-size:14px; }
 .share-copied {
-  font-size: 11px;
-  letter-spacing: 1.5px;
-  text-transform: uppercase;
-  color: var(--green, #22c55e);
-  opacity: 0;
-  transition: opacity 0.2s;
-  pointer-events: none;
+  position:absolute; top:calc(100% + 10px); right:0;
+  white-space:nowrap;
+  padding:6px 14px; border-radius:6px;
+  background:rgba(34,197,94,0.14); border:1px solid rgba(34,197,94,0.35);
+  font-size:10px; letter-spacing:1.5px; text-transform:uppercase;
+  color:#22c55e;
+  opacity:0; pointer-events:none;
+  transition:opacity 0.22s;
+  z-index:10;
 }
-.share-copied.visible { opacity: 1; }
+.share-copied.visible { opacity:1; }
+
+/* ── BREADCRUMBS ── */
+.breadcrumbs {
+  display:flex; align-items:center; gap:6px; flex-wrap:wrap;
+  margin-bottom:20px;
+}
+.breadcrumbs a {
+  font-size:10px; font-weight:600; letter-spacing:1.5px; text-transform:uppercase;
+  color:var(--muted); text-decoration:none;
+  transition:color 0.15s;
+}
+.breadcrumbs a:hover { color:var(--text); }
+.bc-sep { font-size:10px; color:rgba(255,255,255,0.28); }
+.bc-current {
+  font-size:10px; font-weight:600; letter-spacing:1.5px; text-transform:uppercase;
+  color:var(--orange);
+  white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:260px;
+}
+
+/* ── ARTICLE META (date / author / reading time) ── */
+.art-meta {
+  display:flex; align-items:center; gap:8px; flex-wrap:wrap;
+  margin-bottom:22px;
+}
+.art-meta-date,
+.art-meta-author,
+.art-meta-read {
+  font-size:10px; letter-spacing:1.5px; text-transform:uppercase; color:var(--muted);
+}
+.art-meta-sep { color:rgba(255,255,255,0.25); font-size:10px; }
+
+/* ── TWO-COLUMN CONTENT + SIDEBAR ── */
+.art-content-wrap {
+  display:flex; gap:32px; align-items:flex-start;
+}
+.art-body {
+  flex:1; min-width:0;
+  font-size:14px; color:rgba(255,255,255,0.72);
+  line-height:1.85; margin-bottom:36px;
+}
+.art-body p { margin-bottom:18px; }
+.art-body h2 {
+  font-family:'Bebas Neue',sans-serif;
+  font-size:clamp(20px,2.4vw,28px);
+  letter-spacing:2px; color:var(--text);
+  margin-top:40px; margin-bottom:14px;
+  padding-top:12px;
+  border-top:1px solid rgba(255,255,255,0.07);
+  scroll-margin-top:66px;
+}
+.art-body h3 {
+  font-family:'Bebas Neue',sans-serif;
+  font-size:clamp(15px,1.6vw,20px);
+  letter-spacing:1.5px; color:rgba(255,255,255,0.78);
+  margin-top:26px; margin-bottom:10px;
+  scroll-margin-top:66px;
+}
+.art-sidebar {
+  width:280px; flex-shrink:0;
+  position:sticky; top:66px;
+  display:flex; flex-direction:column; gap:16px;
+  max-height:calc(100dvh - 90px);
+  overflow-y:auto; overflow-x:hidden;
+  scrollbar-width:none; padding-bottom:32px;
+}
+.art-sidebar::-webkit-scrollbar { display:none; }
+
+/* ── TABLE OF CONTENTS ── */
+.art-toc {
+  background:var(--surface2);
+  border:1px solid var(--border);
+  border-radius:12px;
+  padding:18px 20px;
+}
+.art-toc-title {
+  font-family:'Bebas Neue',sans-serif; font-size:14px;
+  letter-spacing:3px; color:var(--orange); margin-bottom:12px;
+}
+.toc-list {
+  list-style:none; padding:0; margin:0;
+  counter-reset:toc;
+  display:flex; flex-direction:column; gap:10px;
+}
+.toc-list li {
+  counter-increment:toc;
+  display:flex; align-items:flex-start; gap:10px;
+}
+.toc-list li::before {
+  content:counter(toc, decimal-leading-zero);
+  font-family:'Bebas Neue',sans-serif; font-size:13px;
+  letter-spacing:1px; color:var(--orange); opacity:0.55;
+  flex-shrink:0; margin-top:1px;
+}
+.toc-list a {
+  font-size:11px; font-weight:500; letter-spacing:0.3px;
+  color:var(--muted); text-decoration:none; line-height:1.4;
+  transition:color 0.15s;
+}
+.toc-list a:hover { color:var(--text); }
+
+/* ── AD BLOCK ── */
+.art-ad {
+  background:var(--surface2);
+  border:1px dashed rgba(255,255,255,0.12);
+  border-radius:14px;
+  padding:20px 18px 24px;
+  text-align:center;
+}
+.art-ad-label {
+  font-size:8px; letter-spacing:2.5px; text-transform:uppercase;
+  color:rgba(255,255,255,0.20); margin-bottom:14px;
+}
+.art-ad-slot {
+  width:100%; min-height:320px;
+  background:linear-gradient(160deg,rgba(255,106,0,0.04) 0%,rgba(255,255,255,0.02) 100%);
+  border:1px solid rgba(255,255,255,0.05);
+  border-radius:10px;
+  display:flex; flex-direction:column; align-items:center; justify-content:center; gap:8px;
+}
+.art-ad-slot-icon {
+  font-size:32px; opacity:0.18;
+}
+.art-ad-slot-text {
+  font-size:10px; letter-spacing:2px; text-transform:uppercase;
+  color:rgba(255,255,255,0.15);
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width:960px) {
+  .art-content-wrap { flex-direction:column; }
+  .art-sidebar {
+    width:100%; position:static;
+    max-height:none; overflow:visible; padding-bottom:0;
+    flex-direction:row; align-items:flex-start;
+  }
+  .art-toc { flex:1; }
+  .art-ad  { flex:1; min-width:200px; }
+  .art-ad-slot { min-height:200px; }
+}
 
 @media (max-width:600px) {
   .art-header { padding:0 16px; }
+  .art-header-right { gap:10px; }
+  .back-btn { display:none; }
   .game-promo { flex-direction:column; text-align:center; padding:22px 20px; gap:16px; }
   .game-promo-ball { width:56px; height:56px; }
   .art-page { padding:24px 16px 60px; }
   .art-title { font-size:clamp(26px,7vw,40px); }
-  .art-desc  { font-size:14px; }
-  .art-body  { font-size:13px; }
+  .art-sidebar { flex-direction:column; }
+  .art-body { font-size:13px; }
+  .art-ad-slot { min-height:220px; }
 }

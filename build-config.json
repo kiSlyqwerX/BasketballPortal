@@ -14,7 +14,8 @@
     { "label": "NBA",        "slug": "nba",        "query": "NBA basketball" },
     { "label": "EuroLeague", "slug": "euroleague",  "query": "EuroLeague basketball" },
     { "label": "Transfers",  "slug": "transfers",   "query": "basketball trade transfer signing" },
-    { "label": "Training",   "slug": "training",    "query": "basketball training practice workout" }
+    { "label": "Training",   "slug": "training",    "query": "basketball training practice workout" },
+    { "label": "Test",       "slug": "test",        "query": "" }
   ],
 
   "newsApi": {

@@ -25,25 +25,48 @@
 
 <header class="art-header">
   <a class="art-logo" href="/">BasketTap</a>
-  <a class="back-btn" href="/news/{{articleCategory}}/" data-dir="back">← Back to {{articleCategoryLabel}}</a>
+  <div class="art-header-right">
+    <a class="back-btn" href="/news/{{articleCategory}}/" data-dir="back">← Back to {{articleCategoryLabel}}</a>
+    <div class="art-share-wrap">
+      <button class="share-btn" id="share-btn">
+        <span class="share-icon">↗</span>
+        Share
+      </button>
+      <span class="share-copied" id="share-copied">Link copied!</span>
+    </div>
+  </div>
 </header>
 
 <div class="art-page">
+
+  <!-- 1. Article photo -->
   {{articleImageBlock}}
+
+  <!-- 2. Breadcrumbs -->
+  {{breadcrumbs}}
+
+  <!-- Badge + 4. h1 Title -->
   <span class="art-badge {{articleBadgeClass}}">{{articleBadgeLabel}}</span>
   <h1 class="art-title">{{articleTitle}}</h1>
-  {{articleDateBlock}}
+
+  <!-- 3. Date / Author / Reading time -->
+  {{articleMeta}}
+
   <div class="art-divider"></div>
-  <p class="art-desc">{{articleDescription}}</p>
-  <div class="art-body">{{articleBody}}</div>
-  {{articleExtLinkBlock}}
-  <div class="art-share">
-    <button class="share-btn" id="share-btn">
-      <span class="share-icon">↗</span>
-      Share
-    </button>
-    <span class="share-copied" id="share-copied">Link copied!</span>
+
+  <!-- Two-column layout: 5 (content) | 6 (TOC) + 7 (ad) -->
+  <div class="art-content-wrap">
+    <div class="art-body">
+      {{articleBody}}
+    </div>
+    <aside class="art-sidebar">
+      {{articleTOC}}
+      {{articleAd}}
+    </aside>
   </div>
+
+  {{articleExtLinkBlock}}
+
 </div>
 
 <div class="art-page" style="padding-top:0">

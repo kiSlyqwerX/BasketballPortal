@@ -10,7 +10,8 @@ async function fetchAllNews() {
   const seenUrls = new Set();
 
   for (const cat of config.newsCategories) {
-    const query = cat.query || config.newsApi.query;
+    if (!cat.query) continue;
+    const query = cat.query;
     const url = `${baseUrl}/everything?q=${encodeURIComponent(query)}&pageSize=${pageSize}&language=en&sortBy=publishedAt&apiKey=${apiKey}`;
     const res = await fetch(url);
     if (!res.ok) throw new Error(`NewsAPI responded with ${res.status} for category "${cat.slug}"`);
